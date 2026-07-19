@@ -1,0 +1,21 @@
+{
+  "condLabels": ["Educacao_Alta", "Renda_Media", "Democracia_Estavel"],
+  "resLabel": "Resultado",
+  "dados": [
+    { "caso": "Brasil",      "conds": [1, 1, 1], "res": 1 },
+    { "caso": "Argentina",   "conds": [1, 1, 0], "res": 1 },
+    { "caso": "Chile",       "conds": [1, 0, 1], "res": 1 },
+    { "caso": "Colombia",    "conds": [0, 1, 1], "res": 0 },
+    { "caso": "Venezuela",   "conds": [0, 0, 1], "res": 0 },
+    { "caso": "Peru",        "conds": [1, 0, 0], "res": 0 },
+    { "caso": "Equador",     "conds": [0, 1, 0], "res": 0 },
+    { "caso": "Bolivia",     "conds": [0, 0, 0], "res": 0 },
+    { "caso": "Mexico",      "conds": [1, 1, 1], "res": 1 },
+    { "caso": "Paraguay",    "conds": [0, 0, 1], "res": 0 },
+    { "caso": "Uruguay",     "conds": [1, 1, 1], "res": 1 },
+    { "caso": "Costa_Rica",  "conds": [1, 0, 1], "res": 1 },
+    { "caso": "Honduras",    "conds": [0, 1, 0], "res": 0 },
+    { "caso": "Guatemala",   "conds": [0, 0, 0], "res": 0 },
+    { "caso": "Panama",      "conds": [1, 1, 0], "res": 1 }
+  ]
+}

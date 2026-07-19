@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentação Técnica — QCAFlow</title>
+<style>
+  :root {
+    --navy:#1E2A3A; --teal:#048A81; --slate:#2E4057;
+    --light:#EAF4F4; --border:#C5D8D4; --font:'Arial',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);font-size:14px;color:#222;background:#F7F9F8;line-height:1.7;}
+
+  /* PRINT */
+  @media print {
+    body{background:#fff;font-size:12px;}
+    .no-print{display:none!important;}
+    .page-break{page-break-before:always;}
+    nav{display:none;}
+  }
+
+  /* LAYOUT */
+  nav{background:var(--navy);color:#fff;padding:0;position:sticky;top:0;z-index:100;display:flex;flex-wrap:wrap;}
+  nav a{color:rgba(255,255,255,.8);text-decoration:none;padding:10px 14px;font-size:12px;display:block;}
+  nav a:hover{background:var(--teal);color:#fff;}
+  .container{max-width:960px;margin:0 auto;padding:32px 24px;}
+
+  /* COVER */
+  .cover{background:var(--navy);color:#fff;padding:48px 40px;margin-bottom:32px;border-radius:8px;}
+  .cover .tag{display:inline-block;background:var(--teal);padding:3px 10px;border-radius:10px;font-size:11px;font-weight:bold;margin-bottom:12px;letter-spacing:.5px;}
+  .cover h1{font-size:26px;font-weight:bold;margin-bottom:8px;line-height:1.3;}
+  .cover .subtitle{font-size:15px;opacity:.8;margin-bottom:20px;}
+  .cover .meta{font-size:12px;opacity:.65;display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:500px;}
+
+  /* HEADINGS */
+  h2{font-size:18px;color:var(--navy);border-bottom:3px solid var(--teal);padding-bottom:6px;margin:32px 0 16px;}
+  h3{font-size:15px;color:var(--slate);margin:20px 0 10px;}
+  h4{font-size:13px;color:var(--teal);margin:14px 0 6px;font-weight:bold;}
+  p{margin-bottom:12px;}
+
+  /* SECTIONS */
+  .sec{background:#fff;border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:20px;}
+  .sec .sec-tag{display:inline-block;background:var(--light);color:var(--teal);padding:2px 9px;border-radius:8px;font-size:11px;font-weight:bold;margin-bottom:12px;}
+
+  /* CODE */
+  pre{background:#1E2A3A;color:#A8D8D4;padding:16px;border-radius:6px;overflow-x:auto;font-family:'Courier New',monospace;font-size:12px;line-height:1.6;margin:12px 0;}
+  code{background:#E8F5F4;color:var(--teal);padding:1px 5px;border-radius:3px;font-family:'Courier New',monospace;font-size:12px;}
+
+  /* TABLES */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+  th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;}
+  td{padding:7px 10px;border-bottom:1px solid var(--border);}
+  tr:nth-child(even) td{background:#F4FAFA;}
+
+  /* DIAGRAM */
+  .diagram{background:var(--light);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:'Courier New',monospace;font-size:12px;color:var(--navy);line-height:2;margin:14px 0;}
+  .diagram .arrow{color:var(--teal);font-size:14px;}
+
+  /* ALERTS */
+  .alert{padding:12px 16px;border-radius:6px;margin:14px 0;font-size:13px;}
+  .alert-info{background:#E8F5F4;border-left:4px solid var(--teal);}
+  .alert-warn{background:#FEF9E7;border-left:4px solid #D4A017;}
+
+  /* VERSION BADGE */
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:bold;}
+  .badge-new{background:#D5F5E3;color:#1A7A42;}
+  .badge-upd{background:#FEF9E7;color:#7D6608;}
+
+  ul,ol{margin:8px 0 12px 20px;}
+  li{margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+<nav class="no-print">
+  <a href="#arquitetura">Arquitetura</a>
+  <a href="#dados">Modelo de Dados</a>
+  <a href="#algoritmos">Algoritmos</a>
+  <a href="#funcoes">Funções</a>
+  <a href="#formatos">Formatos de Arquivo</a>
+  <a href="#interface">Interface</a>
+  <a href="#deploy">Implantação</a>
+  <a href="#changelog">Changelog</a>
+  <a href="#" onclick="window.print();return false;" style="margin-left:auto;background:var(--teal);">🖨 Imprimir</a>
+</nav>
+
+<div class="container">
+
+  <div class="cover">
+    <div class="tag">DOCUMENTAÇÃO TÉCNICA</div>
+    <h1>QCAFlow — v5.0</h1>
+    <div class="subtitle">Ferramenta Web para Análise Qualitativa Comparativa por Conjuntos Fuzzy</div>
+    <div class="meta">
+      <span><strong>Versão:</strong> 5.0</span>
+      <span><strong>Formato:</strong> HTML5 + JavaScript (single-file)</span>
+      <span><strong>Plataforma:</strong> Navegador Web (100% offline)</span>
+      <span><strong>Licença:</strong> Uso Acadêmico / MIT License</span>
+      <span><strong>Dependências:</strong> SheetJS 0.18.5 embutido no HTML (sem CDN)</span>
+      <span><strong>Compatibilidade:</strong> Chrome 90+, Firefox 88+, Edge 90+, Safari 14+</span>
+    </div>
+  </div>
+
+  <!-- ===================== 1. ARQUITETURA ===================== -->
+  <h2 id="arquitetura">1. Arquitetura do Sistema</h2>
+
+  <div class="sec">
+    <div class="sec-tag">VISÃO GERAL</div>
+    <p>A ferramenta é implementada como um único arquivo HTML5 (<em>single-page application</em>). A partir da v4.1, a biblioteca SheetJS (usada apenas para importar Excel .xlsx) é <strong>embutida no próprio arquivo</strong>, e na v5.0 a lógica de calibração, necessidade, tabela verdade e dashboard foram estendidas para suportar calibração linear, contradições de caso e negação do desfecho. A ferramenta funciona <strong>100% offline</strong>, residindo toda a lógica em JavaScript puro (ES6+) e persistindo os dados via <code>localStorage</code>.</p>
+
+    <div class="diagram">
+┌──────────────────────────────────────────────────────────────┐
+│                   QCAFlow.html (v5.0)             │
+│                                                               │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────┐       │
+│  │  &lt;style&gt;  │  │  HTML    │  │  &lt;script&gt; │  │  Data  │       │
+│  │  CSS3    │  │ 10 Tabs  │  │  ES6+ JS │  │  State │       │
+│  └──────────┘  └──────────┘  └──────────┘  └────────┘       │
+│  ┌────────────────────────┐          │                        │
+│  │ SheetJS 0.18.5 embutido │          │                        │
+│  └────────────────────────┘          │                        │
+│       ┌──────────────────────────────┼───────────────────┐   │
+│       │                              │                   │   │
+│  localStorage    Blob URLs     File API    (tudo offline)│   │
+│  (Histórico)  (PDF/Word/MD)  (CSV/XLSX/JSON/XML)         │   │
+└──────────────────────────────────────────────────────────────┘
+    </div>
+
+    <h3>Camadas da Aplicação</h3>
+    <table>
+      <tr><th>Camada</th><th>Tecnologia</th><th>Responsabilidade</th></tr>
+      <tr><td>Apresentação</td><td>HTML5 + CSS3</td><td>10 abas (tabs), tabelas, cards KPI, gráfico SVG, painel de nomes, quadro de configurações</td></tr>
+      <tr><td>Lógica de Negócio</td><td>JavaScript ES6+</td><td>Calibração, cálculos fsQCA fuzzy (consistência/PRI/RoN), Quine-McCluskey, três soluções (Análise-Padrão), ~Y, robustez, interpretação</td></tr>
+      <tr><td>Estado</td><td>Variáveis JS em memória</td><td><code>dados[]</code>, <code>truthTable[]</code>, <code>numConds</code>, <code>limiar</code>, <code>limiarPRI</code>, <code>limiarFreq</code>, <code>dirExpect[]</code>, <code>calibInfo</code>, <code>solutions</code></td></tr>
+      <tr><td>Persistência</td><td>localStorage</td><td>Histórico de análises — chave <code>qcaflow_historico</code> (máx. 100 sessões)</td></tr>
+      <tr><td>I/O</td><td>File API + Blob + SheetJS (embutido)</td><td>Import CSV/Excel/JSON/XML; Export CSV/.qcaflow/HTML/PDF/Word/Markdown (com registro de auditoria)</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-tag">FLUXO DE DADOS</div>
+    <div class="diagram">
+📊 Dados (entrada do usuário)
+    │
+    ├──(opcional)─→ 🎯 Calibração: applyCalibration()  → escores fuzzy [0,1]
+    │
+    ▼
+computeTruthTable()  ──→  truthTable[]   (2ᴺ linhas; consist, PRI, ~Y, freq)
+    │
+    ├──→ renderTruthTable()     Tab: 🔢 Tabela Verdade
+    ├──→ renderAnalise()        Tab: 📈 Análise
+    │       ├── métricas gerais
+    │       ├── necessidade (consist + RoN)
+    │       └── configurações suficientes (consist, PRI, cob. única)
+    ├──→ computeSolutions()     complexa / parcimoniosa / intermediária
+    ├──→ renderSolucao()        Tab: 🧮 Solução
+    │       ├── consistência global
+    │       ├── três soluções (Quine-McCluskey + core/periferia)
+    │       ├── quadro de configurações (notação Fiss ●/⊗)
+    │       ├── ausência do desfecho (~Y)
+    │       ├── testes de robustez
+    │       ├── equifinalidade
+    │       ├── casos típicos/desviantes
+    │       └── gráfico XY (SVG)
+    ├──→ renderInterpretacao()  Tab: 📝 Interpretação
+    │       └── narrativa (método/calibração → necessidade →
+    │           tabela verdade → soluções → assimetria/robustez)
+    └──→ renderDashboard()      Tab: 📉 Dashboard
+            ├── KPI cards
+            ├── tabela resumo
+            └── soluções intermediária + parcimoniosa
+    </div>
+  </div>
+
+  <!-- ===================== 2. MODELO DE DADOS ===================== -->
+  <h2 id="dados">2. Modelo de Dados</h2>
+
+  <div class="sec">
+    <div class="sec-tag">ESTRUTURAS JAVASCRIPT</div>
+
+    <h3>2.1 Estado Global</h3>
+    <pre>
+// Variáveis de estado (escopo global do módulo)
+let numConds   = 3;                         // Número de condições (3–8)
+let condLabels = ['C1', 'C2', 'C3'];        // Rótulos das condições
+let resLabel   = 'Resultado';               // Rótulo do resultado
+let dados      = [];                        // Array de casos
+let truthTable = [];                        // Tabela verdade computada
+let limiar     = 0.75;                      // Limiar de consistência
+let limiarPRI  = 0.70;                      // Limiar PRI (alerta)          [v4.1]
+let limiarFreq = 1;                         // Limiar de frequência         [v4.1]
+let limiarProp = 0.80;                      // Limiar de proporção (contradições) [v5.0]
+let dirExpect  = ['','',''];                // Expectativas direcionais     [v4.1]
+                                            //  '' | '1' presença | '0' ausência
+let rawBackup  = null;                      // Dados brutos pré-calibração  [v4.1]
+let calibInfo  = { applied:false, type:'logistic', anchors:{}, adjusted:[] }; // Calibração [v5.0]
+let solutions  = { complex:[], parsimonious:[], intermediate:[] }; //       [v4.1]
+    </pre>
+
+    <h3>2.2 Estrutura de um Caso (<code>dados[]</code>)</h3>
+    <pre>
+// Cada elemento de dados[]
+{
+  caso:  string,        // Identificador do caso (ex: "Brasil")
+  conds: number[],      // Valores das condições [0..1], length = numConds
+  res:   number         // Valor do resultado [0..1]
+}
+    </pre>
+
+    <h3>2.3 Estrutura da Tabela Verdade (<code>truthTable[]</code>)</h3>
+    <pre>
+// Cada linha computada por computeTruthTable() — métricas fuzzy sobre TODOS os casos
+{
+  combo:          string,     // Combinação binária ex: "110"
+  bits:           number[],   // Array de bits ex: [1, 1, 0]
+  nCasos:         number,     // N de casos atribuídos (pertencimento à config > 0,5)
+  nSuc:           number,     // N de casos atribuídos com resultado > 0,5
+  consist:        number|null,// Σmin(Mᵢ,Yᵢ) / ΣMᵢ   (M = pertencimento à config)   [v4.1 fuzzy]
+  pri:            number|null,// (Σmin(M,Y) − Σmin(M,Y,1−Y)) / (ΣM − Σmin(M,Y,1−Y)) [v4.1]
+  priAlert:       boolean,    // PRI < limiarPRI ou (consist − PRI) > 0,25 em linha suf. [v4.1]
+  cobBruta:       number|null,// Σmin(M,Y) / ΣY
+  consistNeg:     number|null,// Consistência para ~Y = Σmin(M,1−Y) / ΣM            [v4.1]
+  resTVNeg:       1|0|null,   // Suficiência para a ausência do desfecho            [v4.1]
+  belowFreq:      boolean,    // nCasos > 0 porém < limiarFreq (vira remainder)     [v4.1]
+  obsConsistPos:  number,     // Consistência individual para Y (Rubinson, 2013)    [v5.0]
+  obsConsistNeg:  number,     // Consistência individual para ~Y (Rubinson, 2013)   [v5.0]
+  resTVAuto:      'S'|'I'|'C'|null, // Resultado automático: Suficiente/Insuficiente/Contradição [v5.0]
+  resTVManual:    'S'|'I'|'C'|null, // Override manual do usuário                       [v5.0]
+  resTV:          '1'|'0'|'C'|null, // Resultado de suficiência final (inclui contradição)[v5.0]
+  tipo:           string,     // 'Suficiente'|'Insuficiente'|'Contradição'|...      [v5.0]
+  matching:       object[]    // Referência aos casos atribuídos
+}
+    </pre>
+
+    <div class="alert alert-info">
+      <strong>Compatibilidade fuzzy ↔ crisp:</strong> as fórmulas de pertencimento mínimo <code>Σmin(·)</code> reduzem-se exatamente às contagens clássicas quando os dados são dicotômicos (0/1), preservando os resultados das versões anteriores.
+    </div>
+
+    <h3>2.4 Estrutura das Soluções (<code>solutions</code>)</h3>
+    <pre>
+// Preenchida por computeSolutions() — Análise-Padrão (Standard Analysis)
+{
+  complex:       Implicant[],  // sem remainders lógicos
+  parsimonious:  Implicant[],  // todos os remainders que simplificam
+  intermediate:  Implicant[],  // apenas contrafactuais fáceis (dirExpect)
+  easyRems:      TruthRow[]     // remainders incorporados à intermediária
+}
+// Cada Implicant da intermediária recebe term.core[]: boolean por condição
+// (true = nuclear, presente também na parcimoniosa; false = periférica — Fiss, 2011)
+    </pre>
+
+    <h3>2.5 Calibração (<code>calibInfo</code>) <span class="badge badge-new">v5.0</span></h3>
+    <pre>
+{
+  applied:  boolean,     // true após applyCalibration()
+  type:     'logistic'|'linear', // Função de transição utilizada (logística vs linear por partes) [v5.0]
+  when:     string,      // ISO 8601 da aplicação
+  anchors:  {            // por variável: '0'..'N-1' para condições, 'res' para desfecho
+    "0": { on:true, full:9, cross:6, non:1.35 },  // pleno / cruzamento / não-pertencimento
+    ...
+  },
+  adjusted: string[]     // escores 0,500 → 0,501 registrados ("caso · variável")
+}
+    </pre>
+
+    <h3>2.6 Sessão do Histórico (localStorage)</h3>
+    <pre>
+// Chave: 'qcaflow_historico'  |  Valor: JSON.stringify(array)
+{
+  id:        number,    // Date.now() — identificador único
+  name:      string,    // Nome dado pelo usuário
+  timestamp: string,    // ISO 8601
+  numConds:  number,
+  condLabels: string[],
+  resLabel:  string,
+  dados:     object[],  // Cópia profunda dos dados (calibrados, se aplicável)
+  limiar:    number,
+  limiarPRI: number,    // [v4.1]
+  limiarFreq:number,    // [v4.1]
+  limiarProp:number,    // [v5.0]
+  dirExpect: string[],  // [v4.1]
+  calib:     object,    // Cópia de calibInfo [v5.0]
+  summary: {
+    totalCasos:  number,
+    r1:          number,
+    suficientes: number,
+    caminhos:    number,
+    solucao:     string  // Expressão booleana da solução intermediária [v4.1]
+  }
+}
+    </pre>
+  </div>
+
+  <!-- ===================== 3. ALGORITMOS ===================== -->
+  <h2 id="algoritmos">3. Algoritmos Implementados</h2>
+
+  <div class="sec">
+    <div class="sec-tag">ALGORITMO 1</div>
+    <h3>3.1 Geração da Tabela Verdade</h3>
+    <p>Para <em>N</em> condições, são geradas todas as <strong>2ᴺ</strong> combinações binárias possíveis em ordem decrescente (de 111...1 a 000...0).</p>
+    <pre>
+function generateCombinations(n) {
+  const total = Math.pow(2, n);
+  const combos = [];
+  for (let i = total - 1; i >= 0; i--) {
+    const bits = [];
+    for (let b = n - 1; b >= 0; b--) bits.push((i >> b) & 1);
+    combos.push(bits);
+  }
+  return combos;
+}
+    </pre>
+    <p><strong>Complexidade:</strong> O(2ᴺ × M), onde M é o número de casos. Para N=5: 32 combinações; para N=8: 256.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-tag">ALGORITMO 2 <span class="badge badge-new">v4.1</span></div>
+    <h3>3.2 Calibração — Método Direto (Ragin, 2008)</h3>
+    <p>Transforma valores brutos em escores de pertencimento fuzzy [0,1] a partir de três âncoras qualitativas: pertencimento pleno (≈0,95), ponto de cruzamento (0,50) e não-pertencimento pleno (≈0,05), via transformação log-odds.</p>
+    <pre>
+function calibValue(x, full, cross, non) {
+  const lo = x >= cross ? 3*(x-cross)/(full-cross)   // ramo superior
+                        : 3*(x-cross)/(cross-non);   // ramo inferior
+  const m = 1 / (1 + Math.exp(-lo));                 // logística → [0,1]
+  return Math.round(m*1000)/1000;
+}
+// Âncoras sugeridas automaticamente pelos percentis 95/50/5 (suggestAnchors);
+// escores exatamente = 0,500 são ajustados para 0,501 e registrados em calibInfo.adjusted.
+// undoCalibration() restaura rawBackup (dados brutos pré-calibração).
+    </pre>
+    <div class="alert alert-warn">
+      <strong>Boa prática:</strong> as âncoras devem ser justificadas por teoria ou conhecimento substantivo, não apenas pela distribuição dos dados.
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-tag">ALGORITMO 3</div>
+    <h3>3.3 Consistência, PRI e Cobertura (fuzzy)</h3>
+    <p>As métricas usam somas de pertencimento mínimo sobre <strong>todos</strong> os casos (M = pertencimento do caso à configuração/termo; Y = pertencimento ao desfecho). Reduzem-se às contagens clássicas com dados crisp.</p>
+    <table>
+      <tr><th>Métrica</th><th>Fórmula</th><th>Interpretação</th></tr>
+      <tr><td>Consistência de Suficiência</td><td>Σ min(M, Y) / Σ M</td><td>Grau em que M ⊆ Y</td></tr>
+      <tr><td>Consistência PRI <span class="badge badge-new">v4.1</span></td><td>(Σmin(M,Y) − Σmin(M,Y,1−Y)) / (ΣM − Σmin(M,Y,1−Y))</td><td>Reduz inconsistência por pertencimento simultâneo a Y e ~Y</td></tr>
+      <tr><td>Cobertura Bruta</td><td>Σ min(M, Y) / Σ Y</td><td>Fração do desfecho explicada pela config.</td></tr>
+      <tr><td>Cobertura Única</td><td>cob(solução) − cob(solução sem o termo)</td><td>Fração explicada exclusivamente por este termo</td></tr>
+    </table>
+    <p>Um <strong>limiar de frequência</strong> (<code>limiarFreq</code>) roteia linhas com poucos casos aos <em>remainders</em>; o % de casos retidos é exibido. O <strong>alerta de PRI</strong> dispara em linhas suficientes com PRI &lt; limiarPRI ou distância consist−PRI &gt; 0,25.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-tag">ALGORITMO 4</div>
+    <h3>3.4 Minimização Booleana — Quine-McCluskey e as Três Soluções</h3>
+    <p>O algoritmo combina iterativamente pares de implicantes que diferem em exatamente uma posição, gerando termos com "don't care". A seleção de cobertura (implicantes primos essenciais + guloso) garante que apenas as linhas <strong>observadas</strong> suficientes precisem ser cobertas.</p>
+    <pre>
+// Estrutura interna de um implicante
+{
+  bits:   number[],  // Valores das condições (0 ou 1)
+  dc:     number[],  // Máscara de don't-care (1 = irrelevante)
+  covers: string[],  // Mintermos cobertos ex: ["110", "111"]
+  core:   boolean[]  // (só na intermediária) nuclear × periférica  [v4.1]
+}
+    </pre>
+    <p>A <strong>Análise-Padrão</strong> (<code>computeSolutions</code>) deriva três soluções [Ragin, 2008]:</p>
+    <table>
+      <tr><th>Solução</th><th>Remainders usados</th><th>Uso</th></tr>
+      <tr><td>Complexa</td><td>nenhum</td><td>conservadora — apenas evidência observada</td></tr>
+      <tr><td>Parcimoniosa</td><td>todos que simplificam</td><td>identifica condições <strong>nucleares</strong></td></tr>
+      <tr><td>Intermediária</td><td>só contrafactuais fáceis (<code>dirExpect</code>)</td><td><strong>padrão de relato</strong></td></tr>
+    </table>
+    <p>Núcleo × periferia (Fiss, 2011): um literal da intermediária é <strong>nuclear</strong> quando pertence a um termo parcimonioso nele aninhado; caso contrário, é <strong>periférico</strong>.</p>
+    <p><strong>Complexidade:</strong> converge em 2–3 iterações para N ≤ 8 na prática.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-tag">ALGORITMO 5</div>
+    <h3>3.5 Análise de Necessidade com RoN</h3>
+    <p>Para cada condição Cᵢ e sua negação ~Cᵢ são calculadas consistência e cobertura de necessidade (fuzzy) e a <strong>Relevance of Necessity</strong> (RoN; Schneider &amp; Wagemann, 2012), que distingue necessidade substantiva de necessidade trivial (condição quase constante na amostra).</p>
+    <pre>
+// Fuzzy, para X = pertencimento à condição (ou 1−X para a negação):
+consistNec = Σ min(X, Y) / Σ Y;
+cobNec     = Σ min(X, Y) / Σ X;
+RoN        = Σ (1 − X) / Σ (1 − min(X, Y));   // ~1 = relevante; baixo = trivial
+isNec      = consistNec >= 0.90;
+trivial    = isNec && RoN < 0.5;              // sinaliza necessidade trivial
+    </pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-tag">ALGORITMO 6 <span class="badge badge-new">v4.1</span></div>
+    <h3>3.6 Ausência do Desfecho (~Y) e Testes de Robustez</h3>
+    <p><strong>Assimetria causal:</strong> <code>computeNegSolution()</code> deriva a solução conservadora de suficiência para a ausência do desfecho (~Y), com os mesmos limiares, e sinaliza qualquer linha codificada como suficiente para Y e ~Y simultaneamente.</p>
+    <p><strong>Robustez</strong> (<code>runRobustness()</code>): reexecuta a análise (a) variando o limiar de consistência em 0,70–0,90 e (b), se houver calibração aplicada, deslocando o ponto de cruzamento das âncoras em ±5% do intervalo pleno–não, reportando se a solução intermediária permanece idêntica.</p>
+  </div>
+
+  <!-- ===================== 4. FUNÇÕES ===================== -->
+  <h2 id="funcoes">4. Referência de Funções</h2>
+
+  <div class="sec">
+    <div class="sec-tag">API INTERNA</div>
+    <table>
+      <tr><th>Função</th><th>Parâmetros</th><th>Retorno</th><th>Descrição</th></tr>
+      <tr><td><code>recalcAll()</code></td><td>—</td><td>void</td><td>Cadeia principal: recalcula estatísticas → tabela verdade → todas as abas</td></tr>
+      <tr><td><code>computeTruthTable()</code></td><td>—</td><td>void</td><td>Preenche <code>truthTable[]</code> com 2ᴺ linhas calculadas</td></tr>
+      <tr><td><code>generateCombinations(n)</code></td><td>n: number</td><td>number[][]</td><td>Gera todas as 2ᴺ combinações binárias</td></tr>
+      <tr><td><code>quineMinimize(sufRows)</code></td><td>sufRows: TruthRow[]</td><td>Implicant[]</td><td>Minimização booleana de Quine-McCluskey para N condições</td></tr>
+      <tr><td><code>selectCover(pis, req)</code></td><td>Implicant[], TruthRow[]</td><td>Implicant[]</td><td>Seleção de cobertura: primos essenciais + guloso <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>computeSolutions()</code></td><td>—</td><td>object</td><td>Deriva soluções complexa/parcimoniosa/intermediária + core/periferia <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>solutionMetrics(terms, negate)</code></td><td>Implicant[], boolean</td><td>object</td><td>Consistência/cobertura totais e por termo (fuzzy); negate → ~Y <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>necessityAnalysis(negate)</code></td><td>negate: boolean</td><td>object[]</td><td>Consistência, cobertura, RoN e diagnóstico por condição e negação para Y ou ~Y <span class="badge badge-new">v5.0</span></td></tr>
+      <tr><td><code>calibValue(x, full, cross, non, type)</code></td><td>number ×4, type: string</td><td>number</td><td>Calibração log-odds ou linear de um valor (método direto) <span class="badge badge-new">v5.0</span></td></tr>
+      <tr><td><code>suggestAnchors()</code></td><td>—</td><td>void</td><td>Preenche âncoras pelos percentis 95/50/5 <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>applyCalibration()</code> / <code>undoCalibration()</code></td><td>—</td><td>void</td><td>Aplica/desfaz calibração; ajusta escores 0,500→0,501 <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>renderCalibracao()</code></td><td>—</td><td>void</td><td>Renderiza a aba Calibração (âncoras, estatísticas, status) <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>renderNotation()</code> / <code>exportNotationWord()</code></td><td>—</td><td>void</td><td>Quadro de configurações (notação Fiss ●/⊗) e export Word <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>computeNegSolution()</code> / <code>renderNegY()</code></td><td>—</td><td>object / void</td><td>Suficiência para a ausência do desfecho (~Y) <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>runRobustness()</code></td><td>—</td><td>void</td><td>Testes de robustez (limiar e âncoras de calibração) <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>auditLines()</code> / <code>auditTableHTML()</code> / <code>auditMD()</code></td><td>—</td><td>array / string</td><td>Registro de auditoria da análise para os exports <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td><code>fmtTermHTML(term)</code></td><td>term: Implicant</td><td>string</td><td>Formata implicante como HTML com cores</td></tr>
+      <tr><td><code>fmtTermText(term)</code></td><td>term: Implicant</td><td>string</td><td>Formata implicante como texto plano (para exportação)</td></tr>
+      <tr><td><code>renderLabelsPanel()</code></td><td>—</td><td>void</td><td>Renderiza painel de nomes de variáveis acima da tabela de dados <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>renderDadosTable()</code></td><td>—</td><td>void</td><td>Regenera a tabela de dados com N colunas dinâmicas; chama renderLabelsPanel()</td></tr>
+      <tr><td><code>renderTruthTable()</code></td><td>—</td><td>void</td><td>Renderiza as 2ᴺ linhas da tabela verdade</td></tr>
+      <tr><td><code>renderAnalise()</code></td><td>—</td><td>void</td><td>Renderiza métricas, necessidade e configurações suficientes</td></tr>
+      <tr><td><code>renderSolucao()</code></td><td>—</td><td>void</td><td>Renderiza consistência, suficiência, parcimônia, equifinalidade, casos, XY</td></tr>
+      <tr><td><code>renderInterpretacao()</code></td><td>—</td><td>void</td><td>Gera narrativa acadêmica automática: suficiência, necessidade, síntese <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>copyInterpretacao()</code></td><td>—</td><td>void</td><td>Copia texto da aba Interpretação para a área de transferência <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>renderDashboard()</code></td><td>—</td><td>void</td><td>Renderiza KPI cards e tabela resumo</td></tr>
+      <tr><td><code>renderXYPlot()</code></td><td>—</td><td>void</td><td>Gera gráfico SVG de Cobertura × Consistência</td></tr>
+      <tr><td><code>renderHistorico()</code></td><td>—</td><td>void</td><td>Lista sessões salvas do localStorage</td></tr>
+      <tr><td><code>exportProject()</code></td><td>—</td><td>void</td><td>Exporta projeto como arquivo .qcaflow (JSON, com auditoria)</td></tr>
+      <tr><td><code>importProject(event)</code></td><td>FileEvent</td><td>void</td><td>Importa projeto .qcaflow e restaura estado completo (incl. calibração)</td></tr>
+      <tr><td><code>exportSelfContained()</code></td><td>—</td><td>void</td><td>Exporta HTML auto-contido com dados embutidos</td></tr>
+      <tr><td><code>exportCSV()</code></td><td>—</td><td>void</td><td>Exporta tabela de dados como CSV UTF-8</td></tr>
+      <tr><td><code>importCSV(event)</code></td><td>FileEvent</td><td>void</td><td>Importa CSV com detecção automática de separador e N condições</td></tr>
+      <tr><td><code>importExcel(event)</code></td><td>FileEvent</td><td>void</td><td>Importa planilha .xlsx via SheetJS; lê primeira aba <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>importDataJSON(event)</code></td><td>FileEvent</td><td>void</td><td>Importa JSON estruturado {condLabels, resLabel, dados[]} <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>importXML(event)</code></td><td>FileEvent</td><td>void</td><td>Importa XML formato fsqca com &lt;condicoes&gt; e &lt;caso nome="..."&gt; <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>exportCompletePDF()</code></td><td>—</td><td>void</td><td>Exporta análise completa em PDF via window.print() <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>exportCompleteWord()</code></td><td>—</td><td>void</td><td>Exporta análise completa em .doc (Blob HTML application/msword) <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>exportCompleteMarkdown()</code></td><td>—</td><td>void</td><td>Exporta análise completa em Markdown (.md) <span class="badge badge-new">v4</span></td></tr>
+      <tr><td><code>promptSaveHistory()</code></td><td>—</td><td>void</td><td>Solicita nome e salva análise no histórico local</td></tr>
+      <tr><td><code>loadSession(id)</code></td><td>id: number</td><td>void</td><td>Restaura sessão pelo ID do timestamp</td></tr>
+      <tr><td><code>deleteSession(id)</code></td><td>id: number</td><td>void</td><td>Remove sessão do localStorage</td></tr>
+      <tr><td><code>getDB()</code></td><td>—</td><td>Session[]</td><td>Lê e parseia o histórico do localStorage</td></tr>
+      <tr><td><code>saveDB(db)</code></td><td>db: Session[]</td><td>void</td><td>Serializa e salva o histórico no localStorage</td></tr>
+      <tr><td><code>changeNumConds()</code></td><td>—</td><td>void</td><td>Ajusta N condições e recria tabela de dados dinamicamente</td></tr>
+      <tr><td><code>updateAllHeaders()</code></td><td>—</td><td>void</td><td>Sincroniza rótulos das condições em todas as tabelas</td></tr>
+    </table>
+  </div>
+
+  <!-- ===================== 5. FORMATOS DE ARQUIVO ===================== -->
+  <h2 id="formatos">5. Formatos de Arquivo</h2>
+
+  <div class="sec">
+    <div class="sec-tag">ESPECIFICAÇÃO</div>
+
+    <h3>5.1 Arquivo de Projeto (.qcaflow)</h3>
+    <p>Formato JSON estruturado para compartilhamento completo de análises entre usuários.</p>
+    <pre>
+{
+  "meta": {
+    "tool":    "QCAFlow",
+    "version": "5.0",
+    "created": "2026-07-19T12:00:00.000Z",
+    "format":  "qcaflow-project-v1"
+  },
+  "settings": {
+    "numConds":   3,
+    "condLabels": ["Educacao_Alta", "Renda_Media", "Democracia_Estavel"],
+    "resLabel":   "Resultado",
+    "limiar":     0.75,
+    "limiarPRI":  0.70,          // [v4.1]
+    "limiarFreq": 1,             // [v4.1]
+    "limiarProp": 0.80,          // [v5.0]
+    "dirExpect":  ["", "", ""]   // [v4.1] expectativas direcionais
+  },
+  "calib":   { /* calibInfo — âncoras e ajustes */ },  // [v5.0]
+  "audit":   [ /* registro de auditoria [param, valor] */ ], // [v5.0]
+  "dados": [
+    { "caso": "Brasil", "conds": [1, 1, 0], "res": 1 },
+    ...
+  ],
+  "history": [ /* array de sessões salvas */ ]
+}
+    </pre>
+
+    <h3>5.2 Formato CSV de Importação</h3>
+    <pre>
+# Cabeçalho obrigatório na 1ª linha (detectado automaticamente):
+Caso,Condição_1,Condição_2,Condição_3,Resultado
+
+# Separadores aceitos: vírgula (,), ponto-e-vírgula (;), tabulação (\t)
+# Valores: 0 ou 1 para crispy; decimal 0.XX para fuzzy
+# Encoding: UTF-8
+
+Brasil,1,1,0,1
+Argentina,0,1,1,0
+    </pre>
+
+    <h3>5.3 Formato JSON de Importação <span class="badge badge-new">v4</span></h3>
+    <pre>
+// Formato nativo da ferramenta para troca de dados estruturados
+{
+  "condLabels": ["Educacao_Alta", "Renda_Media", "Democracia_Estavel"],
+  "resLabel":   "Resultado",
+  "dados": [
+    { "caso": "Brasil",    "conds": [1, 1, 1], "res": 1 },
+    { "caso": "Argentina", "conds": [1, 1, 0], "res": 1 },
+    ...
+  ]
+}
+// Importado por: importDataJSON(event)
+    </pre>
+
+    <h3>5.4 Formato XML de Importação <span class="badge badge-new">v4</span></h3>
+    <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fsqca&gt;
+  &lt;condicoes&gt;
+    &lt;cond&gt;Educacao_Alta&lt;/cond&gt;
+    &lt;cond&gt;Renda_Media&lt;/cond&gt;
+    &lt;cond&gt;Democracia_Estavel&lt;/cond&gt;
+  &lt;/condicoes&gt;
+  &lt;resultado&gt;Resultado&lt;/resultado&gt;
+  &lt;caso nome="Brasil"&gt;
+    &lt;cond&gt;1&lt;/cond&gt;&lt;cond&gt;1&lt;/cond&gt;&lt;cond&gt;1&lt;/cond&gt;
+    &lt;resultado&gt;1&lt;/resultado&gt;
+  &lt;/caso&gt;
+  ...
+&lt;/fsqca&gt;
+// Importado por: importXML(event) via DOMParser
+    </pre>
+
+    <h3>5.5 Formato Excel (.xlsx)</h3>
+    <p>Importado via <code>importExcel(event)</code> usando SheetJS. A ferramenta lê a <strong>primeira aba</strong> da planilha. A primeira linha deve conter os cabeçalhos na ordem: <code>Caso, Cond_1, ..., Cond_N, Resultado</code>. As colunas são detectadas automaticamente por posição.</p>
+    <div class="alert alert-info">
+      <strong>v4.1:</strong> a biblioteca SheetJS é <strong>embutida no HTML</strong> — a importação Excel funciona 100% offline, sem qualquer dependência de CDN ou conexão à internet.
+    </div>
+
+    <h3>5.6 HTML Auto-contido</h3>
+    <p>Exportado via <code>exportSelfContained()</code>. Injeta o estado atual diretamente no bloco <code>init()</code> do HTML, substituindo os dados de amostra pelos dados reais. O arquivo resultante é completamente funcional sem qualquer dependência externa.</p>
+
+    <h3>5.7 Histórico JSON</h3>
+    <p>Exportado via <em>Exportar Histórico (JSON)</em>. Contém array de todas as sessões salvas. Pode ser importado em outra instância da ferramenta para transferência do histórico entre dispositivos.</p>
+  </div>
+
+  <!-- ===================== 6. INTERFACE ===================== -->
+  <h2 id="interface">6. Estrutura da Interface</h2>
+
+  <div class="sec">
+    <div class="sec-tag">10 ABAS</div>
+    <table>
+      <tr><th>Aba</th><th>ID HTML</th><th>Função de Renderização</th><th>Conteúdo</th></tr>
+      <tr><td>📋 Instruções</td><td>tab-instrucoes</td><td>Estático</td><td>Guia de 6 passos, formatos de importação, notas metodológicas sobre v5.0</td></tr>
+      <tr><td>📊 Dados</td><td>tab-dados</td><td>renderDadosTable()</td><td>Painel de nomes + tabela editável N+2 colunas; importação CSV/Excel/JSON/XML; estatísticas rápidas</td></tr>
+      <tr><td>🎯 Calibração <span class="badge badge-new">v5.0</span></td><td>tab-calibracao</td><td>renderCalibracao()</td><td>Método direto (log-odds ou linear por partes), 3 âncoras por variável, aplicar/desfazer</td></tr>
+      <tr><td>🔢 Tabela Verdade <span class="badge badge-new">v5.0</span></td><td>tab-verdade</td><td>renderTruthTable()</td><td>2ᴺ combinações; consistência, PRI; detecção de contradições fuzzy (Rubinson, 2013); override manual; casos por linha</td></tr>
+      <tr><td>📈 Análise <span class="badge badge-new">v5.0</span></td><td>tab-analise</td><td>renderAnalise()</td><td>Métricas gerais, necessidade lado a lado para Y e ~Y (consistência, cobertura, RoN), e suficientes</td></tr>
+      <tr><td>🧮 Solução</td><td>tab-solucao</td><td>renderSolucao()</td><td>Consistência, três soluções (exclui contradições), quadro Fiss, ~Y, robustez, equifinalidade, casos, XY</td></tr>
+      <tr><td>📝 Interpretação <span class="badge badge-new">v5.0</span></td><td>tab-interpretacao</td><td>renderInterpretacao()</td><td>Narrativa estendida (tipo de calibração, necessidade Y/~Y, contradições e soluções)</td></tr>
+      <tr><td>📉 Dashboard <span class="badge badge-new">v5.0</span></td><td>tab-dashboard</td><td>renderDashboard()</td><td>KPI cards (incluindo Contradições Fuzzy), tabela resumo com badges, soluções</td></tr>
+      <tr><td>📚 Histórico</td><td>tab-historico</td><td>renderHistorico()</td><td>Cards de sessões, carregar/remover, exportação PDF/Word/Markdown (com auditoria estendida)</td></tr>
+      <tr><td>👤 Contato</td><td>tab-contato</td><td>Estático</td><td>Autoria, instituição, citação e propriedade intelectual</td></tr>
+    </table>
+
+    <h3>Componentes Reutilizáveis</h3>
+    <table>
+      <tr><th>Componente</th><th>Classe CSS</th><th>Uso</th></tr>
+      <tr><td>Painel de Nomes</td><td>.labels-panel / .lbl-chip / .lbl-sep</td><td>Aba Dados — acima da tabela, gerado por renderLabelsPanel()</td></tr>
+      <tr><td>Badge de Status</td><td>.badge-suf / .badge-ins / .badge-sem / .badge-nec</td><td>Tabelas verdade, análise e necessidade</td></tr>
+      <tr><td>KPI Card</td><td>.kpi-card</td><td>Dashboard — indicadores principais</td></tr>
+      <tr><td>Seção de Solução</td><td>.sol-sec / .sol-head / .sol-body</td><td>Aba Solução — 9 sub-seções <span class="badge badge-new">v4.1</span></td></tr>
+      <tr><td>Caixa de Info</td><td>.info-note</td><td>Explicações contextuais em todas as abas</td></tr>
+      <tr><td>Gráfico XY</td><td>#xy-plot (SVG inline)</td><td>Aba Solução — gerado por renderXYPlot()</td></tr>
+    </table>
+  </div>
+
+  <!-- ===================== 7. IMPLANTAÇÃO ===================== -->
+  <h2 id="deploy">7. Implantação e Distribuição</h2>
+
+  <div class="sec">
+    <div class="sec-tag">DEPLOYMENT</div>
+
+    <h3>7.1 Uso Local (recomendado para pesquisa)</h3>
+    <ol>
+      <li>Copiar o arquivo <code>QCAFlow.html</code> para qualquer diretório.</li>
+      <li>Abrir com qualquer navegador moderno (duplo clique ou <em>Abrir com...</em>).</li>
+      <li>Funciona <strong>100% offline</strong> — incluindo a importação de Excel (SheetJS embutido). Nenhuma conexão à internet é necessária.</li>
+      <li>O histórico é salvo automaticamente no localStorage sob a chave <code>qcaflow_historico</code>.</li>
+    </ol>
+
+    <div class="alert alert-warn">
+      <strong>Atenção:</strong> O localStorage é específico por origem (browser + perfil). Para transferir histórico entre computadores, use <em>Exportar Histórico (JSON)</em> na aba Histórico.
+    </div>
+
+    <h3>7.2 Distribuição entre Pesquisadores</h3>
+    <ul>
+      <li><strong>Opção A — Arquivo .qcaflow:</strong> exporte o projeto via <em>Exportar Projeto (.qcaflow)</em> e compartilhe o arquivo. O destinatário importa na sua instância da ferramenta.</li>
+      <li><strong>Opção B — HTML auto-contido:</strong> exporte via <em>Exportar HTML Completo</em>. O arquivo resultante contém os dados embutidos e pode ser aberto diretamente por qualquer pessoa.</li>
+      <li><strong>Opção C — Email/repositório:</strong> anexe o <code>.html</code> ou <code>.qcaflow</code> em e-mail, Google Drive, GitHub, OSF ou Zenodo.</li>
+    </ul>
+
+    <h3>7.3 Hospedagem Web (opcional)</h3>
+    <p>O arquivo pode ser publicado em qualquer servidor HTTP estático (GitHub Pages, Netlify, etc.) simplesmente fazendo upload do <code>.html</code>. Não requer backend, banco de dados ou configuração especial.</p>
+    <pre>
+# Exemplo — GitHub Pages
+git init
+git add QCAFlow.html
+git commit -m "Publicar ferramenta fsQCA"
+git remote add origin https://github.com/usuario/fsqca-tool.git
+git push -u origin main
+# Ativar GitHub Pages em Settings > Pages > Branch: main
+    </pre>
+
+    <h3>7.4 Requisitos de Sistema</h3>
+    <table>
+      <tr><td>Navegador</td><td>Chrome 90, Firefox 88, Edge 90, Safari 14</td><td>Última versão estável</td></tr>
+      <tr><td>Memória</td><td>256 MB RAM disponível</td><td>512 MB+</td></tr>
+      <tr><td>Armazenamento</td><td>5 MB localStorage por origem</td><td>—</td></tr>
+      <tr><td>Tela</td><td>1024×600 px</td><td>1280×800 px+</td></tr>
+      <tr><td>Conexão</td><td>Não necessária — 100% offline, inclusive importação Excel (SheetJS embutido)</td><td>—</td></tr>
+    </table>
+
+    <h3>7.5 Citação e Propriedade Intelectual</h3>
+    <table>
+      <tr><th>Item</th><th>Referência</th></tr>
+      <tr><td>Licença</td><td>MIT License — Copyright © 2026 Leonardo Felipe da Silva Rossini (<code>LICENSE</code>)</td></tr>
+      <tr><td>Citação (máquina)</td><td><code>CITATION.cff</code> — compatível com GitHub, Zenodo e ferramentas APA/BibTeX</td></tr>
+      <tr><td>Citação (APA 7)</td><td>Rossini, L. (2026). <em>QCAFlow</em> [Software]. MIT License. https://doi.org/10.XXXXX</td></tr>
+      <tr><td>Repositório</td><td>https://github.com/[username]/qcaflow</td></tr>
+      <tr><td>DOI Zenodo</td><td>https://doi.org/10.XXXXX/zenodo.XXXXXXX <em>(gerado ao criar release no GitHub)</em></td></tr>
+      <tr><td>DOI JOSS</td><td>https://doi.org/10.XXXXX/joss.XXXXX <em>(gerado após aceite no Journal of Open Source Software)</em></td></tr>
+      <tr><td>Registro INPI</td><td>BR XXXXXXXXXXXXXXX — Lei 9.609/1998 <em>(documento de registro mantido em repositório privado local)</em></td></tr>
+      <tr><td>Artigo de referência</td><td><code>paper.md</code> + <code>paper.bib</code> — submetido ao JOSS</td></tr>
+    </table>
+
+    <div class="alert-info">
+      <strong>Roteiro de publicação:</strong>
+      (1) Criar repositório público no GitHub →
+      (2) Criar release v5.0.0 →
+      (3) Conectar Zenodo (https://zenodo.org) para DOI automático →
+      (4) Submeter ao JOSS (https://joss.theoj.org/papers/new) →
+      (5) Protocolar registro no INPI (https://www.gov.br/inpi).
+      Ver <code>README.md</code> para instruções detalhadas.
+    </div>
+  </div>
+
+  <!-- ===================== 8. CHANGELOG ===================== -->
+  <h2 id="changelog">8. Histórico de Versões</h2>
+
+  <div class="sec">
+    <div class="sec-tag">CHANGELOG</div>
+
+    <h3>v5.0 — Versão Atual <span class="badge badge-new">ATUAL</span></h3>
+    <ul>
+      <li><span class="badge badge-new">NOVO</span> <strong>Calibração Linear por Partes</strong> — alternativa metodológica à transição logística tradicional (Nikou et al., 2024)</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Contradições Fuzzy de Caso</strong> — identificação automática de inconsistências usando consistência individual ($ObsConsist_c$, Rubinson, 2013) com limiar de proporção</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Override Manual de Resultado</strong> — possibilidade de alterar manualmente o resultado na tabela verdade para Suficiente (1), Insuficiente (0) ou Contradição (C)</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Necessidade Lado a Lado ($Y$ e $\sim Y$)</strong> — tabelas separadas para a presença e ausência do desfecho com cálculo de RoN</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Dashboard com KPI de Contradições</strong> — card indicador de contradições e status badges dinâmicos na tabela verdade</li>
+      <li><span class="badge badge-upd">MELHORADO</span> Minimização booleana atualizada para excluir contradições e suporte a expectativas direcionais estendido</li>
+      <li><span class="badge badge-upd">MELHORADO</span> Relatório e auditoria em PDF, Word, Markdown e persistência local totalmente integrados</li>
+    </ul>
+
+    <h3>v4.1 — Versão Anterior</h3>
+    <ul>
+      <li><span class="badge badge-new">NOVO</span> Aba <strong>Calibração</strong> — método direto (log-odds), 3 âncoras por variável, sugestão P95/P50/P5, tratamento do escore 0,500, desfazer</li>
+      <li><span class="badge badge-new">NOVO</span> Consistência <strong>PRI</strong> na tabela verdade e nos suficientes, com alertas</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Três soluções</strong> (Análise-Padrão): complexa, parcimoniosa e intermediária via expectativas direcionais</li>
+      <li><span class="badge badge-new">NOVO</span> Condições <strong>nucleares × periféricas</strong> (Fiss, 2011) e quadro de configurações ●/⊗ exportável</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>RoN</strong> (Relevance of Necessity) na análise de necessidade, com alerta de necessidade trivial</li>
+      <li><span class="badge badge-new">NOVO</span> Análise da <strong>ausência do desfecho (~Y)</strong> — assimetria causal</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Testes de robustez</strong> (variação de limiar e de âncoras de calibração)</li>
+      <li><span class="badge badge-new">NOVO</span> Suporte a <strong>6, 7 e 8 condições</strong>, com aviso de diversidade limitada</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Limiar de frequência</strong> configurável, com % de casos retidos</li>
+      <li><span class="badge badge-new">NOVO</span> <strong>Registro de auditoria</strong> da análise embutido em PDF/Word/Markdown e no projeto .qcaflow</li>
+      <li><span class="badge badge-upd">MELHORADO</span> <strong>SheetJS embutido</strong> no HTML — importação Excel 100% offline (sem CDN)</li>
+      <li><span class="badge badge-upd">CORRIGIDO</span> Núcleo de cálculo agora é <strong>fuzzy</strong> de fato — atribuição por pertencimento &gt; 0,5 e métricas Σmin (antes a tabela verdade usava igualdade exata 0/1)</li>
+      <li><span class="badge badge-upd">MELHORADO</span> Narrativa da Interpretação reescrita no padrão de relato de periódico</li>
+    </ul>
+
+    <h3>v4.0 — Versão Anterior</h3>
+    <ul>
+      <li><span class="badge badge-new">NOVO</span> Aba Interpretação com narrativa acadêmica gerada automaticamente</li>
+      <li><span class="badge badge-new">NOVO</span> Painel de nomes de variáveis acima da tabela de dados (.labels-panel)</li>
+      <li><span class="badge badge-new">NOVO</span> Importação Excel (.xlsx) via SheetJS CDN</li>
+      <li><span class="badge badge-new">NOVO</span> Importação JSON estruturado {condLabels, resLabel, dados[]}</li>
+      <li><span class="badge badge-new">NOVO</span> Importação XML formato &lt;fsqca&gt;&lt;caso nome="..."&gt;</li>
+      <li><span class="badge badge-new">NOVO</span> Exportação da análise completa em PDF (window.print)</li>
+      <li><span class="badge badge-new">NOVO</span> Exportação da análise completa em Word (.doc via Blob)</li>
+      <li><span class="badge badge-new">NOVO</span> Exportação da análise completa em Markdown (.md)</li>
+      <li><span class="badge badge-upd">CORRIGIDO</span> Bug: variável <code>um</code> indefinida em renderSolucao() com 1 caminho</li>
+      <li><span class="badge badge-upd">CORRIGIDO</span> Bug: cobertura total ultrapassava 100% em renderDashboard() (casos duplicados)</li>
+      <li><span class="badge badge-upd">CORRIGIDO</span> Bug: Math.round(0.5) substituído por limiar explícito ≥ 0.5 em casos típicos fuzzy</li>
+      <li><span class="badge badge-upd">CORRIGIDO</span> Bug: aba Interpretação não renderizava ao clicar (faltava chamada em switchTab())</li>
+      <li><span class="badge badge-upd">MELHORADO</span> Chave localStorage: <code>qcaflow_historico</code> → <code>qcaflow_historico</code></li>
+      <li><span class="badge badge-upd">MELHORADO</span> Ordem das abas reorganizada para fluxo natural do pesquisador</li>
+    </ul>
+
+    <h3>v3.0 — Versão Anterior</h3>
+    <ul>
+      <li>Suporte a 3, 4 e 5 condições (dinâmico)</li>
+      <li>Análise de Necessidade com diagnóstico por condição e negação</li>
+      <li>Casos Típicos e Desviantes (inconsistência e cobertura)</li>
+      <li>Gráfico XY SVG — Cobertura × Consistência</li>
+      <li>Histórico em localStorage com 100 sessões</li>
+      <li>Export/Import de Projeto (.fsqca)</li>
+      <li>Export HTML Auto-contido com dados embutidos</li>
+      <li>8 KPI cards no Dashboard</li>
+      <li>Quine-McCluskey generalizado para N condições</li>
+    </ul>
+
+    <h3>v2.x — Versão Anterior</h3>
+    <ul>
+      <li>Suporte a 3 condições fixas</li>
+      <li>Tabela Verdade, Análise e Dashboard</li>
+      <li>Parcimônia e Equifinalidade (básicos)</li>
+      <li>Import/Export CSV</li>
+    </ul>
+
+    <h3>v1.x — Versão Inicial (Excel)</h3>
+    <ul>
+      <li>Planilha Excel com 5 abas e fórmulas COUNTIFS</li>
+      <li>Geração automática da Tabela Verdade para 3 condições</li>
+      <li>Dashboard com KPIs básicos</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:32px;padding:16px;background:var(--light);border-radius:8px;font-size:12px;color:#555;text-align:center;">
+    Documentação Técnica — QCAFlow v5.0 &nbsp;|&nbsp;
+    Gerado em <strong id="gen-date"></strong> &nbsp;|&nbsp;
+    Licença MIT License
+  </div>
+  <script>document.getElementById('gen-date').textContent=new Date().toLocaleDateString('pt-BR');</script>
+
+</div><!-- /container -->
+</body>
+</html>

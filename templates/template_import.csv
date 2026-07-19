@@ -1,0 +1,16 @@
+Caso,Educacao_Alta,Renda_Media,Democracia_Estavel,Resultado
+Brasil,1,1,1,1
+Argentina,1,1,0,1
+Chile,1,0,1,1
+Colombia,0,1,1,0
+Venezuela,0,0,1,0
+Peru,1,0,0,0
+Equador,0,1,0,0
+Bolivia,0,0,0,0
+Mexico,1,1,1,1
+Paraguay,0,0,1,0
+Uruguay,1,1,1,1
+Costa_Rica,1,0,1,1
+Honduras,0,1,0,0
+Guatemala,0,0,0,0
+Panama,1,1,0,1

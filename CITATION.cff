@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+type: software
+title: "QCAFlow"
+abstract: >
+  QCAFlow is a browser-based, zero-installation, fully offline platform for
+  fuzzy-set Qualitative Comparative Analysis (fsQCA). It implements the complete
+  analytical protocol — from data input (CSV, Excel, JSON, XML) and direct
+  method calibration (log-odds, three qualitative anchors) to truth table
+  construction with raw and PRI consistency and a configurable frequency
+  threshold, necessity analysis with Relevance of Necessity (RoN), Boolean
+  minimization via the Quine-McCluskey algorithm with the Standard Analysis
+  solutions (complex, parsimonious, and intermediate via directional
+  expectations), core/peripheral condition identification, a negation-of-outcome
+  analysis for causal asymmetry, robustness checks, equifinality identification,
+  and automatic academic narrative generation — in a single self-contained
+  HTML5 file supporting 3 to 8 conditions.
+authors:
+  - family-names: Rossini
+    given-names: "Leonardo Felipe da Silva"
+    affiliation: "UNOESC — Universidade do Oeste de Santa Catarina"
+    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+version: "5.0"
+date-released: "2026-07-19"
+license: MIT
+repository-code: "https://github.com/[username]/qcaflow"
+url: "https://github.com/[username]/qcaflow"
+doi: "10.XXXXX/joss.XXXXX"
+keywords:
+  - qualitative-comparative-analysis
+  - QCA
+  - fuzzy-sets
+  - Boolean-minimization
+  - Quine-McCluskey
+  - social-science-methods
+  - research-tool
+  - fsQCA
+references:
+  - type: book
+    authors:
+      - family-names: Ragin
+        given-names: "Charles C."
+    title: "Redesigning Social Inquiry: Fuzzy Sets and Beyond"
+    year: 2008
+    publisher: "University of Chicago Press"
+    doi: "10.7208/chicago/9780226702797.001.0001"

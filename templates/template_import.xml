@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsqca>
+  <condicoes>
+    <cond>Educacao_Alta</cond>
+    <cond>Renda_Media</cond>
+    <cond>Democracia_Estavel</cond>
+  </condicoes>
+  <resultado>Resultado</resultado>
+
+  <caso nome="Brasil">
+    <cond>1</cond>
+    <cond>1</cond>
+    <cond>1</cond>
+    <resultado>1</resultado>
+  </caso>
+  <caso nome="Argentina">
+    <cond>1</cond>
+    <cond>1</cond>
+    <cond>0</cond>
+    <resultado>1</resultado>
+  </caso>
+  <caso nome="Chile">
+    <cond>1</cond>
+    <cond>0</cond>
+    <cond>1</cond>
+    <resultado>1</resultado>
+  </caso>
+  <caso nome="Colombia">
+    <cond>0</cond>
+    <cond>1</cond>
+    <cond>1</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Venezuela">
+    <cond>0</cond>
+    <cond>0</cond>
+    <cond>1</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Peru">
+    <cond>1</cond>
+    <cond>0</cond>
+    <cond>0</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Equador">
+    <cond>0</cond>
+    <cond>1</cond>
+    <cond>0</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Bolivia">
+    <cond>0</cond>
+    <cond>0</cond>
+    <cond>0</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Mexico">
+    <cond>1</cond>
+    <cond>1</cond>
+    <cond>1</cond>
+    <resultado>1</resultado>
+  </caso>
+  <caso nome="Paraguay">
+    <cond>0</cond>
+    <cond>0</cond>
+    <cond>1</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Uruguay">
+    <cond>1</cond>
+    <cond>1</cond>
+    <cond>1</cond>
+    <resultado>1</resultado>
+  </caso>
+  <caso nome="Costa_Rica">
+    <cond>1</cond>
+    <cond>0</cond>
+    <cond>1</cond>
+    <resultado>1</resultado>
+  </caso>
+  <caso nome="Honduras">
+    <cond>0</cond>
+    <cond>1</cond>
+    <cond>0</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Guatemala">
+    <cond>0</cond>
+    <cond>0</cond>
+    <cond>0</cond>
+    <resultado>0</resultado>
+  </caso>
+  <caso nome="Panama">
+    <cond>1</cond>
+    <cond>1</cond>
+    <cond>0</cond>
+    <resultado>1</resultado>
+  </caso>
+</fsqca>

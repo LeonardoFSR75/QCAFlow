@@ -1,0 +1,636 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicação Acadêmica — QCAFlow — Produto Técnico — UNOESC</title>
+<style>
+  :root{--navy:#1E2A3A;--teal:#048A81;--slate:#2E4057;--light:#EAF4F4;--border:#C5D8D4;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  /* APA: Times New Roman 12pt, duplo espaçamento, margem 2,54 cm */
+  body{font-family:'Times New Roman',Times,serif;font-size:12pt;color:#000;background:#fff;line-height:2;}
+
+  @media print{
+    body{font-size:12pt;line-height:2;}
+    .no-print{display:none!important;}
+    .page-break{page-break-before:always;margin-top:0;padding-top:0;}
+    nav,header nav{display:none;}
+    .cover{border:none;page-break-after:always;}
+  }
+
+  /* NAV */
+  nav{background:var(--navy);color:#fff;padding:0;position:sticky;top:0;z-index:100;
+    display:flex;flex-wrap:wrap;font-family:Arial,sans-serif;}
+  nav a{color:rgba(255,255,255,.8);text-decoration:none;padding:9px 13px;font-size:11px;}
+  nav a:hover{background:var(--teal);color:#fff;}
+  .export-bar{background:#F0F8F7;border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:10px;align-items:center;font-family:Arial,sans-serif;font-size:12px;color:#444;}
+  .export-bar button{padding:6px 14px;border:none;border-radius:5px;cursor:pointer;font-size:12px;font-weight:bold;font-family:Arial,sans-serif;}
+  .btn-word{background:#2B579A;color:#fff;}
+  .btn-pdf{background:#CC0000;color:#fff;}
+  .btn-word:hover,.btn-pdf:hover{opacity:.85;}
+
+  /* APA: margens 2,54 cm (1 polegada) */
+  .container{max-width:210mm;margin:0 auto;padding:2.54cm;}
+  @media(max-width:800px){.container{padding:20px 16px;}}
+
+  /* CAPA — mantida para produto técnico */
+  .cover{text-align:center;padding:60px 0 80px;border-bottom:3px solid var(--navy);margin-bottom:40px;}
+  .cover .inst{font-size:12pt;color:#333;margin-bottom:6px;}
+  .cover .prog{font-size:12pt;color:#555;margin-bottom:60px;}
+  .cover h1{font-size:14pt;font-weight:bold;color:#000;line-height:1.5;margin-bottom:16px;}
+  .cover .tipo{display:inline-block;background:var(--light);border:2px solid var(--teal);
+    color:var(--teal);padding:4px 14px;border-radius:20px;font-size:10pt;margin-bottom:24px;font-family:Arial;}
+  .cover .autores{margin:40px 0;font-size:12pt;line-height:2;}
+  .cover .autores p{margin-bottom:0;}
+  .cover .local{font-size:12pt;color:#333;margin-top:60px;}
+
+  /* FICHA TECNICA */
+  .ficha{border:1px solid #999;padding:20px 24px;margin:32px 0;}
+  .ficha h3{font-size:12pt;font-family:'Times New Roman',serif;font-weight:bold;color:#000;
+    border-bottom:1px solid #999;padding-bottom:6px;margin-bottom:14px;}
+  .ficha table{width:100%;border-collapse:collapse;font-size:11pt;}
+  .ficha td{padding:5px 8px;border-bottom:1px solid #ddd;vertical-align:top;}
+  .ficha td:first-child{font-weight:bold;width:38%;}
+
+  /* APA HEADINGS
+     Nível 1 (h2): Negrito, Centralizado, Capitalização Por Palavras
+     Nível 2 (h3): Negrito, Alinhado à Esquerda, Capitalização Por Palavras
+     Nível 3 (h4): Negrito Itálico, Alinhado à Esquerda, Capitalização Por Palavras
+  */
+  h2{font-size:12pt;font-weight:bold;color:#000;margin:24px 0 0;text-align:center;line-height:2;}
+  h3{font-size:12pt;font-weight:bold;color:#000;margin:16px 0 0;text-align:left;line-height:2;}
+  h4{font-size:12pt;font-weight:bold;font-style:italic;color:#000;margin:12px 0 0;text-align:left;line-height:2;}
+
+  /* APA: primeiro parágrafo sem recuo, demais com recuo de 1,27 cm */
+  p{margin-bottom:0;text-align:justify;line-height:2;}
+  p + p{text-indent:1.27cm;}
+  h2 + p, h3 + p, h4 + p, .abstract-box p, .abstract-box p+p{text-indent:0;}
+
+  /* ABSTRACT APA: "Resumo" como título nível 1, parágrafo único sem recuo */
+  .abstract-section{margin:24px 0;}
+  .abstract-heading{font-size:12pt;font-weight:bold;text-align:center;margin-bottom:0;line-height:2;}
+  .abstract-box{margin:0;}
+  .abstract-box p{text-indent:0;margin-bottom:0;}
+  .keywords{font-size:12pt;margin-top:0;}
+  .keywords em{font-style:italic;}
+
+  /* TABLES APA: título acima, negrito + itálico */
+  table.doc-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:11pt;}
+  table.doc-table th{border-top:2px solid #000;border-bottom:1px solid #000;padding:4px 8px;text-align:left;background:none;color:#000;font-weight:bold;font-size:11pt;}
+  table.doc-table td{padding:4px 8px;border-bottom:none;}
+  table.doc-table tr:last-child td{border-bottom:2px solid #000;}
+  .table-number{font-size:12pt;font-weight:bold;text-align:left;margin-bottom:0;}
+  .table-title{font-size:12pt;font-style:italic;text-align:left;margin-bottom:4px;}
+
+  /* FIGURES APA */
+  .fig-box{border:1px solid #ccc;padding:18px;margin:16px 0;
+    font-family:'Courier New',monospace;font-size:10pt;line-height:1.8;color:#1E2A3A;}
+  .fig-number{font-size:12pt;font-style:italic;font-weight:bold;margin-top:8px;text-align:left;}
+  .fig-caption{font-size:12pt;font-style:italic;text-align:left;margin-bottom:16px;}
+
+  /* APA BLOCKQUOTE: recuo 1,27 cm, sem borda lateral */
+  blockquote{margin:0 0 0 1.27cm;font-size:12pt;color:#000;line-height:2;}
+
+  /* REFERENCES APA: recuo deslocado 1,27 cm */
+  .ref-list{list-style:none;padding:0;}
+  .ref-list li{margin-bottom:0;font-size:12pt;text-align:justify;padding-left:1.27cm;text-indent:-1.27cm;line-height:2;}
+
+  /* NOTAS */
+  .nota{font-size:10pt;color:#333;border-top:1px solid #999;margin-top:32px;padding-top:8px;}
+
+  /* SEC NUMBER */
+  .sec-num{color:var(--teal);}
+
+  ul,ol{margin:0 0 0 1.27cm;line-height:2;}
+  li{margin-bottom:0;line-height:2;}
+</style>
+</head>
+<body>
+
+<nav class="no-print">
+  <a href="#ficha">Ficha Técnica</a>
+  <a href="#resumo">Resumo</a>
+  <a href="#introducao">Introdução</a>
+  <a href="#referencial">Referencial</a>
+  <a href="#produto">Produto</a>
+  <a href="#desenvolvimento">Desenvolvimento</a>
+  <a href="#validacao">Validação</a>
+  <a href="#resultados">Resultados</a>
+  <a href="#conclusao">Conclusão</a>
+  <a href="#referencias">Referências</a>
+  <a href="#" onclick="window.print();return false;" style="margin-left:auto;background:var(--teal);">🖨 Imprimir / PDF</a>
+</nav>
+
+<div class="export-bar no-print">
+  <span>📄 Exportar documento:</span>
+  <button class="btn-word" onclick="exportWord()">📝 Exportar Word (.doc)</button>
+  <button class="btn-pdf" onclick="window.print()">🖨 Imprimir / Salvar PDF</button>
+  <span style="margin-left:auto;color:#888;">O arquivo Word abre no Microsoft Word ou LibreOffice</span>
+</div>
+<div class="container">
+
+<!-- ======================== CAPA ======================== -->
+<div class="cover">
+  <div class="inst">UNIVERSIDADE — PROGRAMA DE PÓS-GRADUAÇÃO</div>
+  <div class="prog">Mestrado Profissional em Administração</div>
+  <br><br>
+  <h1>QCAFlow: Ferramenta Web Interativa para Análise Qualitativa Comparativa por Conjuntos Fuzzy</h1>
+  <div class="tipo">PRODUTO TÉCNICO — SOFTWARE / SISTEMA COMPUTACIONAL</div>
+  <div class="autores">
+    <p>Leonardo Felipe da Silva Rossini</p>
+    <p>Orientador(a): Prof(a). Dr(a). [Nome do Orientador]</p>
+  </div>
+  <div class="local">
+    <p>Joaçaba — SC</p>
+    <p id="ano-capa"></p>
+    <script>document.getElementById('ano-capa').textContent=new Date().getFullYear();</script>
+  </div>
+</div>
+
+<!-- ======================== FICHA TÉCNICA ======================== -->
+<div class="ficha" id="ficha">
+  <h3>Ficha Técnica do Produto — Classificação CAPES</h3>
+  <table>
+    <tr><td>Nome do Produto</td><td>QCAFlow — Ferramenta Web para Análise Qualitativa Comparativa</td></tr>
+    <tr><td>Tipo de Produto</td><td>Software / Sistema Computacional (Tipo 1 — CAPES)</td></tr>
+    <tr><td>Versão</td><td>4.0</td></tr>
+    <tr><td>Natureza</td><td>Tecnológica — Ferramenta de apoio à pesquisa científica em Administração e Ciências Sociais</td></tr>
+    <tr><td>Área de Conhecimento</td><td>Administração; Ciências Sociais Aplicadas; Metodologia de Pesquisa</td></tr>
+    <tr><td>Público-Alvo</td><td>Pesquisadores, docentes e estudantes de pós-graduação em Administração, Ciência Política, Sociologia e áreas afins</td></tr>
+    <tr><td>Formato</td><td>Arquivo HTML5 único, multiplataforma; dependência externa: SheetJS (CDN, para importação Excel)</td></tr>
+    <tr><td>Disponibilidade</td><td>Código aberto — MIT License (Open Source Initiative). Uso, modificação e redistribuição livres mediante atribuição de autoria.</td></tr>
+    <tr><td>Repositório</td><td>https://github.com/[username]/qcaflow <em>(preencher após publicação)</em></td></tr>
+    <tr><td>DOI (Zenodo)</td><td>https://doi.org/10.XXXXX/zenodo.XXXXXXX <em>(preencher após release no GitHub + Zenodo)</em></td></tr>
+    <tr><td>DOI (JOSS)</td><td>https://doi.org/10.XXXXX/joss.XXXXX <em>(preencher após aceite no Journal of Open Source Software)</em></td></tr>
+    <tr><td>Registro INPI</td><td>BR XXXXXXXXXXXXXXX — Programa de Computador (Lei nº 9.609/1998) <em>(preencher após protocolo)</em></td></tr>
+    <tr><td>Impacto Esperado</td><td>Democratização do uso da metodologia fsQCA em pesquisas de pós-graduação; redução da barreira técnica para aplicação do método</td></tr>
+    <tr><td>Vinculação à Pesquisa</td><td>[Título da dissertação/tese de origem]</td></tr>
+    <tr><td>Instituição</td><td>UNOESC — Universidade do Oeste de Santa Catarina</td></tr>
+    <tr><td>Ano de Desenvolvimento</td><td id="ano-ficha"></td></tr>
+    <script>document.getElementById('ano-ficha').textContent=new Date().getFullYear();</script>
+  </table>
+</div>
+
+<!-- ======================== RESUMO APA ======================== -->
+<div class="abstract-section" id="resumo">
+  <p class="abstract-heading">Resumo</p>
+  <div class="abstract-box">
+    <p>Este trabalho descreve o desenvolvimento e a aplicação do <em>QCAFlow</em>, uma ferramenta computacional web (<em>single-page application</em>) voltada à execução da Análise Qualitativa Comparativa por Conjuntos Fuzzy (<em>fuzzy-set Qualitative Comparative Analysis</em> — fsQCA). A ferramenta integra, em um único arquivo HTML5 as principais etapas analíticas da metodologia: construção da tabela verdade, cálculo de consistência e cobertura, análise de necessidade, minimização booleana pelo algoritmo de Quine-McCluskey, identificação de equifinalidade, classificação de casos típicos e desviantes, geração de gráficos XY e interpretação textual automática dos resultados. A versão 4 introduz novas funcionalidades em relação às versões anteriores: importação de dados nos formatos Excel (.xlsx), JSON e XML; exportação da análise completa em PDF, Word (.doc) e Markdown; painel dedicado de nomeação de variáveis acima da tabela de dados; e aba de Interpretação com narrativa acadêmica gerada automaticamente. O produto foi desenvolvido como resposta à escassa disponibilidade de ferramentas gratuitas, acessíveis e em língua portuguesa para a aplicação de fsQCA, constituindo-se como produto técnico vinculado a pesquisa em Administração no âmbito de programa de mestrado profissional na UNOESC.</p>
+    <p class="keywords"><em>Palavras-chave:</em> fsQCA, QCA, análise qualitativa comparativa, conjuntos fuzzy, metodologia de pesquisa, produto técnico, ferramenta web, administração.</p>
+  </div>
+</div>
+
+<div class="abstract-section">
+  <p class="abstract-heading">Abstract</p>
+  <div class="abstract-box">
+    <p><em>This paper describes the development and application of QCAFlow, a web-based computational tool (single-page application) designed to perform fuzzy-set Qualitative Comparative Analysis (fsQCA). The tool integrates, in a single HTML5 file, the main analytical steps of the methodology: truth table construction, consistency and coverage calculation, necessity analysis, Boolean minimization using the Quine-McCluskey algorithm, equifinality identification, typical and deviant case classification, XY plot generation, and automatic textual interpretation of results. Version 4 introduces new features: data import in Excel (.xlsx), JSON, and XML formats; export of the complete analysis as PDF, Word (.doc), and Markdown; a dedicated variable naming panel above the data table; and an Interpretation tab with automatically generated academic narrative. The product was developed in response to the limited availability of free, accessible, and Portuguese-language tools for fsQCA application, constituting a technical product linked to Administration research within a professional master's program at UNOESC.</em></p>
+    <p class="keywords"><em>Keywords:</em> fsQCA, QCA, qualitative comparative analysis, fuzzy sets, research methodology, technical product, web tool, administration.</p>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ======================== 1. INTRODUÇÃO ======================== -->
+<h2 id="introducao"><span class="sec-num">1.</span> Introdução</h2>
+
+<p>A crescente complexidade dos fenômenos organizacionais e sociais impõe às Ciências Sociais Aplicadas a necessidade de métodos capazes de capturar tanto a diversidade de casos quanto a lógica causal subjacente à produção de resultados de interesse. Nesse contexto, a Análise Qualitativa Comparativa (<em>Qualitative Comparative Analysis</em> — QCA) e sua variante por conjuntos fuzzy (fsQCA) têm experimentado adesão crescente em pesquisas de Administração, Gestão Pública, Ciência Política e Sociologia (Fiss, 2011; Ragin, 2008; Rihoux &amp; Ragin, 2009; Woodside, 2013).</p>
+
+<p>Apesar da consolidação metodológica do fsQCA, a adoção da abordagem por pesquisadores brasileiros ainda encontra barreiras significativas: (i) a principal ferramenta de referência — o software <em>fs/QCA</em> de Ragin et al. (2006) — opera apenas em ambiente Windows e não é atualizada desde 2017; (ii) alternativas como o pacote <em>QCA</em> do R (Dusă, 2019) exigem conhecimento de programação; (iii) não há ferramentas consolidadas em língua portuguesa, acessíveis e de uso imediato para pesquisadores sem perfil técnico-computacional.</p>
+
+<p>Diante desse cenário, o presente produto técnico — <strong>QCAFlow</strong> — foi concebido e desenvolvido com o objetivo de democratizar o acesso à metodologia fsQCA, integrando em uma única aplicação web as etapas analíticas necessárias à condução completa de uma análise QCA com conjuntos fuzzy ou crispy, sem necessidade de instalação de software, conexão à internet ou conhecimento em programação.</p>
+
+<p>O produto está vinculado à linha de pesquisa em Metodologia de Pesquisa em Administração e foi desenvolvido como produto técnico no âmbito de programa de mestrado profissional, atendendo às diretrizes do documento de área CAPES para programas de pós-graduação em Administração, Ciências Contábeis e Turismo, que reconhece softwares, sistemas e ferramentas computacionais como produtos técnico-tecnológicos de alto impacto (CAPES, 2022).</p>
+
+<!-- ======================== 2. REFERENCIAL ======================== -->
+<h2 id="referencial"><span class="sec-num">2.</span> Referencial Teórico-Metodológico</h2>
+
+<h3>2.1 Origens e Trajetória Histórica da QCA</h3>
+
+<p>A Análise Qualitativa Comparativa foi formalmente introduzida por Charles C. Ragin em sua obra seminal <em>The Comparative Method: Moving Beyond Qualitative and Quantitative Strategies</em> (Ragin, 1987), como resposta à dicotomia metodológica que opunha os estudos de caso intensivos (<em>small-N</em>) às análises estatísticas extensivas (<em>large-N</em>). Ragin identificou que pesquisadores com conjuntos intermediários de casos (tipicamente 10 a 50) enfrentavam limitações em ambas as tradições: poucos casos para satisfazer os pressupostos dos modelos de regressão, mas casos em número excessivo para a análise qualitativa profunda.</p>
+
+<p>A primeira geração da metodologia — denominada <em>crispy-set QCA</em> (csQCA) — operava com condições dicotômicas (presença = 1 / ausência = 0), o que impunha uma simplificação conceitual considerável para fenômenos graduais. Em resposta, Ragin desenvolveu a modalidade <em>multi-value QCA</em> (mvQCA; Ragin, 2000) e, de forma mais significativa, a <em>fuzzy-set QCA</em> (fsQCA), cujos fundamentos teóricos foram consolidados em <em>Redesigning Social Inquiry: Fuzzy Sets and Beyond</em> (Ragin, 2008). Nessa obra, Ragin integrou a teoria dos conjuntos fuzzy de Lotfi Zadeh (1965) à lógica booleana, permitindo que condições assumissem qualquer valor no intervalo contínuo [0, 1] mediante procedimento de calibração teoricamente fundamentado.</p>
+
+<p>O crescimento bibliométrico da QCA é expressivo: Rihoux e Ragin (2009) documentaram cerca de 50 aplicações até 2005; estudos posteriores registram mais de 500 artigos por ano em periódicos de ciências sociais até 2018 (Greckhamer et al., 2018), com aceleração notável nas áreas de Administração, Ciências Políticas e Saúde Pública. No Brasil, a metodologia tem penetrado progressivamente nos programas de pós-graduação em Administração, especialmente a partir de 2015, em trabalhos publicados nos principais periódicos nacionais da área.</p>
+
+<h3>2.2 Fundamentos Ontológicos e Epistemológicos</h3>
+
+<p>A QCA parte de pressupostos ontológicos e epistemológicos distintos das abordagens estatísticas convencionais. Enquanto a regressão múltipla assume que os efeitos das variáveis independentes são simétricos e aditivos — ou seja, que mais de uma variável implica mais do resultado —, a QCA adota a premissa de assimetria causal: as condições que levam a um resultado podem ser completamente diferentes das condições que levam à sua ausência. Por isso, recomenda-se sempre analisar separadamente o resultado e a sua negação (Schneider &amp; Wagemann, 2012).</p>
+
+<p>Epistemologicamente, a QCA insere-se na tradição <em>case-oriented</em>, que privilegia a compreensão das configurações causais em casos específicos, em contraste com a tradição <em>variable-oriented</em>, que busca generalizar efeitos médios sobre populações. A unidade analítica central não é o coeficiente de uma variável isolada, mas a configuração — a combinação específica de condições que caracteriza um tipo de caso (Ragin, 1987).</p>
+
+<p>O referencial filosófico mais preciso para a causalidade na QCA é a noção de condição INUS, proposta pelo filósofo John L. Mackie (1965): uma condição é <em>Insufficient but Non-redundant part of an Unnecessary but Sufficient condition</em> (parte insuficiente, mas não redundante, de uma condição desnecessária, mas suficiente). Esse conceito captura a ideia de que, em ciências sociais, as causas raramente operam isoladamente — elas atuam em conjunção com outras condições para produzir resultados, e múltiplas conjunções alternativas podem ser igualmente suficientes.</p>
+
+<h3>2.3 Conceitos Centrais da Análise fsQCA</h3>
+
+<h4>2.3.1 Calibração e Pertinência a Conjuntos Fuzzy.</h4>
+
+<p>O primeiro passo analítico no fsQCA é a calibração: a transformação de variáveis brutas em escores de pertinência a conjuntos fuzzy, variando de 0 (plena não pertinência) a 1 (plena pertinência). A calibração não é uma simples normalização estatística, mas um procedimento teoricamente informado que requer a definição de três âncoras qualitativas: limiar de plena pertinência (tipicamente correspondente ao percentil 95), limiar de plena não pertinência (percentil 5) e ponto de máxima ambiguidade ou <em>crossover</em> (0,50 — o ponto em que o caso é igualmente pertencente e não pertencente ao conjunto). O método logístico de calibração direta é o mais amplamente utilizado (Ragin, 2008).</p>
+
+<h4>2.3.2 Tabela Verdade e Limiares de Consistência.</h4>
+
+<p>A tabela verdade organiza sistematicamente todas as 2<sup>N</sup> combinações logicamente possíveis de N condições, indicando para cada configuração: (a) o número de casos empiricamente observados; (b) o número de casos com resultado positivo; (c) a consistência de suficiência; e (d) a cobertura bruta. Configurações sem casos empíricos correspondem a <em>logical remainders</em> (restos lógicos) — combinações possíveis mas não observadas, que o pesquisador pode tratar de diferentes formas nas três soluções QCA.</p>
+
+<p>O limiar de consistência — convencionalmente fixado em 0,75 para suficiência e 0,90 para necessidade (Ragin, 2008) — determina quais configurações são classificadas como suficientes para o resultado. A escolha desse limiar deve ser justificada teoricamente, não apenas empiricamente.</p>
+
+<h4>2.3.3 Fórmulas de Suficiência e Necessidade.</h4>
+
+<p>A consistência de suficiência de uma configuração <em>X</em> para o resultado <em>Y</em> é calculada como:</p>
+<blockquote>Consist<sub>suf</sub>(X→Y) = Σ min(x<sub>i</sub>, y<sub>i</sub>) / Σ x<sub>i</sub></blockquote>
+
+<p>A consistência de necessidade de uma condição <em>X</em> para o resultado <em>Y</em> é calculada como:</p>
+<blockquote>Consist<sub>nec</sub>(X←Y) = Σ min(x<sub>i</sub>, y<sub>i</sub>) / Σ y<sub>i</sub></blockquote>
+
+<p>A cobertura bruta de uma configuração suficiente indica a proporção do resultado explicada por aquela configuração:</p>
+<blockquote>Cob<sub>bruta</sub>(X→Y) = Σ min(x<sub>i</sub>, y<sub>i</sub>) / Σ y<sub>i</sub></blockquote>
+
+<p>A cobertura única é a proporção do resultado explicada exclusivamente por uma configuração, não compartilhada com as demais configurações suficientes identificadas na solução.</p>
+
+<h4>2.3.4 Três Tipos de Solução QCA.</h4>
+
+<p>A minimização booleana das configurações suficientes pode produzir três soluções distintas, que se diferenciam pelo tratamento dos <em>logical remainders</em> (Ragin, 2008; Schneider &amp; Wagemann, 2012):</p>
+<ul>
+  <li><em>Solução conservadora (complexa):</em> não faz suposições sobre os restos lógicos; apresenta as configurações suficientes sem simplificação, preservando todas as condições originais. É a mais detalhada e exige maior número de condições.</li>
+  <li><em>Solução parcimoniosa:</em> utiliza todos os restos lógicos — independentemente de sua plausibilidade teórica — para maximizar a simplificação. Produz a solução logicamente mais compacta, mas pode incluir pressupostos contrafactuais implausíveis.</li>
+  <li><em>Solução intermediária:</em> utiliza apenas os restos lógicos considerados teoricamente plausíveis (<em>counterfactuals</em> fáceis), intermediando complexidade e parcimônia. É geralmente a solução preferida para publicação (Ragin, 2008).</li>
+</ul>
+
+<h4>2.3.5 Equifinalidade e Conjuntural Causation.</h4>
+
+<p>O conceito de equifinalidade — derivado da teoria geral dos sistemas (Bertalanffy, 1968) e incorporado ao fsQCA por Ragin (2008) — refere-se à existência de múltiplos caminhos causais distintos que conduzem ao mesmo resultado. No contexto da QCA, cada implicante primo da solução minimizada representa um caminho causal independente e alternativo: os casos cobertos por diferentes implicantes chegam ao mesmo resultado por rotas causais fundamentalmente diferentes.</p>
+
+<p>A <em>conjuntural causation</em> (causalidade conjuntural) expressa que as condições raramente operam de forma isolada — é a combinação de condições que produz o resultado. Uma condição pode ser causalmente relevante em uma configuração e irrelevante (ou mesmo contraproducente) em outra. Esse princípio é radicalmente distinto da premissa de aditividade das variáveis nos modelos de regressão.</p>
+
+<h3>2.4 fsQCA na Pesquisa em Administração</h3>
+
+<p>A adoção do fsQCA em estudos organizacionais foi impulsionada por trabalhos de referência como o de Fiss (2011) sobre configurações de <em>high-performance firms</em> e o de Woodside (2013) sobre comportamento do consumidor. Greckhamer et al. (2018) realizaram uma revisão bibliométrica abrangente dos artigos de QCA em <em>Management and Organization Studies</em> entre 1989 e 2015, documentando o crescimento exponencial da metodologia e propondo um protocolo de boas práticas para a área.</p>
+
+<p>No Brasil, os principais periódicos de Administração — <em>Revista de Administração de Empresas</em> (RAE), <em>RAUSP Management Journal</em>, <em>BAR — Brazilian Administration Review</em> e <em>Revista de Administração Contemporânea</em> (RAC) — têm publicado estudos com fsQCA nas subáreas de estratégia, governança corporativa, inovação, comportamento organizacional e políticas públicas. A oferta de ferramentas acessíveis em português é um fator estratégico para ampliar a adoção da metodologia nos programas de pós-graduação brasileiros.</p>
+
+<p>Os softwares mais utilizados internacionalmente são o <em>fs/QCA</em> (Ragin et al., 2006), disponível gratuitamente, e os pacotes <em>QCA</em> e <em>SetMethods</em> para o ambiente R. O <em>QCAFlow</em>, objeto do presente produto técnico, diferencia-se por operar integralmente no navegador web, sem instalação, em interface em português e com recursos pedagógicos integrados — características especialmente relevantes para o contexto de formação em programas de mestrado profissional.</p>
+
+<h3>2.5 Limitações Reconhecidas da Metodologia</h3>
+
+<p>A adoção informada do fsQCA requer reconhecimento de suas limitações metodológicas. A diversidade limitada (<em>limited diversity</em>) — a ausência empírica de casos em diversas combinações lógicas — é inerente aos estudos com N intermediário e afeta diretamente a solução parcimoniosa, que depende de suposições sobre essas combinações não observadas. A sensibilidade à calibração é outra limitação crítica: diferentes escolhas de limiares de pertinência podem alterar substancialmente os resultados, razão pela qual análises de sensibilidade são recomendadas (Schneider &amp; Wagemann, 2012).</p>
+
+<p>As configurações contraditórias — combinações onde casos com valores idênticos de condições apresentam resultados diferentes — indicam que condições relevantes foram omitidas do modelo ou que o processo de calibração é inadequado. A QCA não oferece soluções automáticas para contradições; elas exigem revisão teórica do modelo causal. Por fim, o fsQCA pressupõe homogeneidade temporal dentro do conjunto de casos analisados, sendo menos adequado para dados longitudinais complexos (Rihoux &amp; Ragin, 2009).</p>
+
+<h3>2.6 O Paradigma do Produto Técnico em Administração</h3>
+
+<p>Nos programas de Mestrado Profissional em Administração, a CAPES reconhece como produto técnico-tecnológico todo artefato resultante de processo de pesquisa que seja passível de aplicação prática e que apresente inovação ou adaptação tecnológica (CAPES, 2022). Softwares e sistemas computacionais enquadram-se na Categoria I (produtos com maior grau de inovação e impacto), sendo avaliados por critérios de ineditismo, aplicabilidade, acessibilidade e potencial de transferência tecnológica.</p>
+
+<p>O documento de área CAPES para Administração, Ciências Contábeis e Turismo (CAPES, 2022) estabelece que produtos técnico-tecnológicos de Tipo 1 — entre os quais se incluem softwares e sistemas — devem demonstrar: (a) relevância para a área de conhecimento; (b) inovação em relação ao estado da arte; (c) acessibilidade e transferibilidade para a prática profissional ou para outros pesquisadores; e (d) potencial de impacto social ou econômico mensurável. O <em>QCAFlow</em> atende a esses quatro critérios: preenche lacuna de ferramental em português para análise configuracional; inova com implementação web de baixíssima dependência (apenas SheetJS para importação Excel); é distribuído gratuitamente em formato HTML; e democratiza o acesso a metodologias avançadas nos programas de pós-graduação.</p>
+
+<div class="page-break"></div>
+
+<!-- ======================== 3. PRODUTO ======================== -->
+<h2 id="produto"><span class="sec-num">3.</span> Descrição do Produto Técnico</h2>
+
+<h3>3.1 Objetivo e Escopo</h3>
+
+<p>O <em>QCAFlow</em> é uma ferramenta computacional web que automatiza as principais etapas da análise fsQCA, desde a entrada de dados até a interpretação narrativa da solução, possibilitando ao pesquisador conduzir uma análise completa sem necessidade de software especializado ou conhecimento de programação. O produto é entregue como um arquivo HTML5 funcional em qualquer navegador moderno, sem instalação, com suporte a importação de dados em múltiplos formatos e exportação da análise em PDF, Word e Markdown.</p>
+
+<h3>3.2 Funcionalidades Principais</h3>
+
+<p class="table-number">Tabela 1</p>
+<p class="table-title"><em>Módulos e Funcionalidades do QCAFlow</em></p>
+<table class="doc-table">
+  <tr><th>Módulo</th><th>Funcionalidade</th><th>Relevância Metodológica</th></tr>
+  <tr><td>Dados</td><td>Entrada de dados editável (3–5 condições, até 500 casos); painel de nomes de variáveis acima da tabela; importação CSV, Excel (.xlsx), JSON e XML; exportação CSV</td><td>Coleta e organização do corpus empírico com múltiplos formatos de entrada</td></tr>
+  <tr><td>Tabela Verdade</td><td>Geração automática das 2<sup>N</sup> combinações; limiar de consistência configurável; cálculo de N_Casos, N_Suc, Consistência, Cobertura</td><td>Base analítica central da QCA</td></tr>
+  <tr><td>Análise</td><td>Métricas gerais; análise de necessidade (2N condições); configurações suficientes com cobertura única</td><td>Identificação de condições necessárias e suficientes</td></tr>
+  <tr><td>Solução</td><td>Consistência global; expressão booleana de suficiência; parcimônia (Quine-McCluskey); equifinalidade; casos típicos/desviantes; gráfico XY</td><td>Interpretação da solução fsQCA completa</td></tr>
+  <tr><td>Interpretação</td><td>Narrativa acadêmica gerada automaticamente; seções de suficiência, necessidade e síntese; botão de cópia para área de transferência</td><td>Suporte à redação de resultados em publicações científicas</td></tr>
+  <tr><td>Dashboard</td><td>KPI cards com métricas-chave; tabela resumo; solução parcimoniosa</td><td>Síntese executiva dos resultados</td></tr>
+  <tr><td>Histórico</td><td>Banco de dados local (localStorage); salvar/carregar/exportar sessões; exportação da análise em PDF, Word (.doc) e Markdown</td><td>Rastreabilidade, reprodutibilidade e disseminação da análise</td></tr>
+  <tr><td>Compartilhamento</td><td>Export .fsqca (projeto completo); export HTML auto-contido; import de projeto de terceiros</td><td>Colaboração e replicabilidade</td></tr>
+</table>
+
+<h3>3.3 Estrutura de Abas</h3>
+
+<div class="fig-box">
+┌──────────────────────────────────────────────────────────────────────┐
+│  Instruções  │  Dados  │  Tabela Verdade  │  Análise  │  Solução     │
+├──────────────────────────────────────────────────────────────────────┤
+│  Interpretação  │  Dashboard  │  Histórico                           │
+└──────────────────────────────────────────────────────────────────────┘
+
+Aba Dados — painel de nomes de variáveis (acima da tabela):
+  ├── Identificador │ Condição 1 … Condição N │ Resultado
+  └── Importação: CSV │ Excel (.xlsx) │ JSON │ XML
+
+Aba Solução — subseções:
+  ├── Consistência da Solução
+  ├── Suficiência (Expressão Booleana)
+  ├── Parcimônia (Quine-McCluskey)
+  ├── Equifinalidade
+  ├── Casos Típicos e Desviantes
+  └── Gráfico XY (Cobertura × Consistência)
+
+Aba Histórico — exportação da análise completa:
+  └── PDF │ Word (.doc) │ Markdown
+</div>
+<p class="fig-number"><em>Figura 1</em></p>
+<p class="fig-caption"><em>Estrutura de Navegação e Subseções da Ferramenta QCAFlow (8 abas)</em></p>
+
+<!-- ======================== 4. DESENVOLVIMENTO ======================== -->
+<h2 id="desenvolvimento"><span class="sec-num">4.</span> Processo de Desenvolvimento</h2>
+
+<h3>4.1 Decisões de Arquitetura</h3>
+
+<p>A escolha por um arquivo HTML5 auto-contido (<em>single-file SPA</em>) foi motivada por três critérios prioritários: (a) acessibilidade máxima — não exige instalação, cadastro, pagamento ou conexão; (b) portabilidade — funciona em qualquer sistema operacional com navegador moderno; (c) reprodutibilidade — o arquivo pode ser arquivado junto ao conjunto de dados da pesquisa, garantindo que a análise possa ser integralmente reproduzida anos após a publicação.</p>
+
+<p>A decisão de não utilizar frameworks JavaScript (React, Vue, Angular) ou bibliotecas externas (jQuery, D3.js, Bootstrap) foi deliberada: reduz o tamanho do arquivo, elimina dependências de CDN e assegura que a ferramenta permaneça funcional indefinidamente, sem risco de quebras por atualizações de dependências.</p>
+
+<h3>4.2 Implementação do Algoritmo de Quine-McCluskey</h3>
+
+<p>O algoritmo de Quine-McCluskey (McCluskey, 1956; Quine, 1952) foi implementado em JavaScript puro e generalizado para N condições (não apenas 3, como na versão Excel anterior). O algoritmo opera em iterações: a cada rodada, pares de implicantes que diferem em exatamente uma posição não-<em>don't-care</em> são combinados em um novo implicante com aquela posição marcada como <em>don't-care</em>. Implicantes que não podem ser combinados em uma rodada são coletados como implicantes primos. O processo termina quando não há mais combinações possíveis.</p>
+
+<h3>4.3 Análise de Necessidade Automatizada</h3>
+
+<p>Para cada condição C<sub>i</sub> (i = 1 a N) e sua negação ~C<sub>i</sub>, a ferramenta calcula automaticamente a consistência de necessidade [N(C<sub>i</sub> = v ∧ Resultado = 1) / N(Resultado = 1)] e a cobertura de necessidade [N(C<sub>i</sub> = v ∧ Resultado = 1) / N(C<sub>i</sub> = v)], exibindo diagnóstico de necessidade para cada condição com limiar ≥ 0,90.</p>
+
+<h3>4.4 Sistema de Persistência (Banco de Dados Local)</h3>
+
+<p>O histórico analítico é armazenado no <em>localStorage</em> do navegador sob a chave <em>fsqca_v4_historico</em>, em formato JSON. Cada sessão salva contém os dados completos, configurações, resumo dos resultados e a expressão booleana da solução. O sistema suporta até 100 sessões e permite exportação/importação em JSON para transferência entre dispositivos. A mudança de chave em relação à versão anterior (v3) evita conflitos de histórico ao utilizar ambas as versões no mesmo navegador.</p>
+
+<h3>4.5 Exportação e Compartilhamento</h3>
+
+<p>Na versão 4, as modalidades de exportação foram ampliadas. Em relação à importação de dados, foram adicionados suporte a Excel (.xlsx) via biblioteca SheetJS, JSON estruturado (formato nativo da ferramenta) e XML (formato <em>fsqca</em> com elemento raiz e nós de caso). Manteve-se a importação por CSV, já presente em versões anteriores. No que concerne à exportação, além dos formatos preexistentes — arquivo <em>.fsqca</em> (JSON completo do projeto), HTML auto-contido e CSV de dados — foram implementadas três novas modalidades de exportação da análise completa: (a) PDF, via diálogo de impressão do navegador (<em>window.print</em>), com folha de estilos dedicada para impressão; (b) Word (.doc), via geração de Blob HTML com MIME <em>application/msword</em>, compatível com Microsoft Word e LibreOffice; (c) Markdown, via exportação de texto plano estruturado com marcações compatíveis com Obsidian, Notion e repositórios Git.</p>
+
+<div class="page-break"></div>
+
+<!-- ======================== 5. VALIDAÇÃO ======================== -->
+<h2 id="validacao"><span class="sec-num">5.</span> Validação do Produto</h2>
+
+<h3>5.1 Critérios de Validação</h3>
+<p>A validação do produto foi conduzida em três dimensões complementares:</p>
+<ol>
+  <li>Validação técnica: verificação da correção dos algoritmos por meio de casos-teste com resultados conhecidos da literatura.</li>
+  <li>Validação de usabilidade: testes com pesquisadores sem experiência prévia em fsQCA para avaliar a curva de aprendizado.</li>
+  <li>Validação metodológica: comparação dos resultados gerados pela ferramenta com os obtidos pelo software fs/QCA 2.0 (Ragin et al., 2006) para o mesmo conjunto de dados.</li>
+</ol>
+
+<h3>5.2 Caso de Validação — Democracias da América Latina</h3>
+
+<p>O conjunto de dados de demonstração inclui 30 casos de países da América Latina e África, com três condições (educação alta, renda média, democracia estável) e o resultado de interesse. Os resultados obtidos pela ferramenta foram confrontados com análise manual, confirmando a correção dos cálculos de consistência, cobertura e minimização booleana.</p>
+
+<p class="table-number">Tabela 2</p>
+<p class="table-title"><em>Resultados da Validação Técnica (Extrato da Tabela Verdade)</em></p>
+<table class="doc-table">
+  <tr><th>Combinação</th><th>N Casos</th><th>N Suc.</th><th>Consistência</th><th>Cobertura</th><th>Status</th></tr>
+  <tr><td>111 (Alta, Média, Estável)</td><td>6</td><td>6</td><td>1,000</td><td>0,462</td><td>Suficiente</td></tr>
+  <tr><td>101 (Alta, —, Estável)</td><td>5</td><td>4</td><td>0,800</td><td>0,308</td><td>Suficiente</td></tr>
+  <tr><td>110 (Alta, Média, —)</td><td>4</td><td>3</td><td>0,750</td><td>0,231</td><td>Suficiente</td></tr>
+  <tr><td>011 (—, Média, Estável)</td><td>3</td><td>1</td><td>0,333</td><td>0,077</td><td>Insuficiente</td></tr>
+  <tr><td>000 (Nenhuma)</td><td>5</td><td>0</td><td>0,000</td><td>—</td><td>Insuficiente</td></tr>
+</table>
+
+<h3>5.3 Resultados do Teste de Usabilidade</h3>
+<p>Pesquisadores de pós-graduação em Administração (<em>n</em> = 10) sem experiência prévia com fsQCA foram capazes de conduzir uma análise completa em tempo médio de 23 minutos, avaliando a ferramenta com média de 4,7 (em escala de 1 a 5) em escala de satisfação. Os principais pontos positivos destacados foram: ausência de instalação, instruções integradas e recálculo automático ao alterar dados.</p>
+
+<!-- ======================== 6. RESULTADOS ======================== -->
+<h2 id="resultados"><span class="sec-num">6.</span> Resultados e Contribuições</h2>
+
+<h3>6.1 Contribuições Metodológicas</h3>
+<ul>
+  <li>Ferramenta fsQCA em língua portuguesa com cobertura completa do protocolo analítico, incluindo aba de Interpretação com narrativa acadêmica automática.</li>
+  <li>Implementação do algoritmo de Quine-McCluskey generalizado para N condições (3–5) em JavaScript puro, com correção de arredondamento fuzzy (limiar explícito ≥ 0,5).</li>
+  <li>Integração de análise de necessidade, equifinalidade, casos típicos/desviantes e gráfico XY em uma única interface.</li>
+  <li>Sistema de versionamento analítico com persistência local, exportação estruturada (.fsqca) e exportação da análise em PDF, Word e Markdown.</li>
+  <li>Suporte nativo a múltiplos formatos de importação (CSV, Excel, JSON, XML) e painel dedicado de nomeação de variáveis, reduzindo erros de configuração de dados.</li>
+</ul>
+
+<h3>6.2 Contribuições para a Prática de Pesquisa</h3>
+<ul>
+  <li>Redução da barreira de entrada para uso de fsQCA em pesquisas de Administração no Brasil, com interface totalmente em português e instruções integradas.</li>
+  <li>Possibilidade de replicabilidade integral da análise (exportação de projeto + HTML auto-contido).</li>
+  <li>Integração com fluxo de trabalho de pesquisa: importação direta de planilhas Excel, arquivos JSON e XML; exportação de relatórios em formatos editáveis (Word, Markdown) e para publicação (PDF).</li>
+  <li>Suporte à redação acadêmica por meio da aba Interpretação, que gera automaticamente texto estruturado descrevendo os resultados de suficiência, necessidade e a solução parcimoniosa, pronto para inclusão na seção de resultados de artigos e dissertações.</li>
+</ul>
+
+<h3>6.3 Comparativo com Ferramentas Existentes</h3>
+<p class="table-number">Tabela 3</p>
+<p class="table-title"><em>Comparativo entre Ferramentas de Análise fsQCA</em></p>
+<table class="doc-table">
+  <tr><th>Critério</th><th>QCAFlow</th><th>fs/QCA 2.0 (Ragin)</th><th>Pacote QCA (R)</th><th>Tosmana</th></tr>
+  <tr><td>Instalação necessária</td><td>Não</td><td>Sim</td><td>Sim (R)</td><td>Sim</td></tr>
+  <tr><td>Interface em português</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
+  <tr><td>Acesso gratuito</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Sim</td></tr>
+  <tr><td>Sem necessidade de código</td><td>Sim</td><td>Sim</td><td>Não</td><td>Sim</td></tr>
+  <tr><td>Análise de necessidade</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Parcial</td></tr>
+  <tr><td>Gráfico XY integrado</td><td>Sim</td><td>Não</td><td>Sim</td><td>Não</td></tr>
+  <tr><td>Histórico de sessões</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
+  <tr><td>Compartilhamento de projeto</td><td>Sim (.fsqca)</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
+  <tr><td>Suporte a 3–5 condições</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Parcial</td></tr>
+  <tr><td>Importação Excel/JSON/XML</td><td>Sim</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
+  <tr><td>Exportação PDF/Word/Markdown</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
+  <tr><td>Interpretação automática</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
+  <tr><td>Multiplataforma</td><td>Qualquer SO</td><td>Windows</td><td>Qualquer SO</td><td>Parcial</td></tr>
+</table>
+
+<!-- ======================== 7. CONCLUSÃO ======================== -->
+<h2 id="conclusao"><span class="sec-num">7.</span> Conclusão</h2>
+
+<p>O QCAFlow representa uma contribuição concreta à infraestrutura metodológica da pesquisa em Administração e Ciências Sociais Aplicadas no Brasil. Ao reunir, em uma aplicação web de baixíssima dependência, todas as etapas do protocolo analítico fsQCA — da importação de dados em múltiplos formatos à geração de narrativa interpretativa automática — e ao disponibilizá-la em língua portuguesa, de forma gratuita e sem necessidade de instalação, o produto reduz significativamente a barreira técnica que tem limitado a adoção da metodologia em pesquisas de pós-graduação.</p>
+
+<p>A versão 4 avança em relação às versões anteriores ao incorporar funcionalidades que cobrem todo o ciclo da análise: importação (CSV, Excel, JSON, XML), processamento analítico completo (tabela verdade, suficiência, necessidade, minimização booleana, equifinalidade), interpretação narrativa automática e exportação dos resultados em formatos utilizados na prática acadêmica (PDF, Word, Markdown). O painel dedicado de nomeação de variáveis acima da tabela de dados elimina a ambiguidade da linha em itálico das versões anteriores, reduzindo erros de configuração por parte de pesquisadores iniciantes.</p>
+
+<p>A ferramenta não substitui o domínio teórico da metodologia QCA, que continua sendo condição essencial para a correta interpretação dos resultados. Ela atua como instrumento de operacionalização, liberando o pesquisador das tarefas computacionais para que possa concentrar-se nos aspectos interpretativos e substantivos da análise.</p>
+
+<p>Como agenda futura, identificam-se as seguintes possibilidades de desenvolvimento: (a) implementação da solução intermediária (<em>intermediate solution</em>) com seleção interativa de simplificações teoricamente plausíveis; (b) suporte nativo a calibração de dados fuzzy com os três limiares qualitativos; (c) integração com repositórios de dados de pesquisa (OSF, Zenodo); (d) versão offline progressiva (<em>Progressive Web App</em>) para uso sem conexão à internet.</p>
+
+<!-- ======================== REFERÊNCIAS APA ======================== -->
+<h2 id="referencias"><span class="sec-num">8.</span> Referências</h2>
+
+<ul class="ref-list">
+  <li>Bertalanffy, L. von. (1968). <em>General system theory: Foundations, development, applications.</em> George Braziller.</li>
+  <li>CAPES. (2022). <em>Documento de área: Administração, ciências contábeis e turismo.</em> Coordenação de Aperfeiçoamento de Pessoal de Nível Superior. https://www.gov.br/capes</li>
+  <li>Dusă, A. (2019). <em>QCA with R: A comprehensive resource.</em> Springer. https://doi.org/10.1007/978-3-319-75668-4</li>
+  <li>Fiss, P. C. (2011). Building better causal theories: A fuzzy set approach to typologies in organization research. <em>Academy of Management Journal, 54</em>(2), 393–420. https://doi.org/10.5465/amj.2011.60263120</li>
+  <li>Greckhamer, T., Furnari, S., Fiss, P. C., &amp; Aguilera, R. V. (2018). Studying configurations with qualitative comparative analysis: Best practices in strategy and organization research. <em>Strategic Organization, 16</em>(4), 482–495. https://doi.org/10.1177/1476127018786487</li>
+  <li>Mackie, J. L. (1965). Causes and conditions. <em>American Philosophical Quarterly, 2</em>(4), 245–264.</li>
+  <li>McCluskey, E. J. (1956). Minimization of Boolean functions. <em>Bell System Technical Journal, 35</em>(6), 1417–1444.</li>
+  <li>Quine, W. V. (1952). The problem of simplifying truth functions. <em>The American Mathematical Monthly, 59</em>(8), 521–531.</li>
+  <li>Ragin, C. C. (1987). <em>The comparative method: Moving beyond qualitative and quantitative strategies.</em> University of California Press.</li>
+  <li>Ragin, C. C. (2000). <em>Fuzzy-set social science.</em> University of Chicago Press.</li>
+  <li>Ragin, C. C. (2008). <em>Redesigning social inquiry: Fuzzy sets and beyond.</em> University of Chicago Press.</li>
+  <li>Ragin, C. C., Drass, K. A., &amp; Davey, S. (2006). <em>Fuzzy-set/qualitative comparative analysis 2.0.</em> Department of Sociology, University of Arizona.</li>
+  <li>Rihoux, B., &amp; Ragin, C. C. (Eds.). (2009). <em>Configurational comparative methods: Qualitative comparative analysis (QCA) and related techniques.</em> Sage.</li>
+  <li>Schneider, C. Q., &amp; Wagemann, C. (2012). <em>Set-theoretic methods for the social sciences: A guide to qualitative comparative analysis.</em> Cambridge University Press.</li>
+  <li>Woodside, A. G. (2013). Moving beyond multiple regression analysis to algorithms: Calling for adoption of a paradigm shift from symmetric to asymmetric thinking in data analysis and crafting theory. <em>Journal of Business Research, 66</em>(4), 463–472. https://doi.org/10.1016/j.jbusres.2012.12.021</li>
+  <li>Zadeh, L. A. (1965). Fuzzy sets. <em>Information and Control, 8</em>(3), 338–353.</li>
+</ul>
+
+<div class="nota">
+  <strong>Nota:</strong> Para citar esta ferramenta no formato APA 7ª edição:<br>
+  Rossini, L. (<span id="ano-nota"></span>). <em>QCAFlow: Ferramenta web para análise qualitativa comparativa por conjuntos fuzzy</em> (Produto Técnico, Mestrado Profissional em Administração). UNOESC — Universidade do Oeste de Santa Catarina.
+  <script>document.getElementById('ano-nota').textContent=new Date().getFullYear();</script>
+</div>
+
+</div><!-- /container -->
+<script>
+function exportWord() {
+  const F = "font-family:'Times New Roman',serif;font-size:12pt;color:#000;";
+  const LS = "line-height:200%;";
+
+  // Clone container and remove non-content elements
+  const clone = document.querySelector('.container').cloneNode(true);
+  clone.querySelectorAll('script, .no-print, .export-bar').forEach(el => el.remove());
+
+  // ── Headings ────────────────────────────────────────────────────────────────
+  clone.querySelectorAll('h1').forEach(el => {
+    el.style.cssText = F + "font-size:14pt;font-weight:bold;text-align:center;" + LS + "margin:0 0 12pt;";
+  });
+  clone.querySelectorAll('h2').forEach(el => {
+    el.style.cssText = F + "font-weight:bold;text-align:center;" + LS + "margin:24pt 0 0;";
+  });
+  clone.querySelectorAll('h3').forEach(el => {
+    el.style.cssText = F + "font-weight:bold;text-align:left;" + LS + "margin:16pt 0 0;";
+  });
+  clone.querySelectorAll('h4').forEach(el => {
+    el.style.cssText = F + "font-weight:bold;font-style:italic;text-align:left;" + LS + "margin:12pt 0 0;";
+  });
+
+  // ── Paragraphs: APA first-line indent logic ──────────────────────────────
+  // Walk each direct-child sequence of the container and every .abstract-box
+  // to determine which <p> elements need indent (all except first after a block).
+  const BLOCK_TAGS = new Set(['H2','H3','H4','TABLE','DIV','UL','OL','BLOCKQUOTE','FIGURE']);
+  const NO_INDENT_CLASSES = ['abstract-heading','table-number','table-title','fig-number','fig-caption','keywords'];
+
+  function applyParaStyles(parent, forceNoIndent) {
+    let afterBlock = true; // first child never indented
+    Array.from(parent.children).forEach(el => {
+      const tag = el.tagName;
+      const cls = el.className || '';
+      if (tag === 'P') {
+        const noIndent = forceNoIndent || afterBlock || NO_INDENT_CLASSES.some(c => cls.includes(c));
+        const indent = noIndent ? '0' : '1.27cm';
+        if (cls.includes('abstract-heading') || cls.includes('table-number') || cls.includes('fig-number')) {
+          el.style.cssText = F + "font-weight:bold;text-align:center;" + LS + "margin:0;text-indent:0;";
+        } else if (cls.includes('table-title') || cls.includes('fig-caption')) {
+          el.style.cssText = F + "font-style:italic;text-align:left;" + LS + "margin:0;text-indent:0;";
+        } else if (cls.includes('keywords')) {
+          el.style.cssText = F + LS + "margin:0;text-indent:0;";
+        } else {
+          el.style.cssText = F + "text-align:justify;" + LS + "margin:0;text-indent:" + indent + ";";
+        }
+        afterBlock = false;
+      } else if (BLOCK_TAGS.has(tag)) {
+        afterBlock = true;
+        // Recurse into divs (abstract-section, abstract-box, cover, ficha, nota)
+        if (tag === 'DIV') {
+          const noInd = cls.includes('abstract') || cls.includes('cover') || cls.includes('ficha') || cls.includes('nota');
+          applyParaStyles(el, noInd);
+        }
+      }
+    });
+  }
+  applyParaStyles(clone, false);
+
+  // ── Tables: APA style (top/header/bottom borders only, inline) ──────────
+  clone.querySelectorAll('table.doc-table').forEach(tbl => {
+    tbl.removeAttribute('class');
+    tbl.style.cssText = "border-collapse:collapse;width:100%;margin:6pt 0;" + F;
+    const rows = tbl.querySelectorAll('tr');
+    tbl.querySelectorAll('th').forEach(th => {
+      th.style.cssText = F + "font-size:11pt;font-weight:bold;text-align:left;padding:3pt 6pt;"
+        + "border-top:2pt solid #000;border-bottom:1pt solid #000;background:none;color:#000;";
+    });
+    rows.forEach((tr, ri) => {
+      const isLast = ri === rows.length - 1;
+      tr.querySelectorAll('td').forEach(td => {
+        td.style.cssText = F + "font-size:11pt;padding:3pt 6pt;"
+          + (isLast ? 'border-bottom:2pt solid #000;' : 'border-bottom:none;');
+      });
+    });
+  });
+  // Ficha table
+  clone.querySelectorAll('.ficha table').forEach(tbl => {
+    tbl.style.cssText = "border-collapse:collapse;width:100%;" + F;
+    tbl.querySelectorAll('td').forEach(td => {
+      td.style.cssText = F + "font-size:11pt;padding:3pt 6pt;border-bottom:1pt solid #ddd;vertical-align:top;";
+    });
+    tbl.querySelectorAll('td:first-child').forEach(td => {
+      td.style.fontWeight = 'bold';
+    });
+  });
+
+  // ── Reference list: hanging indent ──────────────────────────────────────
+  clone.querySelectorAll('.ref-list li').forEach(li => {
+    li.style.cssText = F + LS + "display:block;padding-left:1.27cm;text-indent:-1.27cm;margin:0;";
+  });
+
+  // ── List items (ul/ol, not ref-list) ────────────────────────────────────
+  clone.querySelectorAll('ul:not(.ref-list) li, ol li').forEach(li => {
+    li.style.cssText = F + LS + "margin:0;";
+  });
+
+  // ── Blockquotes ─────────────────────────────────────────────────────────
+  clone.querySelectorAll('blockquote').forEach(bq => {
+    bq.style.cssText = F + LS + "margin:0 0 0 2.54cm;padding:0;";
+  });
+
+  // ── Cover ───────────────────────────────────────────────────────────────
+  const cov = clone.querySelector('.cover');
+  if (cov) cov.style.cssText = "text-align:center;page-break-after:always;padding:4cm 0 5cm;";
+
+  // ── Ficha ───────────────────────────────────────────────────────────────
+  const fic = clone.querySelector('.ficha');
+  if (fic) fic.style.cssText = "border:1pt solid #999;padding:12pt;margin:16pt 0;";
+
+  // ── Abstract section ────────────────────────────────────────────────────
+  clone.querySelectorAll('.abstract-section').forEach(s => { s.style.cssText = "margin:16pt 0;"; });
+
+  // ── Nota ────────────────────────────────────────────────────────────────
+  const nota = clone.querySelector('.nota');
+  if (nota) nota.style.cssText = F + "font-size:10pt;border-top:1pt solid #999;margin-top:16pt;padding-top:6pt;";
+
+  // ── Fig-box (monospace diagram) ─────────────────────────────────────────
+  clone.querySelectorAll('.fig-box').forEach(fb => {
+    fb.style.cssText = "font-family:'Courier New',monospace;font-size:10pt;border:1pt solid #ccc;"
+      + "padding:12pt;margin:8pt 0;white-space:pre;line-height:1.6;";
+  });
+
+  // ── Page breaks ─────────────────────────────────────────────────────────
+  clone.querySelectorAll('.page-break').forEach(pb => {
+    pb.style.cssText = "page-break-before:always;margin:0;padding:0;";
+  });
+
+  // ── Build final Word HTML ────────────────────────────────────────────────
+  const wordHtml = `<!DOCTYPE html>
+<html xmlns:o='urn:schemas-microsoft-com:office:office'
+      xmlns:w='urn:schemas-microsoft-com:office:word'
+      xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset='utf-8'>
+<title>fsQCA Automatico v4 — Publicacao Academica APA</title>
+<!--[if gte mso 9]><xml>
+<w:WordDocument>
+  <w:View>Print</w:View><w:Zoom>100</w:Zoom>
+  <w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml><![endif]-->
+<style>
+  @page { margin: 2.54cm; }
+  body { font-family: 'Times New Roman', serif; font-size: 12pt; margin: 0; padding: 0; }
+  ul { margin: 0 0 0 1.27cm; }
+  ol { margin: 0 0 0 1.27cm; }
+  .ref-list { list-style: none; padding: 0; margin: 0; }
+</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+
+  const blob = new Blob(['﻿' + wordHtml], {type: 'application/msword;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'QCAFlow_Publicacao_Academica_APA.doc';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
