@@ -19,12 +19,12 @@ authors:
   - family-names: Rossini
     given-names: "Leonardo Felipe da Silva"
     affiliation: "UNOESC — Universidade do Oeste de Santa Catarina"
-    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+    orcid: "https://orcid.org/0000-0001-6812-5086"
 version: "5.0"
 date-released: "2026-07-19"
 license: MIT
-repository-code: "https://github.com/[username]/qcaflow"
-url: "https://github.com/[username]/qcaflow"
+repository-code: "https://github.com/LeonardoFSR75/qcaflow"
+url: "https://github.com/LeonardoFSR75/qcaflow"
 doi: "10.XXXXX/joss.XXXXX"
 keywords:
   - qualitative-comparative-analysis

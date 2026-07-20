@@ -154,13 +154,13 @@
   <table>
     <tr><td>Nome do Produto</td><td>QCAFlow — Ferramenta Web para Análise Qualitativa Comparativa</td></tr>
     <tr><td>Tipo de Produto</td><td>Software / Sistema Computacional (Tipo 1 — CAPES)</td></tr>
-    <tr><td>Versão</td><td>4.0</td></tr>
+    <tr><td>Versão</td><td>5.0</td></tr>
     <tr><td>Natureza</td><td>Tecnológica — Ferramenta de apoio à pesquisa científica em Administração e Ciências Sociais</td></tr>
     <tr><td>Área de Conhecimento</td><td>Administração; Ciências Sociais Aplicadas; Metodologia de Pesquisa</td></tr>
     <tr><td>Público-Alvo</td><td>Pesquisadores, docentes e estudantes de pós-graduação em Administração, Ciência Política, Sociologia e áreas afins</td></tr>
     <tr><td>Formato</td><td>Arquivo HTML5 único, multiplataforma; dependência externa: SheetJS (CDN, para importação Excel)</td></tr>
     <tr><td>Disponibilidade</td><td>Código aberto — MIT License (Open Source Initiative). Uso, modificação e redistribuição livres mediante atribuição de autoria.</td></tr>
-    <tr><td>Repositório</td><td>https://github.com/[username]/qcaflow <em>(preencher após publicação)</em></td></tr>
+    <tr><td>Repositório</td><td>https://github.com/LeonardoFSR75/qcaflow</td></tr>
     <tr><td>DOI (Zenodo)</td><td>https://doi.org/10.XXXXX/zenodo.XXXXXXX <em>(preencher após release no GitHub + Zenodo)</em></td></tr>
     <tr><td>DOI (JOSS)</td><td>https://doi.org/10.XXXXX/joss.XXXXX <em>(preencher após aceite no Journal of Open Source Software)</em></td></tr>
     <tr><td>Registro INPI</td><td>BR XXXXXXXXXXXXXXX — Programa de Computador (Lei nº 9.609/1998) <em>(preencher após protocolo)</em></td></tr>
@@ -176,7 +176,7 @@
 <div class="abstract-section" id="resumo">
   <p class="abstract-heading">Resumo</p>
   <div class="abstract-box">
-    <p>Este trabalho descreve o desenvolvimento e a aplicação do <em>QCAFlow</em>, uma ferramenta computacional web (<em>single-page application</em>) voltada à execução da Análise Qualitativa Comparativa por Conjuntos Fuzzy (<em>fuzzy-set Qualitative Comparative Analysis</em> — fsQCA). A ferramenta integra, em um único arquivo HTML5 as principais etapas analíticas da metodologia: construção da tabela verdade, cálculo de consistência e cobertura, análise de necessidade, minimização booleana pelo algoritmo de Quine-McCluskey, identificação de equifinalidade, classificação de casos típicos e desviantes, geração de gráficos XY e interpretação textual automática dos resultados. A versão 4 introduz novas funcionalidades em relação às versões anteriores: importação de dados nos formatos Excel (.xlsx), JSON e XML; exportação da análise completa em PDF, Word (.doc) e Markdown; painel dedicado de nomeação de variáveis acima da tabela de dados; e aba de Interpretação com narrativa acadêmica gerada automaticamente. O produto foi desenvolvido como resposta à escassa disponibilidade de ferramentas gratuitas, acessíveis e em língua portuguesa para a aplicação de fsQCA, constituindo-se como produto técnico vinculado a pesquisa em Administração no âmbito de programa de mestrado profissional na UNOESC.</p>
+    <p>Este trabalho descreve o desenvolvimento e a aplicação do <em>QCAFlow</em>, uma ferramenta computacional web (<em>single-page application</em>) voltada à execução da Análise Qualitativa Comparativa por Conjuntos Fuzzy (<em>fuzzy-set Qualitative Comparative Analysis</em> — fsQCA). A ferramenta integra, em um único arquivo HTML5, as principais etapas analíticas da metodologia: calibração direta (transição log-odds ou linear por partes), construção da tabela verdade com detecção automática de contradições fuzzy, análise de necessidade bidirecional (para o resultado e sua negação) com Relevância da Necessidade (RoN), minimização booleana pelo algoritmo de Quine-McCluskey nas três soluções da Análise-Padrão (complexa, parcimoniosa e intermediária, com distinção núcleo/periferia conforme Fiss, 2011), testes de robustez, identificação de equifinalidade, classificação de casos típicos e desviantes, geração de gráficos XY e interpretação textual automática dos resultados. A versão 5.0 consolida todo esse protocolo analítico em relação às versões anteriores, que introduziram a importação de dados nos formatos Excel (.xlsx), JSON e XML, a exportação da análise completa em PDF, Word (.doc) e Markdown, o painel dedicado de nomeação de variáveis acima da tabela de dados e a aba de Interpretação com narrativa acadêmica gerada automaticamente. O produto foi desenvolvido como resposta à escassa disponibilidade de ferramentas gratuitas, acessíveis e em língua portuguesa para a aplicação de fsQCA, constituindo-se como produto técnico vinculado a pesquisa em Administração no âmbito de programa de mestrado profissional na UNOESC.</p>
     <p class="keywords"><em>Palavras-chave:</em> fsQCA, QCA, análise qualitativa comparativa, conjuntos fuzzy, metodologia de pesquisa, produto técnico, ferramenta web, administração.</p>
   </div>
 </div>
@@ -184,7 +184,7 @@
 <div class="abstract-section">
   <p class="abstract-heading">Abstract</p>
   <div class="abstract-box">
-    <p><em>This paper describes the development and application of QCAFlow, a web-based computational tool (single-page application) designed to perform fuzzy-set Qualitative Comparative Analysis (fsQCA). The tool integrates, in a single HTML5 file, the main analytical steps of the methodology: truth table construction, consistency and coverage calculation, necessity analysis, Boolean minimization using the Quine-McCluskey algorithm, equifinality identification, typical and deviant case classification, XY plot generation, and automatic textual interpretation of results. Version 4 introduces new features: data import in Excel (.xlsx), JSON, and XML formats; export of the complete analysis as PDF, Word (.doc), and Markdown; a dedicated variable naming panel above the data table; and an Interpretation tab with automatically generated academic narrative. The product was developed in response to the limited availability of free, accessible, and Portuguese-language tools for fsQCA application, constituting a technical product linked to Administration research within a professional master's program at UNOESC.</em></p>
+    <p><em>This paper describes the development and application of QCAFlow, a web-based computational tool (single-page application) designed to perform fuzzy-set Qualitative Comparative Analysis (fsQCA). The tool integrates, in a single HTML5 file, the main analytical steps of the methodology: direct-method calibration (log-odds or piecewise-linear transition), truth table construction with automatic fuzzy contradiction detection, bidirectional necessity analysis (for the outcome and its negation) with the Relevance of Necessity (RoN), Boolean minimization using the Quine-McCluskey algorithm across the three Standard Analysis solutions (complex, parsimonious, and intermediate, with core/peripheral distinction following Fiss, 2011), robustness checks, equifinality identification, typical and deviant case classification, XY plot generation, and automatic textual interpretation of results. Version 5.0 consolidates this analytical protocol on top of features introduced in earlier versions: data import in Excel (.xlsx), JSON, and XML formats; export of the complete analysis as PDF, Word (.doc), and Markdown; a dedicated variable naming panel above the data table; and an Interpretation tab with automatically generated academic narrative. The product was developed in response to the limited availability of free, accessible, and Portuguese-language tools for fsQCA application, constituting a technical product linked to Administration research within a professional master's program at UNOESC.</em></p>
     <p class="keywords"><em>Keywords:</em> fsQCA, QCA, qualitative comparative analysis, fuzzy sets, research methodology, technical product, web tool, administration.</p>
   </div>
 </div>
@@ -296,42 +296,50 @@
 <p class="table-title"><em>Módulos e Funcionalidades do QCAFlow</em></p>
 <table class="doc-table">
   <tr><th>Módulo</th><th>Funcionalidade</th><th>Relevância Metodológica</th></tr>
-  <tr><td>Dados</td><td>Entrada de dados editável (3–5 condições, até 500 casos); painel de nomes de variáveis acima da tabela; importação CSV, Excel (.xlsx), JSON e XML; exportação CSV</td><td>Coleta e organização do corpus empírico com múltiplos formatos de entrada</td></tr>
-  <tr><td>Tabela Verdade</td><td>Geração automática das 2<sup>N</sup> combinações; limiar de consistência configurável; cálculo de N_Casos, N_Suc, Consistência, Cobertura</td><td>Base analítica central da QCA</td></tr>
-  <tr><td>Análise</td><td>Métricas gerais; análise de necessidade (2N condições); configurações suficientes com cobertura única</td><td>Identificação de condições necessárias e suficientes</td></tr>
-  <tr><td>Solução</td><td>Consistência global; expressão booleana de suficiência; parcimônia (Quine-McCluskey); equifinalidade; casos típicos/desviantes; gráfico XY</td><td>Interpretação da solução fsQCA completa</td></tr>
-  <tr><td>Interpretação</td><td>Narrativa acadêmica gerada automaticamente; seções de suficiência, necessidade e síntese; botão de cópia para área de transferência</td><td>Suporte à redação de resultados em publicações científicas</td></tr>
-  <tr><td>Dashboard</td><td>KPI cards com métricas-chave; tabela resumo; solução parcimoniosa</td><td>Síntese executiva dos resultados</td></tr>
-  <tr><td>Histórico</td><td>Banco de dados local (localStorage); salvar/carregar/exportar sessões; exportação da análise em PDF, Word (.doc) e Markdown</td><td>Rastreabilidade, reprodutibilidade e disseminação da análise</td></tr>
-  <tr><td>Compartilhamento</td><td>Export .fsqca (projeto completo); export HTML auto-contido; import de projeto de terceiros</td><td>Colaboração e replicabilidade</td></tr>
+  <tr><td>Dados</td><td>Entrada de dados editável (3–8 condições, até 500 casos); painel de nomes de variáveis acima da tabela; importação CSV, Excel (.xlsx), JSON e XML; exportação CSV</td><td>Coleta e organização do corpus empírico com múltiplos formatos de entrada</td></tr>
+  <tr><td>Calibração</td><td>Método direto (Ragin, 2008) com três âncoras por variável; transição log-odds ou linear por partes (Nikou et al., 2024); sugestão de âncoras por percentis; ajuste automático de escores em 0,500</td><td>Transformação teoricamente fundamentada de dados brutos em escores de pertinência fuzzy</td></tr>
+  <tr><td>Tabela Verdade</td><td>Geração automática das 2<sup>N</sup> combinações; limiar de consistência, PRI e frequência configuráveis; detecção automática de contradições fuzzy (Rubinson, 2013); override manual de resultado</td><td>Base analítica central da QCA, com diagnóstico de qualidade da codificação</td></tr>
+  <tr><td>Análise</td><td>Métricas gerais; análise de necessidade bidirecional (resultado e sua negação) com Relevância da Necessidade (RoN); configurações suficientes com cobertura única</td><td>Identificação de condições necessárias e suficientes, com alerta de necessidade trivial</td></tr>
+  <tr><td>Solução</td><td>Consistência global; três soluções da Análise-Padrão (complexa, parcimoniosa, intermediária) com distinção núcleo/periferia (Fiss, 2011); equifinalidade; casos típicos/desviantes; testes de robustez; gráfico XY</td><td>Interpretação completa da solução fsQCA conforme o padrão de relato recomendado pela literatura</td></tr>
+  <tr><td>Interpretação</td><td>Narrativa acadêmica gerada automaticamente; seções de calibração, necessidade, tabela verdade, soluções, equifinalidade e assimetria; botão de cópia para área de transferência</td><td>Suporte à redação de resultados em publicações científicas</td></tr>
+  <tr><td>Dashboard</td><td>KPI cards com métricas-chave; tabela resumo; soluções intermediária e parcimoniosa</td><td>Síntese executiva dos resultados</td></tr>
+  <tr><td>Histórico</td><td>Banco de dados local (localStorage); salvar/carregar/exportar sessões; exportação da análise em PDF, Word (.doc) e Markdown, com registro de auditoria embutido</td><td>Rastreabilidade, reprodutibilidade e disseminação da análise</td></tr>
+  <tr><td>Compartilhamento</td><td>Export .qcaflow (projeto completo); export HTML auto-contido; import de projeto de terceiros</td><td>Colaboração e replicabilidade</td></tr>
 </table>
 
 <h3>3.3 Estrutura de Abas</h3>
 
 <div class="fig-box">
 ┌──────────────────────────────────────────────────────────────────────┐
-│  Instruções  │  Dados  │  Tabela Verdade  │  Análise  │  Solução     │
+│ Instruções │ Dados │ Calibração │ Tabela Verdade │ Análise │ Solução │
 ├──────────────────────────────────────────────────────────────────────┤
-│  Interpretação  │  Dashboard  │  Histórico                           │
+│  Interpretação  │  Dashboard  │  Histórico  │  Contato                │
 └──────────────────────────────────────────────────────────────────────┘
 
 Aba Dados — painel de nomes de variáveis (acima da tabela):
   ├── Identificador │ Condição 1 … Condição N │ Resultado
   └── Importação: CSV │ Excel (.xlsx) │ JSON │ XML
 
+Aba Calibração — método direto (Ragin, 2008):
+  ├── Três âncoras por variável (pleno / cruzamento / não-pertencimento)
+  ├── Transição log-odds ou linear por partes (Nikou et al., 2024)
+  └── Sugestão automática por percentis 95/50/5
+
 Aba Solução — subseções:
   ├── Consistência da Solução
   ├── Suficiência (Expressão Booleana)
-  ├── Parcimônia (Quine-McCluskey)
+  ├── Minimização Booleana — Complexa, Parcimoniosa, Intermediária
+  ├── Quadro de Configurações (núcleo × periferia, Fiss, 2011)
   ├── Equifinalidade
   ├── Casos Típicos e Desviantes
+  ├── Testes de Robustez
   └── Gráfico XY (Cobertura × Consistência)
 
 Aba Histórico — exportação da análise completa:
-  └── PDF │ Word (.doc) │ Markdown
+  └── PDF │ Word (.doc) │ Markdown │ Projeto (.qcaflow)
 </div>
 <p class="fig-number"><em>Figura 1</em></p>
-<p class="fig-caption"><em>Estrutura de Navegação e Subseções da Ferramenta QCAFlow (8 abas)</em></p>
+<p class="fig-caption"><em>Estrutura de Navegação e Subseções da Ferramenta QCAFlow (10 abas)</em></p>
 
 <!-- ======================== 4. DESENVOLVIMENTO ======================== -->
 <h2 id="desenvolvimento"><span class="sec-num">4.</span> Processo de Desenvolvimento</h2>
@@ -344,19 +352,19 @@ Aba Histórico — exportação da análise completa:
 
 <h3>4.2 Implementação do Algoritmo de Quine-McCluskey</h3>
 
-<p>O algoritmo de Quine-McCluskey (McCluskey, 1956; Quine, 1952) foi implementado em JavaScript puro e generalizado para N condições (não apenas 3, como na versão Excel anterior). O algoritmo opera em iterações: a cada rodada, pares de implicantes que diferem em exatamente uma posição não-<em>don't-care</em> são combinados em um novo implicante com aquela posição marcada como <em>don't-care</em>. Implicantes que não podem ser combinados em uma rodada são coletados como implicantes primos. O processo termina quando não há mais combinações possíveis.</p>
+<p>O algoritmo de Quine-McCluskey (McCluskey, 1956; Quine, 1952) foi implementado em JavaScript puro e generalizado para N condições (3 a 8), não apenas 3, como na versão Excel original que precedeu a ferramenta web. O algoritmo opera em iterações: a cada rodada, pares de implicantes que diferem em exatamente uma posição não-<em>don't-care</em> são combinados em um novo implicante com aquela posição marcada como <em>don't-care</em>. Implicantes que não podem ser combinados em uma rodada são coletados como implicantes primos. O processo termina quando não há mais combinações possíveis. A seleção da cobertura mínima entre os implicantes primos combina a extração dos implicantes essenciais com uma busca exaustiva de cardinalidade mínima sobre os implicantes remanescentes (equivalente ao método de Petrick para o número de implicantes tipicamente encontrado em análises com 3 a 8 condições), garantindo uma solução de tamanho realmente mínimo.</p>
 
 <h3>4.3 Análise de Necessidade Automatizada</h3>
 
-<p>Para cada condição C<sub>i</sub> (i = 1 a N) e sua negação ~C<sub>i</sub>, a ferramenta calcula automaticamente a consistência de necessidade [N(C<sub>i</sub> = v ∧ Resultado = 1) / N(Resultado = 1)] e a cobertura de necessidade [N(C<sub>i</sub> = v ∧ Resultado = 1) / N(C<sub>i</sub> = v)], exibindo diagnóstico de necessidade para cada condição com limiar ≥ 0,90.</p>
+<p>Para cada condição C<sub>i</sub> (i = 1 a N) e sua negação ~C<sub>i</sub>, a ferramenta calcula automaticamente, de forma bidirecional (para o resultado e para sua negação), a consistência de necessidade [Σmin(x<sub>i</sub>,y<sub>i</sub>) / Σy<sub>i</sub>] e a cobertura de necessidade [Σmin(x<sub>i</sub>,y<sub>i</sub>) / Σx<sub>i</sub>], exibindo diagnóstico de necessidade para cada condição com limiar ≥ 0,90. A partir da v5.0, o cálculo inclui também a Relevância da Necessidade (<em>Relevance of Necessity</em> — RoN; Schneider &amp; Wagemann, 2012), que sinaliza quando uma condição estatisticamente necessária é, na verdade, quase constante na amostra — situação em que a necessidade identificada deve ser interpretada como potencialmente trivial.</p>
 
 <h3>4.4 Sistema de Persistência (Banco de Dados Local)</h3>
 
-<p>O histórico analítico é armazenado no <em>localStorage</em> do navegador sob a chave <em>fsqca_v4_historico</em>, em formato JSON. Cada sessão salva contém os dados completos, configurações, resumo dos resultados e a expressão booleana da solução. O sistema suporta até 100 sessões e permite exportação/importação em JSON para transferência entre dispositivos. A mudança de chave em relação à versão anterior (v3) evita conflitos de histórico ao utilizar ambas as versões no mesmo navegador.</p>
+<p>O histórico analítico é armazenado no <em>localStorage</em> do navegador sob a chave <em>qcaflow_historico</em>, em formato JSON. Cada sessão salva contém os dados completos, configurações, calibração aplicada, expectativas direcionais e um resumo dos resultados, incluindo a expressão booleana da solução intermediária. O sistema suporta até 100 sessões e permite exportação/importação em JSON para transferência entre dispositivos.</p>
 
 <h3>4.5 Exportação e Compartilhamento</h3>
 
-<p>Na versão 4, as modalidades de exportação foram ampliadas. Em relação à importação de dados, foram adicionados suporte a Excel (.xlsx) via biblioteca SheetJS, JSON estruturado (formato nativo da ferramenta) e XML (formato <em>fsqca</em> com elemento raiz e nós de caso). Manteve-se a importação por CSV, já presente em versões anteriores. No que concerne à exportação, além dos formatos preexistentes — arquivo <em>.fsqca</em> (JSON completo do projeto), HTML auto-contido e CSV de dados — foram implementadas três novas modalidades de exportação da análise completa: (a) PDF, via diálogo de impressão do navegador (<em>window.print</em>), com folha de estilos dedicada para impressão; (b) Word (.doc), via geração de Blob HTML com MIME <em>application/msword</em>, compatível com Microsoft Word e LibreOffice; (c) Markdown, via exportação de texto plano estruturado com marcações compatíveis com Obsidian, Notion e repositórios Git.</p>
+<p>Ao longo das versões, as modalidades de importação e exportação foram ampliadas progressivamente. Em relação à importação de dados, há suporte a Excel (.xlsx) via biblioteca SheetJS embutida (funcionando 100% offline, sem dependência de CDN), JSON estruturado (formato nativo da ferramenta), XML (formato <em>fsqca</em> com elemento raiz e nós de caso) e CSV. No que concerne à exportação, além dos formatos de projeto — arquivo <em>.qcaflow</em> (JSON completo do projeto, incluindo registro de auditoria), HTML auto-contido e CSV de dados —, a ferramenta oferece três modalidades de exportação da análise completa: (a) PDF, via diálogo de impressão do navegador (<em>window.print</em>), com folha de estilos dedicada para impressão; (b) Word (.doc), via geração de Blob HTML com MIME <em>application/msword</em>, compatível com Microsoft Word e LibreOffice; (c) Markdown, via exportação de texto plano estruturado com marcações compatíveis com Obsidian, Notion e repositórios Git. Todas as modalidades de exportação da análise completa incluem, a partir da v5.0, um registro de auditoria com as âncoras de calibração, os limiares adotados, as expectativas direcionais e as três soluções da Análise-Padrão.</p>
 
 <div class="page-break"></div>
 
@@ -395,9 +403,11 @@ Aba Histórico — exportação da análise completa:
 <h3>6.1 Contribuições Metodológicas</h3>
 <ul>
   <li>Ferramenta fsQCA em língua portuguesa com cobertura completa do protocolo analítico, incluindo aba de Interpretação com narrativa acadêmica automática.</li>
-  <li>Implementação do algoritmo de Quine-McCluskey generalizado para N condições (3–5) em JavaScript puro, com correção de arredondamento fuzzy (limiar explícito ≥ 0,5).</li>
-  <li>Integração de análise de necessidade, equifinalidade, casos típicos/desviantes e gráfico XY em uma única interface.</li>
-  <li>Sistema de versionamento analítico com persistência local, exportação estruturada (.fsqca) e exportação da análise em PDF, Word e Markdown.</li>
+  <li>Implementação do algoritmo de Quine-McCluskey generalizado para N condições (3–8) em JavaScript puro, com núcleo de cálculo fuzzy baseado em mínimo fuzzy (não em igualdade crisp) e cobertura mínima garantida entre os implicantes primos.</li>
+  <li>Calibração direta por método de Ragin (2008) com transição log-odds ou linear por partes (Nikou et al., 2024), incorporada diretamente à interface.</li>
+  <li>Detecção automática de contradições fuzzy de caso (Rubinson, 2013) na tabela verdade, com limiar de proporção configurável e possibilidade de override manual do resultado.</li>
+  <li>Integração de análise de necessidade bidirecional com Relevância da Necessidade (RoN), as três soluções da Análise-Padrão com distinção núcleo/periferia (Fiss, 2011), equifinalidade, casos típicos/desviantes, testes de robustez e gráfico XY em uma única interface.</li>
+  <li>Sistema de versionamento analítico com persistência local, exportação estruturada (.qcaflow) e exportação da análise em PDF, Word e Markdown, com registro de auditoria embutido em todos os formatos.</li>
   <li>Suporte nativo a múltiplos formatos de importação (CSV, Excel, JSON, XML) e painel dedicado de nomeação de variáveis, reduzindo erros de configuração de dados.</li>
 </ul>
 
@@ -422,7 +432,11 @@ Aba Histórico — exportação da análise completa:
   <tr><td>Gráfico XY integrado</td><td>Sim</td><td>Não</td><td>Sim</td><td>Não</td></tr>
   <tr><td>Histórico de sessões</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
   <tr><td>Compartilhamento de projeto</td><td>Sim (.fsqca)</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
-  <tr><td>Suporte a 3–5 condições</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Parcial</td></tr>
+  <tr><td>Suporte a 3–8 condições</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Parcial</td></tr>
+  <tr><td>Calibração direta integrada (log-odds/linear)</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Parcial</td></tr>
+  <tr><td>Detecção automática de contradições fuzzy</td><td>Sim</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
+  <tr><td>Solução intermediária com núcleo/periferia (Fiss)</td><td>Sim</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
+  <tr><td>Testes de robustez integrados</td><td>Sim</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
   <tr><td>Importação Excel/JSON/XML</td><td>Sim</td><td>Não</td><td>Parcial</td><td>Não</td></tr>
   <tr><td>Exportação PDF/Word/Markdown</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
   <tr><td>Interpretação automática</td><td>Sim</td><td>Não</td><td>Não</td><td>Não</td></tr>
@@ -434,11 +448,11 @@ Aba Histórico — exportação da análise completa:
 
 <p>O QCAFlow representa uma contribuição concreta à infraestrutura metodológica da pesquisa em Administração e Ciências Sociais Aplicadas no Brasil. Ao reunir, em uma aplicação web de baixíssima dependência, todas as etapas do protocolo analítico fsQCA — da importação de dados em múltiplos formatos à geração de narrativa interpretativa automática — e ao disponibilizá-la em língua portuguesa, de forma gratuita e sem necessidade de instalação, o produto reduz significativamente a barreira técnica que tem limitado a adoção da metodologia em pesquisas de pós-graduação.</p>
 
-<p>A versão 4 avança em relação às versões anteriores ao incorporar funcionalidades que cobrem todo o ciclo da análise: importação (CSV, Excel, JSON, XML), processamento analítico completo (tabela verdade, suficiência, necessidade, minimização booleana, equifinalidade), interpretação narrativa automática e exportação dos resultados em formatos utilizados na prática acadêmica (PDF, Word, Markdown). O painel dedicado de nomeação de variáveis acima da tabela de dados elimina a ambiguidade da linha em itálico das versões anteriores, reduzindo erros de configuração por parte de pesquisadores iniciantes.</p>
+<p>A versão 5.0 avança em relação às versões anteriores ao incorporar o protocolo analítico completo da Análise-Padrão fsQCA: calibração direta com os três limiares qualitativos (log-odds ou linear por partes), detecção automática de contradições fuzzy, necessidade bidirecional com Relevância da Necessidade, as três soluções (complexa, parcimoniosa e intermediária) com seleção interativa de expectativas direcionais e distinção núcleo/periferia, testes de robustez e registro de auditoria embutido em todos os exports. O painel dedicado de nomeação de variáveis acima da tabela de dados elimina a ambiguidade da linha em itálico das versões anteriores, reduzindo erros de configuração por parte de pesquisadores iniciantes.</p>
 
 <p>A ferramenta não substitui o domínio teórico da metodologia QCA, que continua sendo condição essencial para a correta interpretação dos resultados. Ela atua como instrumento de operacionalização, liberando o pesquisador das tarefas computacionais para que possa concentrar-se nos aspectos interpretativos e substantivos da análise.</p>
 
-<p>Como agenda futura, identificam-se as seguintes possibilidades de desenvolvimento: (a) implementação da solução intermediária (<em>intermediate solution</em>) com seleção interativa de simplificações teoricamente plausíveis; (b) suporte nativo a calibração de dados fuzzy com os três limiares qualitativos; (c) integração com repositórios de dados de pesquisa (OSF, Zenodo); (d) versão offline progressiva (<em>Progressive Web App</em>) para uso sem conexão à internet.</p>
+<p>Como agenda futura, identificam-se as seguintes possibilidades de desenvolvimento: (a) suíte de testes automatizados que cubra os principais algoritmos (calibração, tabela verdade, minimização booleana) para fins de manutenção e de submissão a periódicos de software; (b) integração com repositórios de dados de pesquisa (OSF, Zenodo) para publicação conjunta de dados e análise; (c) versão offline progressiva (<em>Progressive Web App</em>) para uso sem conexão à internet; (d) suporte a QCA multivalorada (mvQCA) como alternativa à codificação fuzzy ou crisp.</p>
 
 <!-- ======================== REFERÊNCIAS APA ======================== -->
 <h2 id="referencias"><span class="sec-num">8.</span> Referências</h2>
@@ -451,12 +465,14 @@ Aba Histórico — exportação da análise completa:
   <li>Greckhamer, T., Furnari, S., Fiss, P. C., &amp; Aguilera, R. V. (2018). Studying configurations with qualitative comparative analysis: Best practices in strategy and organization research. <em>Strategic Organization, 16</em>(4), 482–495. https://doi.org/10.1177/1476127018786487</li>
   <li>Mackie, J. L. (1965). Causes and conditions. <em>American Philosophical Quarterly, 2</em>(4), 245–264.</li>
   <li>McCluskey, E. J. (1956). Minimization of Boolean functions. <em>Bell System Technical Journal, 35</em>(6), 1417–1444.</li>
+  <li>Nikou, S., Mezei, J., Liguori, E. W., &amp; El Tarabishy, A. (2024). FsQCA in entrepreneurship research: Opportunities and best practices. <em>Journal of Small Business Management, 62</em>(3), 1531–1548. https://doi.org/10.1080/00472778.2022.2147190</li>
   <li>Quine, W. V. (1952). The problem of simplifying truth functions. <em>The American Mathematical Monthly, 59</em>(8), 521–531.</li>
   <li>Ragin, C. C. (1987). <em>The comparative method: Moving beyond qualitative and quantitative strategies.</em> University of California Press.</li>
   <li>Ragin, C. C. (2000). <em>Fuzzy-set social science.</em> University of Chicago Press.</li>
   <li>Ragin, C. C. (2008). <em>Redesigning social inquiry: Fuzzy sets and beyond.</em> University of Chicago Press.</li>
   <li>Ragin, C. C., Drass, K. A., &amp; Davey, S. (2006). <em>Fuzzy-set/qualitative comparative analysis 2.0.</em> Department of Sociology, University of Arizona.</li>
   <li>Rihoux, B., &amp; Ragin, C. C. (Eds.). (2009). <em>Configurational comparative methods: Qualitative comparative analysis (QCA) and related techniques.</em> Sage.</li>
+  <li>Rubinson, C. (2013). Contradictions in fsQCA. <em>Quality &amp; Quantity, 47</em>(5), 2847–2867. https://doi.org/10.1007/s11135-012-9694-3</li>
   <li>Schneider, C. Q., &amp; Wagemann, C. (2012). <em>Set-theoretic methods for the social sciences: A guide to qualitative comparative analysis.</em> Cambridge University Press.</li>
   <li>Woodside, A. G. (2013). Moving beyond multiple regression analysis to algorithms: Calling for adoption of a paradigm shift from symmetric to asymmetric thinking in data analysis and crafting theory. <em>Journal of Business Research, 66</em>(4), 463–472. https://doi.org/10.1016/j.jbusres.2012.12.021</li>
   <li>Zadeh, L. A. (1965). Fuzzy sets. <em>Information and Control, 8</em>(3), 338–353.</li>
@@ -604,7 +620,7 @@ function exportWord() {
       xmlns='http://www.w3.org/TR/REC-html40'>
 <head>
 <meta charset='utf-8'>
-<title>fsQCA Automatico v4 — Publicacao Academica APA</title>
+<title>QCAFlow v5.0 — Publicacao Academica APA</title>
 <!--[if gte mso 9]><xml>
 <w:WordDocument>
   <w:View>Print</w:View><w:Zoom>100</w:Zoom>

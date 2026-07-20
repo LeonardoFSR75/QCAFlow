@@ -811,14 +811,14 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
           <div class="vcard-icon">🔗</div>
           <div class="vcard-info">
             <span class="vcard-label">ORCID</span>
-            <a href="https://orcid.org/XXXX-XXXX-XXXX-XXXX" target="_blank">orcid.org/XXXX-XXXX-XXXX-XXXX</a>
+            <a href="https://orcid.org/0000-0001-6812-5086" target="_blank">orcid.org/0000-0001-6812-5086</a>
           </div>
         </div>
         <div class="vcard-row">
           <div class="vcard-icon">💻</div>
           <div class="vcard-info">
             <span class="vcard-label">GitHub</span>
-            <a href="https://github.com/[username]/qcaflow" target="_blank">github.com/[username]/qcaflow</a>
+            <a href="https://github.com/LeonardoFSR75/qcaflow" target="_blank">github.com/LeonardoFSR75/qcaflow</a>
           </div>
         </div>
       </div>
@@ -829,10 +829,10 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
         <p><strong>QCAFlow</strong> é uma plataforma web para Análise Qualitativa Comparativa por Conjuntos Fuzzy (fsQCA), desenvolvida como produto técnico do Mestrado Profissional em Administração da UNOESC. A ferramenta implementa o protocolo analítico completo — da importação de dados à minimização booleana via Quine-McCluskey, análise de necessidade, equifinalidade e geração automática de narrativa acadêmica — em um único arquivo HTML5 autocontido, sem instalação ou conexão à internet.</p>
         <p>Fundamentada na metodologia de Charles C. Ragin (1987, 2000, 2008), a ferramenta é especialmente indicada para pesquisadores das ciências sociais e da administração que trabalham com amostras pequenas a médias (N = 10–100) e buscam identificar configurações causais — combinações de condições — que produzem um resultado de interesse.</p>
         <div class="contact-links">
-          <a class="contact-link-btn clb-github" href="https://github.com/[username]/qcaflow" target="_blank">💻 GitHub</a>
+          <a class="contact-link-btn clb-github" href="https://github.com/LeonardoFSR75/qcaflow" target="_blank">💻 GitHub</a>
           <a class="contact-link-btn clb-zenodo" href="https://doi.org/10.XXXXX/zenodo.XXXXXXX" target="_blank">📦 Zenodo DOI</a>
           <a class="contact-link-btn clb-joss" href="https://doi.org/10.XXXXX/joss.XXXXX" target="_blank">📄 JOSS Paper</a>
-          <a class="contact-link-btn clb-orcid" href="https://orcid.org/XXXX-XXXX-XXXX-XXXX" target="_blank">🆔 ORCID</a>
+          <a class="contact-link-btn clb-orcid" href="https://orcid.org/0000-0001-6812-5086" target="_blank">🆔 ORCID</a>
           <a class="contact-link-btn clb-inpi" href="#" target="_blank">🛡️ INPI BR XXXXXXXXXXXXXXX</a>
         </div>
       </div>
@@ -855,7 +855,7 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
 <footer class="app-footer">
   QCAFlow v5.0 &nbsp;·&nbsp; UNOESC — Universidade do Oeste de Santa Catarina
   &nbsp;·&nbsp; Desenvolvido por <strong style="color:#fff;">Leonardo Felipe da Silva Rossini</strong> &nbsp;·&nbsp; 2026
-  &nbsp;·&nbsp; <a href="https://github.com/[username]/qcaflow" style="color:rgba(255,255,255,.6);text-decoration:none;" title="Repositório GitHub">GitHub</a>
+  &nbsp;·&nbsp; <a href="https://github.com/LeonardoFSR75/qcaflow" style="color:rgba(255,255,255,.6);text-decoration:none;" title="Repositório GitHub">GitHub</a>
   &nbsp;·&nbsp; <span title="DOI — preencher após publicação no Zenodo">DOI: 10.XXXXX/zenodo.XXXXXXX</span>
   &nbsp;·&nbsp; MIT License
 </footer>
@@ -888,10 +888,17 @@ const DB_KEY = 'qcaflow_historico';
 // ============================================================
 function yVal(d){ return parseFloat(d.res)||0; }
 function isPos(d){ return yVal(d) > 0.5; }
+// Nudge de pontos de indiferença exatos em 0,500 para 0,501 (mesma convenção usada na
+// calibração — Ragin, 2008), evitando que um caso nunca seja contado em nenhuma linha
+// da tabela verdade (min fuzzy nunca supera 0,5 se travado exatamente em 0,5).
+function condVal(d, k){
+  const x = parseFloat(d.conds[k]) || 0;
+  return x === 0.5 ? 0.501 : x;
+}
 function rowMembership(bits, d){
   let m = 1;
   for(let k=0;k<numConds;k++){
-    const x = parseFloat(d.conds[k])||0;
+    const x = condVal(d, k);
     m = Math.min(m, bits[k]===1 ? x : 1-x);
   }
   return m;
@@ -900,7 +907,7 @@ function termMembership(term, d){
   let m = 1;
   for(let k=0;k<numConds;k++){
     if(term.dc[k]) continue;
-    const x = parseFloat(d.conds[k])||0;
+    const x = condVal(d, k);
     m = Math.min(m, term.bits[k]===1 ? x : 1-x);
   }
   return m;
@@ -1076,8 +1083,8 @@ function renderDadosTable() {
   const thead = document.getElementById('dados-thead');
   let hRow = `<tr><th class="row-num" style="background:var(--primary-dark);width:30px;">#</th>
     <th class="left" style="min-width:180px;">Caso</th>`;
-  for(let i=0;i<numConds;i++) hRow += `<th id="th-c${i}" style="min-width:110px;">${condLabels[i]}</th>`;
-  hRow += `<th id="th-res" style="min-width:90px;">${resLabel}</th></tr>`;
+  for(let i=0;i<numConds;i++) hRow += `<th id="th-c${i}" style="min-width:110px;">${esc(condLabels[i])}</th>`;
+  hRow += `<th id="th-res" style="min-width:90px;">${esc(resLabel)}</th></tr>`;
   thead.innerHTML = hRow;
 
   const tbody = document.getElementById('dados-tbody');
@@ -1103,7 +1110,9 @@ function renderDadosTable() {
   updateStats();
 }
 
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+// Sanitiza a sequência "</script" para impedir que dados do usuário fechem uma tag <script> em HTML gerado (exports).
+function escScript(s){ return String(s).replace(/<\/script/gi, '<\\/script'); }
 
 function cellChange(inp) {
   const idx = parseInt(inp.dataset.idx);
@@ -1133,7 +1142,9 @@ function addRow() {
 }
 function clearData() {
   if(!confirm('Limpar todos os dados? Esta ação não pode ser desfeita.')) return;
-  dados=[]; renderDadosTable(); recalcAll();
+  dados=[];
+  manualOverrides={}; rawBackup=null; calibInfo={applied:false,anchors:{},adjusted:[],type:'logistic'};
+  renderDadosTable(); recalcAll();
 }
 
 // ============================================================
@@ -1315,7 +1326,7 @@ function fmt(v,d){
 // ============================================================
 function renderTruthTable() {
   let hRow=`<tr><th>Combinação</th>`;
-  for(let i=0;i<numConds;i++) hRow+=`<th id="vth-c${i}">${condLabels[i]}</th>`;
+  for(let i=0;i<numConds;i++) hRow+=`<th id="vth-c${i}">${esc(condLabels[i])}</th>`;
   hRow+=`<th>N Casos (Casos)</th><th>N Suc.</th><th>Consistência</th><th>PRI</th><th>Cob. Bruta</th><th>Resultado_TV</th><th>Tipo</th></tr>`;
   document.getElementById('verdade-thead').innerHTML=hRow;
 
@@ -1351,7 +1362,7 @@ function renderTruthTable() {
       const y = yVal(c);
       const obsConsist = x > 0 ? Math.min(x, y) / x : 0;
       const color = obsConsist >= limiar ? '#1A7A42' : '#E74C3C';
-      return `<span style="color:${color};font-weight:bold;" title="Config: ${fmt(x,2)}, Desfecho: ${fmt(y,2)} (consist. individual = ${fmt(obsConsist,2)})">${c.caso}</span>`;
+      return `<span style="color:${color};font-weight:bold;" title="Config: ${fmt(x,2)}, Desfecho: ${fmt(y,2)} (consist. individual = ${fmt(obsConsist,2)})">${esc(c.caso)}</span>`;
     }).join(', ');
 
     return `<tr>
@@ -1400,7 +1411,7 @@ function renderAnalise() {
   const necRows=necessityAnalysis(false).map(function(it){
     const badge=it.trivial?`<span class="badge-ins" title="Consistência ≥ 0,90 mas RoN baixo — condição quase constante na amostra; necessidade possivelmente trivial">Trivial (RoN baixo)</span>`:
                 it.isNec?`<span class="badge-nec">Necessária</span>`:`<span class="badge-nao">Não necessária</span>`;
-    return `<tr><td class="left"><strong>${it.label}</strong></td>
+    return `<tr><td class="left"><strong>${esc(it.label)}</strong></td>
       <td>${it.consistNec!==null?fmt(it.consistNec):'—'}</td>
       <td>${it.cobNec!==null?fmt(it.cobNec):'—'}</td>
       <td>${it.ron!==null?fmt(it.ron):'—'}</td>
@@ -1411,7 +1422,7 @@ function renderAnalise() {
   const necRowsNeg=necessityAnalysis(true).map(function(it){
     const badge=it.trivial?`<span class="badge-ins" title="Consistência ≥ 0,90 mas RoN baixo — condição quase constante na amostra; necessidade possivelmente trivial">Trivial (RoN baixo)</span>`:
                 it.isNec?`<span class="badge-nec">Necessária</span>`:`<span class="badge-nao">Não necessária</span>`;
-    return `<tr><td class="left"><strong>${it.label}</strong></td>
+    return `<tr><td class="left"><strong>${esc(it.label)}</strong></td>
       <td>${it.consistNec!==null?fmt(it.consistNec):'—'}</td>
       <td>${it.cobNec!==null?fmt(it.cobNec):'—'}</td>
       <td>${it.ron!==null?fmt(it.ron):'—'}</td>
@@ -1420,7 +1431,7 @@ function renderAnalise() {
   if (necBodyNeg) necBodyNeg.innerHTML=necRowsNeg||'<tr><td colspan="5" class="empty-msg">Sem dados.</td></tr>';
 
   let shRow=`<tr><th>Combinação</th>`;
-  for(let i=0;i<numConds;i++) shRow+=`<th id="sth-c${i}">${condLabels[i]}</th>`;
+  for(let i=0;i<numConds;i++) shRow+=`<th id="sth-c${i}">${esc(condLabels[i])}</th>`;
   shRow+=`<th>N Casos</th><th>N Suc.</th><th>Consistência</th><th>PRI</th><th>Cob. Bruta</th><th>Cob. Única</th><th>Tipo</th></tr>`;
   document.getElementById('suf-thead').innerHTML=shRow;
 
@@ -1508,18 +1519,69 @@ function selectCover(pis, requiredRows){
   });
   function markCovered(){ req.forEach(function(bits,i){ if(!covered[i]&&chosen.some(function(p){ return piCovers(p,bits); })) covered[i]=true; }); }
   markCovered();
-  while(covered.some(function(c){ return !c; })){
-    let best=null,bestN=0;
-    pis.forEach(function(p){
-      if(chosen.indexOf(p)!==-1) return;
-      let n=0;
-      req.forEach(function(bits,i){ if(!covered[i]&&piCovers(p,bits)) n++; });
-      if(n>bestN){bestN=n;best=p;}
-    });
-    if(!best) break;
-    chosen.push(best); markCovered();
+  const uncoveredIdx = covered.map(function(c,i){ return c?-1:i; }).filter(function(i){ return i>=0; });
+  if(uncoveredIdx.length){
+    const remainingPis = pis.filter(function(p){ return chosen.indexOf(p)===-1; });
+    minCoverSearch(remainingPis, req, uncoveredIdx, covered).forEach(function(p){ chosen.push(p); });
   }
   return chosen;
+}
+// Cobertura mínima dos implicantes primos não-essenciais: busca exaustiva por
+// cardinalidade crescente (equivalente ao método de Petrick para poucos PIs
+// pendentes), garantindo uma solução de tamanho realmente mínimo em vez da
+// aproximação gulosa anterior. Com muitos PIs pendentes (>18), recorre à
+// heurística gulosa para evitar custo combinatório excessivo.
+function minCoverSearch(remainingPis, req, uncoveredIdx, coveredBase){
+  const n = remainingPis.length;
+  if(n === 0) return [];
+  if(n > 18){
+    const chosen=[]; const covered=coveredBase.slice();
+    function stillUncovered(){ return uncoveredIdx.some(function(i){ return !covered[i]; }); }
+    while(stillUncovered()){
+      let best=null,bestN=0;
+      remainingPis.forEach(function(p){
+        if(chosen.indexOf(p)!==-1) return;
+        let cnt=0;
+        uncoveredIdx.forEach(function(i){ if(!covered[i]&&piCovers(p,req[i])) cnt++; });
+        if(cnt>bestN){bestN=cnt;best=p;}
+      });
+      if(!best) break;
+      chosen.push(best);
+      uncoveredIdx.forEach(function(i){ if(piCovers(best,req[i])) covered[i]=true; });
+    }
+    return chosen;
+  }
+  const coverSets = remainingPis.map(function(p){
+    const s=new Set();
+    uncoveredIdx.forEach(function(i){ if(piCovers(p,req[i])) s.add(i); });
+    return s;
+  });
+  for(let size=1; size<=n; size++){
+    const found = searchCombos(n, size, function(idxCombo){
+      const cov=new Set();
+      idxCombo.forEach(function(ci){ coverSets[ci].forEach(function(i){ cov.add(i); }); });
+      if(cov.size === uncoveredIdx.length) return idxCombo.map(function(ci){ return remainingPis[ci]; });
+      return null;
+    });
+    if(found) return found;
+  }
+  return [];
+}
+// Enumera combinações de `size` índices em 0..n-1, retornando o primeiro resultado
+// não-nulo de `test`, com poda por ramo (backtracking).
+function searchCombos(n, size, test){
+  const idx = [];
+  function rec(start){
+    if(idx.length===size) return test(idx);
+    for(let i=start;i<=n-(size-idx.length);i++){
+      idx.push(i);
+      const r = rec(i+1);
+      if(r) return r;
+      idx.pop();
+    }
+    return null;
+  }
+  return rec(0);
 }
 
 // ============================================================
@@ -1537,11 +1599,13 @@ function computeSolutions(){
   if(!suf.length){ solutions={complex:[],parsimonious:[],intermediate:[],easyRems:[]}; return solutions; }
   const complexSol=selectCover(quineMinimize(suf),suf);
   const parsSol=selectCover(quineMinimize(suf.concat(remainders)),suf);
+  // Contrafactual fácil = remainder compatível com a expectativa direcional em
+  // TODAS as condições que têm expectativa declarada; condições sem expectativa
+  // são livres (Ragin, 2008, cap. 8; Schneider & Wagemann, 2012, cap. 9) — não é
+  // exigida adjacência bit-a-bit com nenhuma linha suficiente observada.
   const easyRems=remainders.filter(function(r){
-    return suf.some(function(s){
-      return r.bits.every(function(b,k){
-        return b===s.bits[k]||(dirExpect[k]!==''&&b===parseInt(dirExpect[k]));
-      });
+    return r.bits.every(function(b,k){
+      return dirExpect[k]==='' || b===parseInt(dirExpect[k]);
     });
   });
   const interSol=selectCover(quineMinimize(suf.concat(easyRems)),suf);
@@ -1564,7 +1628,7 @@ function fmtTermHTMLCore(term){
   const parts=[];
   for(let k=0;k<numConds;k++){
     if(term.dc[k]) continue;
-    const lbl=term.bits[k]===1?condLabels[k]:'~'+condLabels[k];
+    const lbl=term.bits[k]===1?esc(condLabels[k]):'~'+esc(condLabels[k]);
     const cls=term.bits[k]===1?'cp':'ca';
     if(term.core&&term.core[k]) parts.push(`<span class="${cls}" style="text-decoration:underline;" title="Condição nuclear (presente na solução parcimoniosa)">${lbl}</span>`);
     else parts.push(`<span class="${cls}" style="font-weight:normal;opacity:.8;" title="Condição periférica (apenas na solução intermediária)">${lbl}</span>`);
@@ -1587,7 +1651,7 @@ function notationChartHTML(forWord){
   inter.forEach(function(_,i){ h+='<th style="'+hs+'">Config. '+(i+1)+'</th>'; });
   h+='</tr>';
   for(let k=0;k<numConds;k++){
-    h+='<tr><td style="'+cs+'text-align:left;"><strong>'+condLabels[k]+'</strong></td>';
+    h+='<tr><td style="'+cs+'text-align:left;"><strong>'+esc(condLabels[k])+'</strong></td>';
     inter.forEach(function(t){
       let sym='&nbsp;';
       if(!t.dc[k]){
@@ -1607,7 +1671,7 @@ function notationChartHTML(forWord){
   h+='<tr><td style="'+cs+'text-align:left;font-weight:bold;">Consistência da solução</td><td style="'+cs+'font-weight:bold;" colspan="'+inter.length+'">'+fmt(smi.total.consist)+'</td></tr>';
   h+='<tr><td style="'+cs+'text-align:left;font-weight:bold;">Cobertura da solução</td><td style="'+cs+'font-weight:bold;" colspan="'+inter.length+'">'+fmt(smi.total.cov)+'</td></tr>';
   h+='</table></div>';
-  h+='<div style="font-size:11px;color:#888;margin-top:6px;">● presença · ⊗ ausência · símbolo grande = <strong>nuclear</strong> · pequeno = periférica · em branco = indiferente (Fiss, 2011). Desfecho: <strong>'+resLabel+'</strong>. Solução intermediária; núcleo definido pela parcimoniosa.</div>';
+  h+='<div style="font-size:11px;color:#888;margin-top:6px;">● presença · ⊗ ausência · símbolo grande = <strong>nuclear</strong> · pequeno = periférica · em branco = indiferente (Fiss, 2011). Desfecho: <strong>'+esc(resLabel)+'</strong>. Solução intermediária; núcleo definido pela parcimoniosa.</div>';
   return h;
 }
 function renderNotation(){
@@ -1616,7 +1680,7 @@ function renderNotation(){
 }
 function exportNotationWord(){
   if(!solutions.intermediate.length){ alert('Sem solução intermediária para exportar.'); return; }
-  const inner='<h2>Quadro de Configurações — '+resLabel+'</h2>'+notationChartHTML(true);
+  const inner='<h2>Quadro de Configurações — '+esc(resLabel)+'</h2>'+notationChartHTML(true);
   const wordHtml='<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
     +'<head><meta charset="utf-8"><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml><![endif]-->'
     +'<style>@page{margin:2.54cm;}body{font-family:"Times New Roman",serif;font-size:12pt;}h2{font-size:13pt;color:#004D26;}</style></head>'
@@ -1664,13 +1728,13 @@ function renderNegY(){
   const neg=computeNegSolution();
   const both=truthTable.filter(function(r){ return r.resTV===1&&r.resTVNeg===1; });
   if(!neg.rows.length){
-    div.innerHTML='<div class="empty-msg">Nenhuma configuração suficiente para ~'+resLabel+' com os limiares atuais.</div>';
+    div.innerHTML='<div class="empty-msg">Nenhuma configuração suficiente para ~'+esc(resLabel)+' com os limiares atuais.</div>';
     return;
   }
-  let h='<div class="step-lbl">Configurações suficientes para ~'+resLabel+'</div>';
+  let h='<div class="step-lbl">Configurações suficientes para ~'+esc(resLabel)+'</div>';
   h+='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">'+neg.rows.map(function(r){ return '<span class="parc-tag">'+r.combo+' <small style="color:#888;">(consist. '+fmt(r.consistNeg,2)+')</small></span>'; }).join('')+'</div>';
-  h+='<div class="suf-expr"><strong>~'+resLabel+'</strong> = '+neg.terms.map(fmtTermText).join(' + ')+'</div>';
-  h+='<div style="font-size:11px;color:#555;">Consistência: <strong>'+fmt(neg.metrics.total.consist)+'</strong> · Cobertura: <strong>'+fmt(neg.metrics.total.cov)+'</strong> · solução conservadora. Compare com a solução para '+resLabel+': a não-simetria entre elas é esperada (assimetria causal).</div>';
+  h+='<div class="suf-expr"><strong>~'+esc(resLabel)+'</strong> = '+neg.terms.map(fmtTermText).join(' + ')+'</div>';
+  h+='<div style="font-size:11px;color:#555;">Consistência: <strong>'+fmt(neg.metrics.total.consist)+'</strong> · Cobertura: <strong>'+fmt(neg.metrics.total.cov)+'</strong> · solução conservadora. Compare com a solução para '+esc(resLabel)+': a não-simetria entre elas é esperada (assimetria causal).</div>';
   if(both.length) h+='<div class="info-note" style="border-left:4px solid var(--red);margin-top:10px;">⚠️ '+both.length+' linha(s) codificada(s) como suficiente(s) para <strong>Y e ~Y simultaneamente</strong> ('+both.map(function(r){ return r.combo; }).join(', ')+') — eleve os limiares de consistência/PRI ou reexamine a calibração.</div>';
   div.innerHTML=h;
 }
@@ -1771,14 +1835,14 @@ function auditLines(){
     if(!a.on||a.full===undefined) return;
     const label=key==='res'?resLabel:condLabels[parseInt(key)];
     if(label===undefined) return;
-    anc.push(label+': '+a.full+' / '+a.cross+' / '+a.non);
+    anc.push(esc(label)+': '+a.full+' / '+a.cross+' / '+a.non);
   });
   return [
     ['Ferramenta','QCAFlow v5.0 — UNOESC'],
     ['Data/hora do export',new Date().toLocaleString('pt-BR')],
     ['Casos',String(dados.length)],
-    ['Condições ('+numConds+')',condLabels.join(', ')],
-    ['Desfecho',resLabel],
+    ['Condições ('+numConds+')',condLabels.map(esc).join(', ')],
+    ['Desfecho',esc(resLabel)],
     ['Limiar de consistência',String(limiar)],
     ['Limiar PRI (alerta)',String(limiarPRI)],
     ['Limiar de frequência','≥ '+limiarFreq+' caso(s)'],
@@ -1787,7 +1851,7 @@ function auditLines(){
       ?('Método direto ('+(calibInfo.type === 'linear' ? 'linear por partes' : 'log-odds')+') — âncoras (pleno/cruzamento/não-pertencimento): '+anc.join(' · ')
         +(calibInfo.adjusted.length?(' · Ajustes 0,500→0,501: '+calibInfo.adjusted.join('; ')):''))
       :'Não aplicada (valores usados diretamente como escores de pertencimento)'],
-    ['Expectativas direcionais',condLabels.map(function(c,k){ return c+'='+(dirExpect[k]===''?'—':(dirExpect[k]==='1'?'presença':'ausência')); }).join(' · ')],
+    ['Expectativas direcionais',condLabels.map(function(c,k){ return esc(c)+'='+(dirExpect[k]===''?'—':(dirExpect[k]==='1'?'presença':'ausência')); }).join(' · ')],
     ['Solução complexa',solutions.complex.map(fmtTermText).join(' + ')||'∅'],
     ['Solução parcimoniosa',solutions.parsimonious.map(fmtTermText).join(' + ')||'∅'],
     ['Solução intermediária',solutions.intermediate.map(fmtTermText).join(' + ')||'∅'],
@@ -1806,14 +1870,16 @@ function auditMD(){
 function fmtTermHTML(term) {
   const parts=[];
   for(let k=0;k<numConds;k++){
-    if(!term.dc[k]) parts.push(term.bits[k]===1?`<span class="cp">${condLabels[k]}</span>`:`<span class="ca">~${condLabels[k]}</span>`);
+    if(!term.dc[k]) parts.push(term.bits[k]===1?`<span class="cp">${esc(condLabels[k])}</span>`:`<span class="ca">~${esc(condLabels[k])}</span>`);
   }
   return parts.length?parts.join(' · '):'<em>∅</em>';
 }
+// Usada tanto em innerHTML quanto em exports de texto/Markdown — escapamos por
+// segurança (esc() é inofensiva em texto puro, apenas expande &/</>/"/').
 function fmtTermText(term) {
   const parts=[];
   for(let k=0;k<numConds;k++){
-    if(!term.dc[k]) parts.push(term.bits[k]===1?condLabels[k]:`~${condLabels[k]}`);
+    if(!term.dc[k]) parts.push(term.bits[k]===1?esc(condLabels[k]):`~${esc(condLabels[k])}`);
   }
   return parts.length?parts.join(' · '):'∅';
 }
@@ -1960,7 +2026,7 @@ function applyCalibration(){
     novo.forEach(function(d,i){
       const x=p.col==='res'?(parseFloat(src[i].res)||0):(parseFloat(src[i].conds[p.col])||0);
       let m=calibValue(x,p.full,p.cross,p.non);
-      if(m===0.5){ m=0.501; adjusted.push(d.caso+' · '+p.label); }
+      if(m===0.5){ m=0.501; adjusted.push(esc(d.caso)+' · '+esc(p.label)); }
       if(p.col==='res') d.res=m; else d.conds[p.col]=m;
     });
     calibInfo.anchors[p.key]={on:true,full:p.full,cross:p.cross,non:p.non};
@@ -2044,7 +2110,7 @@ function renderSolucao() {
       <span style="color:#888;font-size:11px;">CONFIG ${i+1} (${r.combo})</span><br>
       ${fmtTermHTML({bits:r.bits,dc:Array(numConds).fill(0)})}
       <span style="color:#888;"> &nbsp;→&nbsp; </span>
-      <span style="color:var(--slate);font-weight:bold;">${resLabel}</span>
+      <span style="color:var(--slate);font-weight:bold;">${esc(resLabel)}</span>
       &nbsp;<span style="font-size:11px;color:#888;">[c=${fmt(r.consist)} | cob=${r.cobBruta!==null?fmt(r.cobBruta):'—'}]</span>
     </div>`; }).join('');
 
@@ -2075,7 +2141,7 @@ function renderSolucao() {
         <div style="background:var(--slate);color:#fff;padding:8px 12px;font-size:11px;font-weight:bold;">${sd.nome}</div>
         <div style="padding:11px 13px;">
           <div style="font-size:11px;color:#888;margin-bottom:8px;">${sd.desc}</div>
-          <div class="suf-expr" style="margin-bottom:8px;"><strong>${resLabel}</strong> = ${expr||'<em>∅</em>'}</div>
+          <div class="suf-expr" style="margin-bottom:8px;"><strong>${esc(resLabel)}</strong> = ${expr||'<em>∅</em>'}</div>
           <div style="font-size:11px;color:#555;">Consistência: <strong>${fmt(smx.total.consist)}</strong> · Cobertura: <strong>${fmt(smx.total.cov)}</strong> · ${sd.terms.length} termo(s)</div>
         </div></div>`;
     });
@@ -2101,23 +2167,24 @@ function renderSolucao() {
     if(pis.length<=1){
       equiDiv.innerHTML=`<div class="info-note">ℹ️ <strong>Sem equifinalidade</strong>: apenas ${pis.length===0?'nenhum':'um'} caminho causal identificado na solução intermediária.</div>`;
     } else {
-      let eh=`<div class="info-note">✅ <strong>Equifinalidade confirmada:</strong> <strong>${pis.length} caminhos causais</strong> (solução intermediária) produzem "${resLabel}".</div>`;
+      let eh=`<div class="info-note">✅ <strong>Equifinalidade confirmada:</strong> <strong>${pis.length} caminhos causais</strong> (solução intermediária) produzem "${esc(resLabel)}".</div>`;
       eh+=`<div class="equi-paths">`;
       pis.forEach(function(pi,i){
         const pills=condLabels.map(function(n,k){
-          if(pi.dc[k]) return `<span class="epill ep-dc">${n} —</span>`;
-          return pi.bits[k]===1?`<span class="epill ep-pres">✓ ${n}</span>`:`<span class="epill ep-aus">✗ ~${n}</span>`;
+          const en=esc(n);
+          if(pi.dc[k]) return `<span class="epill ep-dc">${en} —</span>`;
+          return pi.bits[k]===1?`<span class="epill ep-pres">✓ ${en}</span>`:`<span class="epill ep-aus">✗ ~${en}</span>`;
         }).join('');
         eh+=`<div class="equi-path">
           <div class="equi-path-title">🔀 Caminho ${i+1}</div>
           <div style="margin-bottom:8px;">${pills}</div>
-          <div style="font-family:monospace;font-size:12px;color:var(--slate);margin-bottom:6px;"><strong>${fmtTermText(pi)}</strong> → ${resLabel}</div>
+          <div style="font-family:monospace;font-size:12px;color:var(--slate);margin-bottom:6px;"><strong>${fmtTermText(pi)}</strong> → ${esc(resLabel)}</div>
           <div style="font-size:11px;color:#888;">Cobre: ${sufCoveredBy(pi).join(', ')}</div>
         </div>`;
       });
       eh+=`</div><div class="equi-sol">
         <div style="font-size:10px;opacity:.6;margin-bottom:5px;">EXPRESSÃO BOOLEANA COMPLETA (INTERMEDIÁRIA)</div>
-        <strong>${resLabel}</strong> = ${pis.map(function(pi){ return `<span>${fmtTermText(pi)}</span>`; }).join(' <span style="color:#7DCEA0;font-size:14px;"> + </span> ')}
+        <strong>${esc(resLabel)}</strong> = ${pis.map(function(pi){ return `<span>${fmtTermText(pi)}</span>`; }).join(' <span style="color:#7DCEA0;font-size:14px;"> + </span> ')}
       </div>`;
       equiDiv.innerHTML=eh;
     }
@@ -2142,15 +2209,15 @@ function renderSolucao() {
   casesDiv.innerHTML=`<div class="cases-grid">
     <div class="cases-box">
       <div class="cases-box-head typ">✅ Casos Típicos (${typical.length})</div>
-      <div class="cases-list">${typical.length?typical.map(function(c){ return `<div class="case-item"><strong>${c.caso}</strong> <span style="color:#888;font-size:11px;">[${c.combo}]</span></div>`; }).join(''):'<div class="empty-msg">Nenhum.</div>'}</div>
+      <div class="cases-list">${typical.length?typical.map(function(c){ return `<div class="case-item"><strong>${esc(c.caso)}</strong> <span style="color:#888;font-size:11px;">[${c.combo}]</span></div>`; }).join(''):'<div class="empty-msg">Nenhum.</div>'}</div>
     </div>
     <div class="cases-box">
       <div class="cases-box-head dev">⚠️ Desviantes – Inconsistência (${devConsist.length})</div>
-      <div class="cases-list">${devConsist.length?devConsist.map(function(c){ return `<div class="case-item"><strong>${c.caso}</strong> <span style="color:#888;font-size:11px;">[${c.combo}]</span></div>`; }).join(''):'<div class="empty-msg">Nenhum.</div>'}</div>
+      <div class="cases-list">${devConsist.length?devConsist.map(function(c){ return `<div class="case-item"><strong>${esc(c.caso)}</strong> <span style="color:#888;font-size:11px;">[${c.combo}]</span></div>`; }).join(''):'<div class="empty-msg">Nenhum.</div>'}</div>
     </div>
     <div class="cases-box" style="grid-column:1/-1;">
       <div class="cases-box-head dev" style="background:#FEF9E7;color:#7D6608;">🔍 Desviantes – Cobertura (${devCov.length})</div>
-      <div class="cases-list">${devCov.length?devCov.map(function(c){ return `<div class="case-item"><strong>${c.caso}</strong> <span style="color:#888;font-size:11px;">[${c.combo}]</span></div>`; }).join(''):'<div class="empty-msg">Nenhum — todos os casos positivos estão cobertos.</div>'}</div>
+      <div class="cases-list">${devCov.length?devCov.map(function(c){ return `<div class="case-item"><strong>${esc(c.caso)}</strong> <span style="color:#888;font-size:11px;">[${c.combo}]</span></div>`; }).join(''):'<div class="empty-msg">Nenhum — todos os casos positivos estão cobertos.</div>'}</div>
     </div>
   </div>`;
 
@@ -2233,7 +2300,7 @@ function renderDashboard() {
   document.getElementById('kpi-nec').textContent=necCount;
 
   let dhRow=`<tr><th>Combinação</th>`;
-  for(let i=0;i<numConds;i++) dhRow+=`<th id="dth-c${i}">${condLabels[i]}</th>`;
+  for(let i=0;i<numConds;i++) dhRow+=`<th id="dth-c${i}">${esc(condLabels[i])}</th>`;
   dhRow+=`<th>N Casos</th><th>N Suc.</th><th>Consistência</th><th>Cobertura</th><th>Status</th></tr>`;
   document.getElementById('dash-thead').innerHTML=dhRow;
 
@@ -2252,8 +2319,8 @@ function renderDashboard() {
   const parcExpr=solutions.parsimonious.map(fmtTermText).join(' + ');
   const interExpr=pis.map(fmtTermText).join(' + ');
   document.getElementById('dash-solucao').innerHTML=pis.length?
-    `<span style="opacity:.6;font-size:11px;">SOLUÇÃO INTERMEDIÁRIA: </span><strong>${resLabel}</strong> = ${interExpr||'∅'}<br>
-     <span style="opacity:.6;font-size:11px;">SOLUÇÃO PARCIMONIOSA: </span><strong>${resLabel}</strong> = ${parcExpr||'∅'}`:
+    `<span style="opacity:.6;font-size:11px;">SOLUÇÃO INTERMEDIÁRIA: </span><strong>${esc(resLabel)}</strong> = ${interExpr||'∅'}<br>
+     <span style="opacity:.6;font-size:11px;">SOLUÇÃO PARCIMONIOSA: </span><strong>${esc(resLabel)}</strong> = ${parcExpr||'∅'}`:
     `<span style="opacity:.5;">Sem configurações suficientes.</span>`;
 }
 
@@ -2284,7 +2351,8 @@ function renderInterpretacao() {
     var gc    = smi.total.consist;
     var cob   = smi.total.cov;
 
-    var cl = condLabels.slice(0, numConds);
+    var cl = condLabels.slice(0, numConds).map(esc);
+    var resLabelEsc = esc(resLabel);
     var condStr = cl.length === 1 ? cl[0]
       : cl.length === 2 ? cl[0] + ' e ' + cl[1]
       : cl.slice(0, -1).join(', ') + ' e ' + cl[cl.length - 1];
@@ -2309,7 +2377,7 @@ function renderInterpretacao() {
       Object.keys(calibInfo.anchors).forEach(function(key){
         var a = calibInfo.anchors[key];
         if (!a.on || a.full === undefined) return;
-        var label = key === 'res' ? resLabel : cl[parseInt(key)];
+        var label = key === 'res' ? resLabelEsc : cl[parseInt(key)];
         if (label === undefined) return;
         ancList += '<li><strong>' + label + '</strong>: pertencimento pleno = ' + a.full
           + '; cruzamento = ' + a.cross + '; não-pertencimento pleno = ' + a.non + '</li>';
@@ -2337,7 +2405,7 @@ function renderInterpretacao() {
       secNec = '<p>A análise de necessidade, conduzida previamente à análise de suficiência, identificou '
         + '<strong>' + necItems.length + ' condição(ões)</strong> acima do limiar de consistência de 0,90:</p><ul>';
       necItems.forEach(function(item) {
-        secNec += '<li><strong>' + item.label + '</strong> (consistência = ' + f3(item.consistNec)
+        secNec += '<li><strong>' + esc(item.label) + '</strong> (consistência = ' + f3(item.consistNec)
           + '; cobertura = ' + f3(item.cobNec) + '; RoN = ' + f3(item.ron) + ')'
           + (item.trivial ? ' — <span style="color:#922B21;">RoN baixo: condição quase constante na amostra; a necessidade pode ser trivial e deve ser relativizada</span>' : '')
           + '</li>';
@@ -2379,7 +2447,7 @@ function renderInterpretacao() {
         + '<strong>intermediária</strong> (' + inter.length + ' termo(s)), esta última incorporando '
         + solutions.easyRems.length + ' contrafactual(is) fácil(eis) conforme as expectativas direcionais definidas. '
         + 'Os resultados reportados referem-se à <strong>solução intermediária</strong>, conforme a prática recomendada (Ragin, 2008; Fiss, 2011).</p>';
-      secSol += '<p>A fsQCA identificou <strong>' + inter.length + ' caminho(s) equivalente(s)</strong> para <em>' + resLabel + '</em>:</p><ul>';
+      secSol += '<p>A fsQCA identificou <strong>' + inter.length + ' caminho(s) equivalente(s)</strong> para <em>' + resLabelEsc + '</em>:</p><ul>';
       smi.perTerm.forEach(function(pt, i) {
         secSol += '<li><strong>Configuração ' + (i + 1) + '</strong> (consistência = ' + f3(pt.consist)
           + '; cobertura bruta = ' + f3(pt.covBruta) + '; cobertura única = ' + f3(pt.covUnica) + '): '
@@ -2405,12 +2473,12 @@ function renderInterpretacao() {
     var negNota = '';
     if (neg.terms.length) {
       negNota = ' A análise complementar da <strong>ausência do desfecho</strong> identificou ' + neg.terms.length
-        + ' configuração(ões) suficiente(s) para ~' + resLabel + ' — '
+        + ' configuração(ões) suficiente(s) para ~' + resLabelEsc + ' — '
         + neg.terms.map(fmtTermText).join(' + ')
         + ' (consistência = ' + f3(neg.metrics.total.consist) + '; cobertura = ' + f3(neg.metrics.total.cov)
         + ') —, distintas das que produzem o resultado, o que corrobora a assimetria causal.';
     } else {
-      negNota = ' A análise complementar da ausência do desfecho (~' + resLabel + ') não identificou configurações suficientes com os limiares atuais.';
+      negNota = ' A análise complementar da ausência do desfecho (~' + resLabelEsc + ') não identificou configurações suficientes com os limiares atuais.';
     }
     var secFinal = '<p>' + equiNota + ' Ressalta-se a <strong>assimetria causal</strong> da abordagem: as configurações que produzem o resultado '
       + 'não são o espelho das que produzem sua ausência.' + negNota
@@ -2426,7 +2494,7 @@ function renderInterpretacao() {
     out += '<div class="interp-section">';
     out += '<div class="interp-sec-title">1. Método, Dados e Calibração</div>';
     out += '<p>A análise qualitativa comparativa por conjuntos fuzzy (fsQCA) foi conduzida com <strong>' + total + ' casos</strong>, '
-      + 'avaliando as condições <em>' + condStr + '</em> em relação ao desfecho <strong>' + resLabel + '</strong>. '
+      + 'avaliando as condições <em>' + condStr + '</em> em relação ao desfecho <strong>' + resLabelEsc + '</strong>. '
       + 'Do total, <strong>' + r1 + ' caso(s) (' + pct1 + '%)</strong> apresentam pertencimento predominante ao resultado (&gt; 0,5) e '
       + '<strong>' + r0 + ' (' + pct0 + '%)</strong> não apresentam.</p>';
     out += secCal;
@@ -2529,29 +2597,36 @@ function importCSV(event) {
   const file=event.target.files[0]; if(!file) return;
   const reader=new FileReader();
   reader.onload=function(e){
-    const lines=e.target.result.trim().split(/\r?\n/);
-    const newData=[];
-    let start=0;
-    const first=lines[0].split(/[,;\t]/);
-    if(isNaN(parseFloat(first[1]))) start=1;
-    const cols=lines[start>0?start:0].split(/[,;\t]/);
-    const detectedN=cols.length-2;
-    if(detectedN>=3&&detectedN<=8&&detectedN!==numConds){
-      numConds=detectedN;
-      condLabels=Array.from({length:numConds},function(_,i){ return 'Condição_'+(i+1); });
-      document.getElementById('num-conds').value=numConds;
+    try{
+      const lines=e.target.result.trim().split(/\r?\n/);
+      const newData=[];
+      let start=0;
+      const first=lines[0].split(/[,;\t]/);
+      if(isNaN(parseFloat(first[1]))) start=1;
+      const cols=lines[start>0?start:0].split(/[,;\t]/);
+      const detectedN=cols.length-2;
+      if(detectedN>=3&&detectedN<=8&&detectedN!==numConds){
+        numConds=detectedN;
+        condLabels=Array.from({length:numConds},function(_,i){ return 'Condição_'+(i+1); });
+        document.getElementById('num-conds').value=numConds;
+      }
+      for(let i=start;i<lines.length;i++){
+        const c=lines[i].split(/[,;\t]/);
+        if(c.length<numConds+2) continue;
+        const conds=[];
+        for(let k=1;k<=numConds;k++) conds.push(parseFloat(c[k])||0);
+        newData.push({caso:c[0].trim().replace(/^"|"$/g,''),conds,res:parseFloat(c[numConds+1])||0});
+      }
+      if(!newData.length){alert('Nenhum dado válido no CSV.');return;}
+      dados=newData;
+      manualOverrides={}; rawBackup=null; calibInfo={applied:false,anchors:{},adjusted:[],type:'logistic'};
+      renderDadosTable(); recalcAll();
+      event.target.value='';
+      alert('✅ ' + newData.length + ' casos importados!');
+    }catch(err){
+      alert('Erro ao importar CSV: arquivo malformado ou em formato inesperado.');
+      event.target.value='';
     }
-    for(let i=start;i<lines.length;i++){
-      const c=lines[i].split(/[,;\t]/);
-      if(c.length<numConds+2) continue;
-      const conds=[];
-      for(let k=1;k<=numConds;k++) conds.push(parseFloat(c[k])||0);
-      newData.push({caso:c[0].trim().replace(/^"|"$/g,''),conds,res:parseFloat(c[numConds+1])||0});
-    }
-    if(!newData.length){alert('Nenhum dado válido no CSV.');return;}
-    dados=newData; renderDadosTable(); recalcAll();
-    event.target.value='';
-    alert('✅ ' + newData.length + ' casos importados!');
   };
   reader.readAsText(file,'UTF-8');
 }
@@ -2568,7 +2643,15 @@ function exportCSV() {
 //  HISTÓRICO (localStorage)
 // ============================================================
 function getDB(){ try{return JSON.parse(localStorage.getItem(DB_KEY)||'[]');}catch(e){return [];} }
-function saveDB(db){ localStorage.setItem(DB_KEY,JSON.stringify(db)); }
+function saveDB(db){
+  try{
+    localStorage.setItem(DB_KEY,JSON.stringify(db));
+    return true;
+  }catch(e){
+    alert('⚠️ Não foi possível salvar: armazenamento local cheio ou indisponível. Exporte/limpe o histórico e tente novamente.');
+    return false;
+  }
+}
 
 function promptSaveHistory() {
   const name=prompt('Nome para esta análise:', 'Análise '+new Date().toLocaleString('pt-BR'));
@@ -2600,8 +2683,7 @@ function promptSaveHistory() {
   };
   db.unshift(session);
   if(db.length>100) db.pop();
-  saveDB(db);
-  alert('✅ Análise salva no histórico!');
+  if(saveDB(db)) alert('✅ Análise salva no histórico!');
   renderHistorico();
 }
 
@@ -2620,6 +2702,7 @@ function loadSession(id) {
   while(dirExpect.length<numConds) dirExpect.push('');
   calibInfo=s.calib||{applied:false,anchors:{},adjusted:[]};
   rawBackup=null;
+  manualOverrides={};
   document.getElementById('num-conds').value=numConds;
   document.getElementById('limiar-input').value=limiar;
   document.getElementById('pri-input').value=limiarPRI;
@@ -2689,14 +2772,14 @@ function renderHistorico() {
     const summ=s.summary||{};
     return `<div class="hist-card">
       <div class="hinfo">
-        <div class="hname">📋 ${s.name}</div>
+        <div class="hname">📋 ${esc(s.name)}</div>
         <div class="hmeta">🕒 ${dtStr} &nbsp;·&nbsp; ${s.numConds||3} condições &nbsp;·&nbsp; Limiar: ${s.limiar||0.75}</div>
         <div class="htags">
           <span class="hist-tag">📊 ${summ.totalCasos||0} casos</span>
           <span class="hist-tag">✅ ${summ.r1||0} resultado=1</span>
           <span class="hist-tag">⚙️ ${summ.suficientes||0} suf.</span>
           <span class="hist-tag">🔀 ${summ.caminhos||0} caminhos</span>
-          ${summ.solucao?`<span class="hist-tag" style="background:#FEF9E7;color:#7D6608;font-family:monospace;">= ${summ.solucao}</span>`:''}
+          ${summ.solucao?`<span class="hist-tag" style="background:#FEF9E7;color:#7D6608;font-family:monospace;">= ${esc(summ.solucao)}</span>`:''}
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px;">
@@ -2752,6 +2835,7 @@ function importProject(event) {
       while (dirExpect.length < numConds) dirExpect.push('');
       calibInfo = p.calib || { applied:false, anchors:{}, adjusted:[] };
       rawBackup = null;
+      manualOverrides = {};
       dados     = p.dados;
       document.getElementById('num-conds').value   = numConds;
       document.getElementById('limiar-input').value = limiar;
@@ -2777,10 +2861,10 @@ function importProject(event) {
 }
 
 function exportSelfContained() {
-  const dataBlob = JSON.stringify({
+  const dataBlob = escScript(JSON.stringify({
     numConds, condLabels: [...condLabels], resLabel, limiar,
     dados: JSON.parse(JSON.stringify(dados))
-  });
+  }));
   const currentHTML = document.documentElement.outerHTML;
   const injected = currentHTML.replace(
     /\/\/ ={10,}\n\s*\/\/\s*INIT[\s\S]*?}\s*\)\(\);/,
@@ -2838,6 +2922,7 @@ function importExcel(event) {
       }
       if (!newData.length) { alert('Nenhum dado válido na planilha.'); return; }
       dados = newData;
+      manualOverrides = {}; rawBackup = null; calibInfo = {applied:false, anchors:{}, adjusted:[], type:'logistic'};
       renderDadosTable();
       for (var i = 0; i < numConds; i++) { var el = document.getElementById('fn-c'+i); if(el) el.value = condLabels[i]; }
       var rEl = document.getElementById('fn-res'); if(rEl) rEl.value = resLabel;
@@ -2874,6 +2959,7 @@ function importDataJSON(event) {
         while (c.length < numConds) c.push(0);
         return { caso: String(r.caso || r.name || ('Caso_'+(i+1))), conds: c.map(Number), res: parseFloat(r.res || r.resultado || 0) };
       });
+      manualOverrides = {}; rawBackup = null; calibInfo = {applied:false, anchors:{}, adjusted:[], type:'logistic'};
       renderDadosTable();
       for (var i = 0; i < numConds; i++) { var el = document.getElementById('fn-c'+i); if(el) el.value = condLabels[i]; }
       var rEl = document.getElementById('fn-res'); if(rEl) rEl.value = resLabel;
@@ -2923,6 +3009,7 @@ function importXML(event) {
         labEls.forEach(function(el, i){ if(i < numConds) condLabels[i] = el.textContent.trim()||condLabels[i]; });
       }
       dados = newData;
+      manualOverrides = {}; rawBackup = null; calibInfo = {applied:false, anchors:{}, adjusted:[], type:'logistic'};
       renderDadosTable();
       for (var i = 0; i < numConds; i++) { var el2 = document.getElementById('fn-c'+i); if(el2) el2.value = condLabels[i]; }
       recalcAll();
@@ -2961,7 +3048,7 @@ function exportCompletePDF() {
 
   var sufRows = suf.map(function(r){
     return '<tr><td style="padding:4px 8px;border:1px solid #ccc;font-family:monospace">'+r.combo+'</td>'
-      +'<td style="padding:4px 8px;border:1px solid #ccc">'+ r.bits.map(function(b,i){ return b?condLabels[i]:'~'+condLabels[i]; }).join(' · ')+'</td>'
+      +'<td style="padding:4px 8px;border:1px solid #ccc">'+ r.bits.map(function(b,i){ return b?esc(condLabels[i]):'~'+esc(condLabels[i]); }).join(' · ')+'</td>'
       +'<td style="padding:4px 8px;border:1px solid #ccc;text-align:center">'+r.nCasos+'</td>'
       +'<td style="padding:4px 8px;border:1px solid #ccc;text-align:center">'+r.nSuc+'</td>'
       +'<td style="padding:4px 8px;border:1px solid #ccc;text-align:center">'+(r.consist!==null?r.consist.toFixed(3):'—')+'</td>'
@@ -2995,8 +3082,8 @@ function exportCompletePDF() {
     +'<table><tr><th style="text-align:left">Parâmetro</th><th style="text-align:left">Valor</th></tr>'
     +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Total de casos</td><td style="padding:4px 8px;border:1px solid #ccc">'+dados.length+'</td></tr>'
     +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Número de condições</td><td style="padding:4px 8px;border:1px solid #ccc">'+numConds+'</td></tr>'
-    +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Condições analisadas</td><td style="padding:4px 8px;border:1px solid #ccc">'+condLabels.join(', ')+'</td></tr>'
-    +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Desfecho (resultado)</td><td style="padding:4px 8px;border:1px solid #ccc">'+resLabel+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Condições analisadas</td><td style="padding:4px 8px;border:1px solid #ccc">'+condLabels.map(esc).join(', ')+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Desfecho (resultado)</td><td style="padding:4px 8px;border:1px solid #ccc">'+esc(resLabel)+'</td></tr>'
     +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Limiar de consistência</td><td style="padding:4px 8px;border:1px solid #ccc">'+limiar+'</td></tr>'
     +'<tr><td style="padding:4px 8px;border:1px solid #ccc">Casos com resultado=1</td><td style="padding:4px 8px;border:1px solid #ccc">'+r1+'</td></tr>'
     +'</table>'
@@ -3010,7 +3097,7 @@ function exportCompletePDF() {
     +'<div class="sol">SOLUÇÃO INTERMEDIÁRIA: '+solucao+'</div>'
     +'<div class="sol" style="background:#2C3E50;">SOLUÇÃO PARCIMONIOSA: '+solucaoParc+'</div>'
     +'<h2>3. Tabela Verdade</h2>'
-    +'<table><thead><tr><th>Combo</th>'+condLabels.map(function(c){ return '<th>'+c+'</th>'; }).join('')+'<th>N Cas.</th><th>N Suc.</th><th>Consist.</th><th>PRI</th><th>Cob.</th><th>Tipo</th></tr></thead><tbody>'+tvRows+'</tbody></table>'
+    +'<table><thead><tr><th>Combo</th>'+condLabels.map(function(c){ return '<th>'+esc(c)+'</th>'; }).join('')+'<th>N Cas.</th><th>N Suc.</th><th>Consist.</th><th>PRI</th><th>Cob.</th><th>Tipo</th></tr></thead><tbody>'+tvRows+'</tbody></table>'
     +'<h2>4. Configurações Suficientes</h2>'
     +(suf.length ? '<table><thead><tr><th>Combo</th><th>Expressão</th><th>N Cas.</th><th>N Suc.</th><th>Consist.</th><th>Cob. Bruta</th></tr></thead><tbody>'+sufRows+'</tbody></table>' : '<p>Nenhuma configuração suficiente com o limiar atual.</p>')
     +'<h2>5. Quadro de Configurações (Fiss, 2011)</h2>'
@@ -3086,8 +3173,8 @@ function exportCompleteWord() {
     +'<table><tr><th style="text-align:left">Parâmetro</th><th style="text-align:left">Valor</th></tr>'
     +'<tr><td>Total de casos</td><td>'+dados.length+'</td></tr>'
     +'<tr><td>Número de condições</td><td>'+numConds+'</td></tr>'
-    +'<tr><td>Condições analisadas</td><td>'+condLabels.join(', ')+'</td></tr>'
-    +'<tr><td>Desfecho analisado</td><td>'+resLabel+'</td></tr>'
+    +'<tr><td>Condições analisadas</td><td>'+condLabels.map(esc).join(', ')+'</td></tr>'
+    +'<tr><td>Desfecho analisado</td><td>'+esc(resLabel)+'</td></tr>'
     +'<tr><td>Limiar de consistência</td><td>'+limiar+'</td></tr>'
     +'<tr><td>Casos com resultado=1</td><td>'+r1+'</td></tr>'
     +'</table>\n'
@@ -3098,7 +3185,7 @@ function exportCompleteWord() {
     +'<p><b>SOLUÇÃO INTERMEDIÁRIA:</b> '+solucao+'</p>\n'
     +'<p><b>SOLUÇÃO PARCIMONIOSA:</b> '+solucaoParc+'</p>\n'
     +'<h2>3. Tabela Verdade</h2>\n'
-    +'<table><tr><th>Combo</th>'+condLabels.map(function(c){ return '<th>'+c+'</th>'; }).join('')
+    +'<table><tr><th>Combo</th>'+condLabels.map(function(c){ return '<th>'+esc(c)+'</th>'; }).join('')
     +'<th>N Cas.</th><th>N Suc.</th><th>Consist.</th><th>PRI</th><th>Cob.</th><th>Tipo</th></tr>'
     + truthTable.map(function(r){
         return '<tr><td>'+r.combo+'</td>'
@@ -3116,7 +3203,7 @@ function exportCompleteWord() {
       ? '<table><tr><th>Combo</th><th>Expressão</th><th>N Cas.</th><th>N Suc.</th><th>Consist.</th><th>Cob. Bruta</th></tr>'
         + suf.map(function(r){
             return '<tr><td>'+r.combo+'</td>'
-              +'<td>'+r.bits.map(function(b,i){ return b?condLabels[i]:'~'+condLabels[i]; }).join(' · ')+'</td>'
+              +'<td>'+r.bits.map(function(b,i){ return b?esc(condLabels[i]):'~'+esc(condLabels[i]); }).join(' · ')+'</td>'
               +'<td style="text-align:center">'+r.nCasos+'</td>'
               +'<td style="text-align:center">'+r.nSuc+'</td>'
               +'<td style="text-align:center">'+(r.consist!==null?r.consist.toFixed(3):'—')+'</td>'

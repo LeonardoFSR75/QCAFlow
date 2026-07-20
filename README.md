@@ -3,7 +3,7 @@
 **Web-Based fsQCA Analysis Platform**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-5.0-blue.svg)](https://github.com/[username]/qcaflow)
+[![Version](https://img.shields.io/badge/version-5.0-blue.svg)](https://github.com/LeonardoFSR75/qcaflow)
 [![JOSS](https://joss.theoj.org/papers/XXXXX/status.svg)](https://doi.org/10.XXXXX/joss.XXXXX)
 [![DOI](https://zenodo.org/badge/DOI/10.XXXXX.svg)](https://doi.org/10.XXXXX/zenodo.XXXXXXX)
 
@@ -17,6 +17,7 @@
 
 | Módulo | Descrição |
 |--------|-----------|
+| 📋 Instruções | Guia de uso passo a passo, integrado à interface |
 | 📊 Dados | Importação CSV, Excel (.xlsx), JSON, XML; edição inline |
 | 🎯 Calibração | Método direto (Ragin, 2008): 3 âncoras, transição logística ou **linear por partes** (Nikou et al., 2024), sugestão por percentis, tratamento de 0,5 |
 | 🔢 Tabela Verdade | 2ᴺ combinações (3–8 condições) · consistência bruta e PRI · **detecção automática de contradições fuzzy** (Rubinson, 2013) com limiar de proporção · **override manual de resultado** · listagem de casos |
@@ -49,6 +50,14 @@ PDF · Word (.doc) · Markdown · Projeto (.qcaflow) · HTML autocontido — tod
 
 - [SheetJS](https://sheetjs.com/) v0.18.5 (MIT) — **embutido no HTML**, sem CDN; usado apenas para importar Excel
 
+## Testes / Tests
+
+```bash
+node tests/core-algorithms.test.js
+```
+
+Testes automatizados dos algoritmos centrais (calibração, tabela verdade, PRI/RoN, Quine-McCluskey e as três soluções), sem dependências externas. Ver [`tests/README.md`](tests/README.md).
+
 ## Como Citar / Citation
 
 > Rossini, L. F. da S. (2026). *QCAFlow: Web-Based fsQCA Analysis Platform* (v5.0) [Software]. UNOESC. MIT License. https://doi.org/10.XXXXX/zenodo.XXXXXXX
@@ -69,6 +78,9 @@ qcaflow/                          ← repositório GitHub / Zenodo
 │   └── Publicacao_Academica.html #   Produto Técnico — Mestrado Profissional (português)
 ├── docs/
 │   └── Documentacao_Tecnica.html # Documentação técnica completa
+├── tests/                        # Testes automatizados dos algoritmos centrais
+│   ├── core-algorithms.test.js
+│   └── README.md
 ├── data/                         # Bases de dados de exemplo (6 cenários)
 └── templates/                    # Modelos de importação (CSV, Excel, JSON, XML)
 ```
@@ -77,7 +89,7 @@ qcaflow/                          ← repositório GitHub / Zenodo
 
 ## Roteiro JOSS / JOSS Submission Roadmap
 
-1. Criar repositório GitHub público: `github.com/[username]/qcaflow`
+1. Criar repositório GitHub público: `github.com/LeonardoFSR75/qcaflow`
 2. Fazer upload de todos os arquivos
 3. Criar release com tag `v5.0.0`
 4. Conectar Zenodo → gera DOI automaticamente

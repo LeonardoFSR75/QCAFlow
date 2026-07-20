@@ -11,7 +11,7 @@ tags:
   - JavaScript
 authors:
   - name: Leonardo Felipe da Silva Rossini
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0001-6812-5086
     affiliation: 1
 affiliations:
   - name: UNOESC — Universidade do Oeste de Santa Catarina, Brazil
@@ -86,8 +86,9 @@ persistence—operates with no network access whatsoever.
 
 **Calibration.** Raw data are transformed into fuzzy-set membership scores in [0,1]
 by the direct method [@ragin2008], using three qualitative anchors per variable
-(full membership ≈ 0.95, crossover 0.50, full non-membership ≈ 0.05) and a
-log-odds transformation. Anchors can be suggested automatically from the 95th, 50th,
+(full membership ≈ 0.95, crossover 0.50, full non-membership ≈ 0.05) and either a
+log-odds or a piecewise-linear transition function [@nikou2024]. Anchors can be
+suggested automatically from the 95th, 50th,
 and 5th percentiles and then adjusted on substantive grounds. Scores that fall
 exactly at the 0.50 crossover are nudged to 0.501 (and logged) to avoid dropping
 cases at the point of maximum ambiguity.
@@ -99,7 +100,11 @@ membership—the minimum over conditions of *x* (presence) or 1−*x* (absence)�
 consistency, and raw coverage [@ragin2008; @schneider2012]. These fuzzy formulas
 reduce exactly to the classical crisp counts when data are dichotomous. A
 configurable frequency threshold routes low-frequency rows to the logical
-remainders, and the proportion of retained cases is reported.
+remainders, and the proportion of retained cases is reported. Each row is also
+screened for fuzzy contradictions [@rubinson2013]: the proportion of cases whose
+individual consistency falls below the adopted threshold is compared against a
+configurable proportion cutoff, flagging rows with a substantively mixed
+membership pattern rather than coding them by raw consistency alone.
 
 **Necessity analysis.** For each condition Cᵢ and its negation ~Cᵢ, necessity
 consistency [Σmin(Xᵢ,Yᵢ) / ΣYᵢ], necessity coverage, and the Relevance of Necessity
@@ -109,8 +114,11 @@ trivial necessity.
 
 **Boolean minimization and the Standard Analysis.** The Quine-McCluskey algorithm
 [@mccluskey1956; @quine1952] is implemented in pure JavaScript, generalized to *N*
-conditions, and paired with essential–prime-implicant plus greedy cover selection so
-that only observed sufficient rows must be covered. Three solutions are derived
+conditions, and paired with essential-prime-implicant extraction followed by an
+exhaustive minimum-cardinality cover search (a Petrick-style search over the
+remaining non-essential implicants, falling back to a greedy heuristic only when
+the number of pending implicants is large) so that only observed sufficient rows
+must be covered by a solution of minimal size. Three solutions are derived
 [@ragin2008]: the *complex* solution (no logical remainders), the *parsimonious*
 solution (all simplifying remainders), and the *intermediate* solution, which
 incorporates only the easy counterfactuals permitted by user-supplied directional
@@ -125,6 +133,15 @@ as sufficient for both Y and ~Y. Robustness checks re-run the analysis across
 consistency thresholds (0.70–0.90) and, when calibration has been applied, under
 ±5% shifts of the crossover anchor, reporting whether the intermediate solution
 remains stable.
+
+## Testing
+
+A dependency-free Node.js test suite (`tests/core-algorithms.test.js`) exercises the
+core computational functions directly—truth table construction, PRI, bidirectional
+necessity with RoN, Quine-McCluskey minimization with minimum-cardinality cover
+selection, and the intermediate-solution logic—against cases with known expected
+outputs, including regression cases for edge conditions such as fuzzy membership
+scores that fall exactly on the 0.5 crossover.
 
 ## Data Model and Persistence
 
