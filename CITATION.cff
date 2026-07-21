@@ -20,11 +20,11 @@ authors:
     given-names: "Leonardo Felipe da Silva"
     affiliation: "UNOESC — Universidade do Oeste de Santa Catarina"
     orcid: "https://orcid.org/0000-0001-6812-5086"
-version: "5.0"
-date-released: "2026-07-19"
+version: "5.1"
+date-released: "2026-07-20"
 license: MIT
-repository-code: "https://github.com/LeonardoFSR75/qcaflow"
-url: "https://github.com/LeonardoFSR75/qcaflow"
+repository-code: "https://github.com/LeonardoFSR75/QCAFlow"
+url: "https://github.com/LeonardoFSR75/QCAFlow"
 doi: "10.5281/zenodo.21465384"
 keywords:
   - qualitative-comparative-analysis

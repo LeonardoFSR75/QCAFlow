@@ -66,6 +66,7 @@
   .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:bold;}
   .badge-new{background:#D5F5E3;color:#1A7A42;}
   .badge-upd{background:#FEF9E7;color:#7D6608;}
+  .badge-fix{background:#FDEDEC;color:#943126;}
 
   ul,ol{margin:8px 0 12px 20px;}
   li{margin-bottom:4px;}
@@ -89,10 +90,10 @@
 
   <div class="cover">
     <div class="tag">DOCUMENTAÇÃO TÉCNICA</div>
-    <h1>QCAFlow — v5.0</h1>
+    <h1>QCAFlow — v5.1</h1>
     <div class="subtitle">Ferramenta Web para Análise Qualitativa Comparativa por Conjuntos Fuzzy</div>
     <div class="meta">
-      <span><strong>Versão:</strong> 5.0</span>
+      <span><strong>Versão:</strong> 5.1</span>
       <span><strong>Formato:</strong> HTML5 + JavaScript (single-file)</span>
       <span><strong>Plataforma:</strong> Navegador Web (100% offline)</span>
       <span><strong>Licença:</strong> Uso Acadêmico / MIT License</span>
@@ -110,7 +111,7 @@
 
     <div class="diagram">
 ┌──────────────────────────────────────────────────────────────┐
-│                   QCAFlow.html (v5.0)             │
+│                   QCAFlow.html (v5.1)             │
 │                                                               │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────┐       │
 │  │  &lt;style&gt;  │  │  HTML    │  │  &lt;script&gt; │  │  Data  │       │
@@ -637,19 +638,13 @@ git push -u origin main
       <tr><td>Licença</td><td>MIT License — Copyright © 2026 Leonardo Felipe da Silva Rossini (<code>LICENSE</code>)</td></tr>
       <tr><td>Citação (máquina)</td><td><code>CITATION.cff</code> — compatível com GitHub, Zenodo e ferramentas APA/BibTeX</td></tr>
       <tr><td>Citação (APA 7)</td><td>Rossini, L. (2026). <em>QCAFlow</em> [Software]. MIT License. https://doi.org/10.5281/zenodo.21465384</td></tr>
-      <tr><td>Repositório</td><td>https://github.com/LeonardoFSR75/qcaflow</td></tr>
-      <tr><td>DOI Zenodo</td><td>https://doi.org/10.5281/zenodo.21465384 <em>(gerado ao criar release no GitHub)</em></td></tr>
-      <tr><td>DOI JOSS</td><td>https://doi.org/10.XXXXX/joss.XXXXX <em>(gerado após aceite no Journal of Open Source Software)</em></td></tr>
-      
-      <tr><td>Artigo de referência</td><td><code>paper.md</code> + <code>paper.bib</code> — submetido ao JOSS</td></tr>
+      <tr><td>Repositório</td><td>https://github.com/LeonardoFSR75/QCAFlow</td></tr>
+      <tr><td>DOI Zenodo</td><td>https://doi.org/10.5281/zenodo.21465384</td></tr>
+      <tr><td>Artigo de referência</td><td><code>paper.md</code> + <code>paper.bib</code> — descrição técnica do software</td></tr>
     </table>
 
     <div class="alert-info">
-      <strong>Roteiro de publicação:</strong>
-      (1) Criar repositório público no GitHub →
-      (2) Criar release v5.0.0 →
-      (3) Conectar Zenodo (https://zenodo.org) para DOI automático →
-      (4) Submeter ao JOSS (https://joss.theoj.org/papers/new).
+      <strong>Publicação:</strong> repositório público no GitHub, com release versionada e DOI automático via Zenodo.
       Ver <code>README.md</code> para instruções detalhadas.
     </div>
   </div>
@@ -686,7 +681,19 @@ git push -u origin main
   <div class="sec">
     <div class="sec-tag">CHANGELOG</div>
 
-    <h3>v5.0 — Versão Atual <span class="badge badge-new">ATUAL</span></h3>
+    <h3>v5.1 — Versão Atual <span class="badge badge-new">ATUAL</span></h3>
+    <ul>
+      <li><span class="badge badge-fix">CORREÇÃO</span> XSS armazenado ao importar histórico/projeto: nomes de sessão e IDs deixaram de ser interpolados sem escape no HTML/atributos <code>onclick</code></li>
+      <li><span class="badge badge-fix">CORREÇÃO</span> Validação de <code>numConds</code> (limitado a 3–8) ao carregar sessões ou importar arquivos <code>.qcaflow</code>, evitando travamento por tabela verdade com 2ⁿ linhas excessivo</li>
+      <li><span class="badge badge-fix">CORREÇÃO</span> Importação CSV agora atualiza os nomes das condições a partir do cabeçalho mesmo quando o número de colunas não muda</li>
+      <li><span class="badge badge-fix">CORREÇÃO</span> Importação XML: detecção do número de condições corrigida (antes o truncamento ocorria antes da detecção, descartando condições extras silenciosamente)</li>
+      <li><span class="badge badge-fix">CORREÇÃO</span> Metadados de versão no arquivo <code>.qcaflow</code> exportado (estava desatualizado)</li>
+      <li><span class="badge badge-fix">CORREÇÃO</span> "Consistência Global da Solução" agora usa a mesma fórmula fuzzy (Σmin(X,Y)/ΣX) usada no Dashboard e nos exports, eliminando divergência entre os números exibidos nas duas telas</li>
+      <li><span class="badge badge-fix">CORREÇÃO</span> Exportação CSV escapa aspas e neutraliza injeção de fórmula em nomes de caso</li>
+      <li><span class="badge badge-upd">ATUALIZADO</span> Remoção das referências à submissão ao JOSS (badge, botão de contato e roteiro de publicação), mantendo apenas o registro DOI via Zenodo</li>
+    </ul>
+
+    <h3>v5.0</h3>
     <ul>
       <li><span class="badge badge-new">NOVO</span> <strong>Calibração Linear por Partes</strong> — alternativa metodológica à transição logística tradicional (Nikou et al., 2024)</li>
       <li><span class="badge badge-new">NOVO</span> <strong>Contradições Fuzzy de Caso</strong> — identificação automática de inconsistências usando consistência individual ($ObsConsist_c$, Rubinson, 2013) com limiar de proporção</li>
@@ -762,7 +769,7 @@ git push -u origin main
   </div>
 
   <div style="margin-top:32px;padding:16px;background:var(--light);border-radius:8px;font-size:12px;color:#555;text-align:center;">
-    Documentação Técnica — QCAFlow v5.0 &nbsp;|&nbsp;
+    Documentação Técnica — QCAFlow v5.1 &nbsp;|&nbsp;
     Gerado em <strong id="gen-date"></strong> &nbsp;|&nbsp;
     Licença MIT License
   </div>

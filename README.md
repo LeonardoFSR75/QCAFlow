@@ -3,8 +3,7 @@
 **Web-Based fsQCA Analysis Platform**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-5.0-blue.svg)](https://github.com/LeonardoFSR75/qcaflow)
-[![JOSS](https://joss.theoj.org/papers/XXXXX/status.svg)](https://doi.org/10.XXXXX/joss.XXXXX)
+[![Version](https://img.shields.io/badge/version-5.1-blue.svg)](https://github.com/LeonardoFSR75/QCAFlow)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21465384.svg)](https://doi.org/10.5281/zenodo.21465384)
 
 ## Sobre / About
@@ -60,7 +59,7 @@ Testes automatizados dos algoritmos centrais (calibração, tabela verdade, PRI/
 
 ## Como Citar / Citation
 
-> Rossini, L. F. da S. (2026). *QCAFlow: Web-Based fsQCA Analysis Platform* (v5.0) [Software]. UNOESC. MIT License. https://doi.org/10.5281/zenodo.21465384
+> Rossini, L. F. da S. (2026). *QCAFlow: Web-Based fsQCA Analysis Platform* (v5.1) [Software]. UNOESC. MIT License. https://doi.org/10.5281/zenodo.21465384
 
 Ver também `CITATION.cff` ou clique em **"Cite this repository"** no GitHub.
 
@@ -75,8 +74,8 @@ qcaflow/                          ← repositório GitHub / Zenodo
 ├── CODE_OF_CONDUCT.md            # Código de Conduta
 ├── SECURITY.md                   # Política de Segurança
 ├── ROADMAP.md                    # Roadmap do Projeto
-├── paper.md                      # Artigo JOSS (inglês)
-├── paper.bib                     # Referências BibTeX do JOSS
+├── paper.md                      # Descrição técnica do software (inglês)
+├── paper.bib                     # Referências BibTeX
 ├── docs/
 │   ├── Documentacao_Tecnica.html # Documentação técnica completa em português
 │   └── Artigos/                  # PDFs de referência bibliográfica

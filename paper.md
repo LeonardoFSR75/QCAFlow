@@ -136,14 +136,14 @@ CSV, Excel, JSON, and XML are provided to guide data preparation.
 # Acknowledgements
 
 The author thanks the Programa de Mestrado em Administração of UNOESC
-and the thesis advisor [name] for institutional support during the development of
-this tool.
+and the thesis advisory committee for institutional support during the development
+of this tool.
 
 # AI Usage Disclosure
 
 Generative AI (Google Gemini via the Antigravity pair-programming agent, and Anthropic Claude via Sonnet 3.5 / Sonnet 4.6) was used during the development of this project. AI assistance was utilized for:
 - Writing test scaffolding and core logic refactoring in the JavaScript codebase (Google Gemini).
-- Conducting failure reviews, code corrections, and aligning the technical documentation and academic paper with the JOSS guidelines (Anthropic Claude Sonnet 3.5 / Sonnet 4.6).
+- Conducting failure reviews, code corrections, and keeping the technical documentation and this paper aligned with the current codebase (Anthropic Claude Sonnet 3.5 / Sonnet 4.6).
 The human author reviewed, edited, and validated all AI-assisted outputs and made all core architectural and design decisions.
 
 # References

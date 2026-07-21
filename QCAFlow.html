@@ -307,7 +307,6 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
 .contact-link-btn:hover{opacity:.85;}
 .clb-github{background:var(--slate);color:#fff;}
 .clb-zenodo{background:#14479B;color:#fff;}
-.clb-joss{background:#C4621A;color:#fff;}
 .clb-orcid{background:#A6CE39;color:#fff;}
 
 </style>
@@ -321,7 +320,7 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
   </div>
   <div class="header-right">
     <span class="dev-credit">Desenvolvido por Leonardo Felipe da Silva Rossini</span>
-    <span class="version-badge">v5.0</span>
+    <span class="version-badge">v5.1</span>
   </div>
 </div>
 
@@ -377,10 +376,10 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
       <div style="margin-top:14px;padding:11px 14px;background:#FFF9E6;border:1px solid #F0C040;border-radius:6px;font-size:12px;color:#665500;line-height:1.7;">
         ⚠️ <strong>Importante:</strong> Para fsQCA com escores fuzzy use decimais entre 0 e 1 (calibrados pelo método direto). Para csQCA use apenas 0 e 1.
         A consistência fuzzy mede a suficiência. Limiares convencionais: consistência bruta ≥ 0,75–0,80; <strong>PRI ≥ 0,70</strong>; necessidade ≥ 0,90 (Ragin, 2008).
-        O QCAFlow v5.0 suporta <strong>calibração linear por partes</strong>, <strong>análise da negação do desfecho (~Y)</strong>, e diagnóstico automático de <strong>contradições fuzzy</strong> (Rubinson, 2013).
+        O QCAFlow v5.1 suporta <strong>calibração linear por partes</strong>, <strong>análise da negação do desfecho (~Y)</strong>, e diagnóstico automático de <strong>contradições fuzzy</strong> (Rubinson, 2013).
       </div>
       <div style="margin-top:14px;padding:10px 14px;background:var(--primary-light);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--primary-dark);line-height:1.6;">
-        <strong>QCAFlow v5.0</strong> · UNOESC — Universidade do Oeste de Santa Catarina ·
+        <strong>QCAFlow v5.1</strong> · UNOESC — Universidade do Oeste de Santa Catarina ·
         Mestrado em Administração · Desenvolvido por <strong>Leonardo Felipe da Silva Rossini</strong> · 2026
       </div>
     </div>
@@ -559,7 +558,7 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
       <div class="sol-sec">
         <div class="sol-head">📐 Consistência da Solução</div>
         <div class="sol-body">
-          <div class="info-note">Consistência mede o grau em que os casos pertencentes a uma configuração suficiente também pertencem ao resultado. Fórmula (crispy): N_Suc / N_Casos por configuração; global = Σ N_Suc / Σ N_Casos (sobre configurações suficientes).</div>
+          <div class="info-note">Consistência mede o grau em que os casos pertencentes a uma configuração suficiente também pertencem ao resultado. Fórmula fuzzy: Σmin(X,Y) / ΣX por configuração; global = mesma fórmula aplicada à união fuzzy de todas as configurações suficientes.</div>
           <div class="consist-grid" id="sol-consist-grid"></div>
           <div style="margin-top:12px;" id="sol-consist-global"></div>
         </div>
@@ -769,7 +768,7 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
 <div id="tab-contato" class="tab-content">
   <div class="sec-box" style="margin-bottom:14px;">
     <div class="sec-head">👤 CONTATO — Desenvolvedor e Projeto QCAFlow</div>
-    <div class="sec-sub">Informações acadêmicas · UNOESC — Universidade do Oeste de Santa Catarina · Joaçaba, SC</div>
+    <div class="sec-sub">Informações acadêmicas · UNOESC — Universidade do Oeste de Santa Catarina · Chapecó, SC</div>
   </div>
   <div class="contact-layout">
     <div class="vcard">
@@ -797,14 +796,14 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
           <div class="vcard-icon">📍</div>
           <div class="vcard-info">
             <span class="vcard-label">Localização</span>
-            Joaçaba, SC — Brasil
+            Chapecó, SC — Brasil
           </div>
         </div>
         <div class="vcard-row">
           <div class="vcard-icon">📧</div>
           <div class="vcard-info">
             <span class="vcard-label">E-mail</span>
-            <a href="mailto:leonardo.rossini@unoesc.edu.br">leonardo.rossini@unoesc.edu.br</a>
+            <a href="mailto:leonardo.ppgapesquisador@gmail.com">leonardo.ppgapesquisador@gmail.com</a>
           </div>
         </div>
         <div class="vcard-row">
@@ -818,7 +817,7 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
           <div class="vcard-icon">💻</div>
           <div class="vcard-info">
             <span class="vcard-label">GitHub</span>
-            <a href="https://github.com/LeonardoFSR75/qcaflow" target="_blank">github.com/LeonardoFSR75/qcaflow</a>
+            <a href="https://github.com/LeonardoFSR75/QCAFlow" target="_blank">github.com/LeonardoFSR75/QCAFlow</a>
           </div>
         </div>
       </div>
@@ -829,16 +828,15 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
         <p><strong>QCAFlow</strong> é uma plataforma web para Análise Qualitativa Comparativa por Conjuntos Fuzzy (fsQCA), desenvolvida como produto técnico do Mestrado em Administração da UNOESC. A ferramenta implementa o protocolo analítico completo — da importação de dados à minimização booleana via Quine-McCluskey, análise de necessidade, equifinalidade e geração automática de narrativa acadêmica — em um único arquivo HTML5 autocontido, sem instalação ou conexão à internet.</p>
         <p>Fundamentada na metodologia de Charles C. Ragin (1987, 2000, 2008), a ferramenta é especialmente indicada para pesquisadores das ciências sociais e da administração que trabalham com amostras pequenas a médias (N = 10–100) e buscam identificar configurações causais — combinações de condições — que produzem um resultado de interesse.</p>
         <div class="contact-links">
-          <a class="contact-link-btn clb-github" href="https://github.com/LeonardoFSR75/qcaflow" target="_blank">💻 GitHub</a>
+          <a class="contact-link-btn clb-github" href="https://github.com/LeonardoFSR75/QCAFlow" target="_blank">💻 GitHub</a>
           <a class="contact-link-btn clb-zenodo" href="https://doi.org/10.5281/zenodo.21465384" target="_blank">📦 Zenodo DOI</a>
-          <a class="contact-link-btn clb-joss" href="https://doi.org/10.XXXXX/joss.XXXXX" target="_blank">📄 JOSS Paper</a>
           <a class="contact-link-btn clb-orcid" href="https://orcid.org/0000-0001-6812-5086" target="_blank">🆔 ORCID</a>
         </div>
       </div>
       <div class="contact-about">
         <h3>📚 Como Citar</h3>
         <p style="font-family:'Courier New',monospace;font-size:12px;background:var(--primary-light);padding:12px 14px;border-radius:6px;border-left:4px solid var(--primary);line-height:1.9;">
-          Rossini, L. F. da S. (2026). <em>QCAFlow: Web-Based fsQCA Analysis Platform</em> (v5.0) [Software]. UNOESC. MIT License. https://doi.org/10.5281/zenodo.21465384
+          Rossini, L. F. da S. (2026). <em>QCAFlow: Web-Based fsQCA Analysis Platform</em> (v5.1) [Software]. UNOESC. MIT License. https://doi.org/10.5281/zenodo.21465384
         </p>
         <p style="margin-top:10px;font-size:12px;color:#666;">Para citar em formato BibTeX, CITATION.cff ou APA 7ª edição completo, acesse o repositório GitHub e clique em <strong>"Cite this repository"</strong>.</p>
       </div>
@@ -852,10 +850,10 @@ td input:focus{background:#FFFBE6;border-radius:3px;}
 </div>
 
 <footer class="app-footer">
-  QCAFlow v5.0 &nbsp;·&nbsp; UNOESC — Universidade do Oeste de Santa Catarina
+  QCAFlow v5.1 &nbsp;·&nbsp; UNOESC — Universidade do Oeste de Santa Catarina
   &nbsp;·&nbsp; Desenvolvido por <strong style="color:#fff;">Leonardo Felipe da Silva Rossini</strong> &nbsp;·&nbsp; 2026
-  &nbsp;·&nbsp; <a href="https://github.com/LeonardoFSR75/qcaflow" style="color:rgba(255,255,255,.6);text-decoration:none;" title="Repositório GitHub">GitHub</a>
-  &nbsp;·&nbsp; <span title="DOI — preencher após publicação no Zenodo">DOI: 10.5281/zenodo.21465384</span>
+  &nbsp;·&nbsp; <a href="https://github.com/LeonardoFSR75/QCAFlow" style="color:rgba(255,255,255,.6);text-decoration:none;" title="Repositório GitHub">GitHub</a>
+  &nbsp;·&nbsp; <span title="Digital Object Identifier do registro Zenodo desta versão">DOI: 10.5281/zenodo.21465384</span>
   &nbsp;·&nbsp; MIT License
 </footer>
 
@@ -1837,7 +1835,7 @@ function auditLines(){
     anc.push(esc(label)+': '+a.full+' / '+a.cross+' / '+a.non);
   });
   return [
-    ['Ferramenta','QCAFlow v5.0 — UNOESC'],
+    ['Ferramenta','QCAFlow v5.1 — UNOESC'],
     ['Data/hora do export',new Date().toLocaleString('pt-BR')],
     ['Casos',String(dados.length)],
     ['Condições ('+numConds+')',condLabels.map(esc).join(', ')],
@@ -2092,9 +2090,8 @@ function renderSolucao() {
         <div style="font-size:11px;color:#666;">${r.nSuc} suc. / ${r.nCasos} casos</div>
         ${verdictHTML(r.consist)}
       </div>`; }).join('');
-    const tCS=suf.reduce(function(s,r){ return s+r.nCasos; },0);
-    const tSS=suf.reduce(function(s,r){ return s+r.nSuc; },0);
-    const gc=tCS>0?tSS/tCS:null;
+    const sufTerms=suf.map(function(r){ return {bits:r.bits, dc:Array(numConds).fill(0)}; });
+    const gc=solutionMetrics(sufTerms).total.consist;
     cGlobal.innerHTML=`<div style="background:var(--primary-dark);color:#fff;border-radius:8px;padding:11px 16px;display:inline-flex;align-items:center;gap:14px;">
       <span style="font-size:11px;opacity:.75;">Consistência Global da Solução</span>
       <span style="font-size:22px;font-weight:bold;">${fmt(gc)}</span>
@@ -2488,7 +2485,7 @@ function renderInterpretacao() {
     // ── Monta HTML ────────────────────────────────────────────────────────
     var out = '';
     out += '<div class="interp-report">';
-    out += '<div class="interp-badge">📝 ANÁLISE INTERPRETATIVA — Gerada Automaticamente · QCAFlow v5.0 · UNOESC</div>';
+    out += '<div class="interp-badge">📝 ANÁLISE INTERPRETATIVA — Gerada Automaticamente · QCAFlow v5.1 · UNOESC</div>';
 
     out += '<div class="interp-section">';
     out += '<div class="interp-sec-title">1. Método, Dados e Calibração</div>';
@@ -2531,7 +2528,7 @@ function renderInterpretacao() {
     el.innerHTML = out;
   } catch(e) {
     var el2 = document.getElementById('interp-content');
-    if (el2) el2.innerHTML = '<p style="color:red;padding:12px;">Erro ao gerar análise: ' + e.message + '</p>';
+    if (el2) el2.innerHTML = '<p style="color:red;padding:12px;">Erro ao gerar análise: ' + esc(e.message) + '</p>';
   }
 }
 
@@ -2606,9 +2603,12 @@ function importCSV(event) {
       const detectedN=cols.length-2;
       if(detectedN>=3&&detectedN<=8&&detectedN!==numConds){
         numConds=detectedN;
-        condLabels=Array.from({length:numConds},function(_,i){ return 'Condição_'+(i+1); });
+        condLabels=Array.from({length:numConds},function(_,i){ return start?String(first[i+1]||('Condição_'+(i+1))):'Condição_'+(i+1); });
         document.getElementById('num-conds').value=numConds;
+      } else if(start){
+        for(let hi=1;hi<=numConds;hi++){ if(first[hi]) condLabels[hi-1]=String(first[hi]).trim(); }
       }
+      if(start && first[numConds+1]) resLabel=String(first[numConds+1]).trim();
       for(let i=start;i<lines.length;i++){
         const c=lines[i].split(/[,;\t]/);
         if(c.length<numConds+2) continue;
@@ -2630,9 +2630,15 @@ function importCSV(event) {
   reader.readAsText(file,'UTF-8');
 }
 
+function csvField(v){
+  let s=String(v);
+  if(/^[=+\-@]/.test(s)) s="'"+s;
+  if(/[",;\n\r\t]/.test(s)) s='"'+s.replace(/"/g,'""')+'"';
+  return s;
+}
 function exportCSV() {
-  let csv='Caso,'+condLabels.join(',')+','+resLabel+'\n';
-  dados.forEach(function(d){ csv+='"'+d.caso+'",'+d.conds.join(',')+','+d.res+'\n'; });
+  let csv=[csvField('Caso')].concat(condLabels.map(csvField)).concat([csvField(resLabel)]).join(',')+'\n';
+  dados.forEach(function(d){ csv+=[csvField(d.caso)].concat(d.conds).concat([d.res]).join(',')+'\n'; });
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download='qcaflow_dados.csv'; a.click();
@@ -2642,6 +2648,42 @@ function exportCSV() {
 //  HISTÓRICO (localStorage)
 // ============================================================
 function getDB(){ try{return JSON.parse(localStorage.getItem(DB_KEY)||'[]');}catch(e){return [];} }
+// Sanitiza uma sessão vinda de fonte externa (histórico/projeto importado) antes de
+// gravá-la no localStorage ou renderizá-la — evita XSS e numConds fora de [3,8].
+function sanitizeSession(s){
+  if(!s || typeof s!=='object') return null;
+  const n=Math.min(8,Math.max(3,parseInt(s.numConds,10)||3));
+  const dadosArr=Array.isArray(s.dados)?s.dados.map(function(d){
+    const conds=Array.isArray(d&&d.conds)?d.conds.slice(0,n).map(Number):[];
+    while(conds.length<n) conds.push(0);
+    return {caso:String((d&&d.caso)!=null?d.caso:''), conds:conds, res:Number(d&&d.res)||0};
+  }):[];
+  const condLabelsArr=Array.isArray(s.condLabels)?s.condLabels.slice(0,n).map(String):[];
+  while(condLabelsArr.length<n) condLabelsArr.push('Condição_'+(condLabelsArr.length+1));
+  const ts=new Date(s.timestamp);
+  const summ=(s.summary&&typeof s.summary==='object')?s.summary:{};
+  return {
+    id: Number(s.id)||(Date.now()+Math.floor(Math.random()*1000)),
+    name: String(s.name||'Análise sem nome'),
+    timestamp: isNaN(ts.getTime())?new Date().toISOString():ts.toISOString(),
+    numConds:n,
+    condLabels:condLabelsArr,
+    resLabel:String(s.resLabel||'Resultado'),
+    dados:dadosArr,
+    limiar:Number(s.limiar)||0.75,
+    limiarPRI:Number(s.limiarPRI)||0.70,
+    limiarFreq:Number(s.limiarFreq)||1,
+    dirExpect:Array.isArray(s.dirExpect)?s.dirExpect.slice(0,n).map(String):Array(n).fill(''),
+    calib:(s.calib&&typeof s.calib==='object')?s.calib:{applied:false,anchors:{},adjusted:[]},
+    summary:{
+      totalCasos:Number(summ.totalCasos)||0,
+      r1:Number(summ.r1)||0,
+      suficientes:Number(summ.suficientes)||0,
+      caminhos:Number(summ.caminhos)||0,
+      solucao:String(summ.solucao||'—'),
+    }
+  };
+}
 function saveDB(db){
   try{
     localStorage.setItem(DB_KEY,JSON.stringify(db));
@@ -2688,8 +2730,9 @@ function promptSaveHistory() {
 
 function loadSession(id) {
   const db=getDB();
-  const s=db.find(function(x){ return x.id===id; });
-  if(!s){alert('Sessão não encontrada.');return;}
+  const raw=db.find(function(x){ return x.id===id; });
+  if(!raw){alert('Sessão não encontrada.');return;}
+  const s=sanitizeSession(raw);
   numConds=s.numConds||3;
   condLabels=s.condLabels||['C1','C2','C3'];
   resLabel=s.resLabel||'Resultado';
@@ -2745,8 +2788,9 @@ function importHistoryJSON(event) {
       if(!Array.isArray(imported)) throw new Error('Formato inválido');
       const db=getDB();
       let added=0;
-      imported.forEach(function(s){
-        if(!db.find(function(x){ return x.id===s.id; })){db.push(s);added++;}
+      imported.forEach(function(raw){
+        const s=sanitizeSession(raw);
+        if(s && !db.find(function(x){ return x.id===s.id; })){db.push(s);added++;}
       });
       db.sort(function(a,b){ return b.id-a.id; });
       saveDB(db);
@@ -2767,26 +2811,36 @@ function renderHistorico() {
   }
   container.innerHTML=db.map(function(s){
     const dt=new Date(s.timestamp);
-    const dtStr=dt.toLocaleString('pt-BR');
+    const dtStr=isNaN(dt.getTime())?'—':dt.toLocaleString('pt-BR');
     const summ=s.summary||{};
+    const safeNumConds=Number(s.numConds)||3;
+    const safeLimiar=Number(s.limiar)||0.75;
     return `<div class="hist-card">
       <div class="hinfo">
         <div class="hname">📋 ${esc(s.name)}</div>
-        <div class="hmeta">🕒 ${dtStr} &nbsp;·&nbsp; ${s.numConds||3} condições &nbsp;·&nbsp; Limiar: ${s.limiar||0.75}</div>
+        <div class="hmeta">🕒 ${esc(dtStr)} &nbsp;·&nbsp; ${safeNumConds} condições &nbsp;·&nbsp; Limiar: ${safeLimiar}</div>
         <div class="htags">
-          <span class="hist-tag">📊 ${summ.totalCasos||0} casos</span>
-          <span class="hist-tag">✅ ${summ.r1||0} resultado=1</span>
-          <span class="hist-tag">⚙️ ${summ.suficientes||0} suf.</span>
-          <span class="hist-tag">🔀 ${summ.caminhos||0} caminhos</span>
+          <span class="hist-tag">📊 ${Number(summ.totalCasos)||0} casos</span>
+          <span class="hist-tag">✅ ${Number(summ.r1)||0} resultado=1</span>
+          <span class="hist-tag">⚙️ ${Number(summ.suficientes)||0} suf.</span>
+          <span class="hist-tag">🔀 ${Number(summ.caminhos)||0} caminhos</span>
           ${summ.solucao?`<span class="hist-tag" style="background:#FEF9E7;color:#7D6608;font-family:monospace;">= ${esc(summ.solucao)}</span>`:''}
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px;">
-        <button class="btn btn-teal" style="font-size:11px;padding:6px 11px;" onclick="loadSession(${s.id})">⬆ Carregar</button>
-        <button class="btn btn-red" style="font-size:11px;padding:6px 11px;" onclick="deleteSession(${s.id})">🗑 Remover</button>
+        <button class="btn btn-teal" style="font-size:11px;padding:6px 11px;" data-hist-action="load" data-hist-id="${esc(String(s.id))}">⬆ Carregar</button>
+        <button class="btn btn-red" style="font-size:11px;padding:6px 11px;" data-hist-action="delete" data-hist-id="${esc(String(s.id))}">🗑 Remover</button>
       </div>
     </div>`;
   }).join('');
+  container.querySelectorAll('[data-hist-action]').forEach(function(btn){
+    const idAttr=btn.getAttribute('data-hist-id');
+    const id=Number(idAttr);
+    btn.addEventListener('click', function(){
+      if(btn.getAttribute('data-hist-action')==='load') loadSession(id);
+      else deleteSession(id);
+    });
+  });
 }
 
 // ============================================================
@@ -2795,7 +2849,7 @@ function renderHistorico() {
 function exportProject() {
   const meta = {
     tool: 'QCAFlow',
-    version: '4.1',
+    version: '5.1',
     created: new Date().toISOString(),
     format: 'qcaflow-project-v1',
     author: 'Leonardo Felipe da Silva Rossini — UNOESC',
@@ -2824,8 +2878,9 @@ function importProject(event) {
     try {
       const p = JSON.parse(e.target.result);
       if (!p.settings || !Array.isArray(p.dados)) throw new Error('Formato inválido');
-      numConds  = p.settings.numConds  || 3;
-      condLabels= p.settings.condLabels|| ['C1','C2','C3'];
+      numConds  = Math.min(8, Math.max(3, parseInt(p.settings.numConds, 10) || 3));
+      condLabels= Array.isArray(p.settings.condLabels) ? p.settings.condLabels.slice(0, numConds).map(String) : [];
+      while (condLabels.length < numConds) condLabels.push('Condição_'+(condLabels.length+1));
       resLabel  = p.settings.resLabel  || 'Resultado';
       limiar    = p.settings.limiar    || 0.75;
       limiarPRI = p.settings.limiarPRI || 0.70;
@@ -2835,14 +2890,21 @@ function importProject(event) {
       calibInfo = p.calib || { applied:false, anchors:{}, adjusted:[] };
       rawBackup = null;
       manualOverrides = {};
-      dados     = p.dados;
+      dados     = p.dados.map(function(d){
+        const conds=Array.isArray(d&&d.conds)?d.conds.slice(0,numConds).map(Number):[];
+        while(conds.length<numConds) conds.push(0);
+        return {caso:String((d&&d.caso)!=null?d.caso:''), conds:conds, res:Number(d&&d.res)||0};
+      });
       document.getElementById('num-conds').value   = numConds;
       document.getElementById('limiar-input').value = limiar;
       document.getElementById('pri-input').value    = limiarPRI;
       document.getElementById('freq-input').value   = limiarFreq;
       if (Array.isArray(p.history) && p.history.length) {
         const db = getDB();
-        p.history.forEach(function(s){ if (!db.find(function(x){ return x.id === s.id; })) db.push(s); });
+        p.history.forEach(function(raw){
+          const s = sanitizeSession(raw);
+          if (s && !db.find(function(x){ return x.id === s.id; })) db.push(s);
+        });
         db.sort(function(a,b){ return b.id - a.id; });
         saveDB(db);
       }
@@ -2988,18 +3050,16 @@ function importXML(event) {
       if (err) throw new Error('XML inválido: ' + err.textContent.substring(0,120));
       var casos = doc.querySelectorAll('caso');
       if (!casos.length) throw new Error('Nenhum elemento <caso> encontrado no XML.');
-      var newData = [];
-      casos.forEach(function(c, i) {
+      var rawCases = Array.from(casos).map(function(c, i) {
         var nome = c.getAttribute('nome') || c.getAttribute('name') || ('Caso_'+(i+1));
         var condEls = c.querySelectorAll('cond');
         var conds = Array.from(condEls).map(function(el){ return parseFloat(el.textContent) || 0; });
         var resEl = c.querySelector('resultado, result, res');
         var res = resEl ? parseFloat(resEl.textContent) || 0 : 0;
-        while (conds.length < numConds) conds.push(0);
-        newData.push({ caso: nome, conds: conds.slice(0, numConds), res: res });
+        return { caso: nome, conds: conds, res: res };
       });
-      if (!newData.length) { alert('Nenhum dado válido no XML.'); return; }
-      var firstN = newData[0].conds.length;
+      if (!rawCases.length) { alert('Nenhum dado válido no XML.'); return; }
+      var firstN = rawCases[0].conds.length;
       if (firstN >= 3 && firstN <= 8 && firstN !== numConds) {
         numConds = firstN;
         document.getElementById('num-conds').value = numConds;
@@ -3007,6 +3067,11 @@ function importXML(event) {
         var labEls = doc.querySelectorAll('condicoes > cond, labels > cond, condLabels > cond');
         labEls.forEach(function(el, i){ if(i < numConds) condLabels[i] = el.textContent.trim()||condLabels[i]; });
       }
+      var newData = rawCases.map(function(rc){
+        var conds = rc.conds.slice(0, numConds);
+        while (conds.length < numConds) conds.push(0);
+        return { caso: rc.caso, conds: conds, res: rc.res };
+      });
       dados = newData;
       manualOverrides = {}; rawBackup = null; calibInfo = {applied:false, anchors:{}, adjusted:[], type:'logistic'};
       renderDadosTable();
@@ -3106,7 +3171,7 @@ function exportCompletePDF() {
     +'<h2>7. Registro de Auditoria da Análise</h2>'
     +auditTableHTML()
     +'<div style="margin-top:16pt;font-size:8pt;color:#888;border-top:1pt solid #ccc;padding-top:6pt;">'
-    +'QCAFlow v5.0 · UNOESC — Universidade do Oeste de Santa Catarina · Desenvolvido por Leonardo Felipe da Silva Rossini · 2026'
+    +'QCAFlow v5.1 · UNOESC — Universidade do Oeste de Santa Catarina · Desenvolvido por Leonardo Felipe da Silva Rossini · 2026'
     +'</div>'
     +'<script>window.onload=function(){ window.print(); };<\/script>'
     +'</body></html>';
@@ -3217,7 +3282,7 @@ function exportCompleteWord() {
     +'<h2>7. Registro de Auditoria da Análise</h2>\n'
     +auditTableHTML()
     +'<p style="font-size:9pt;color:#888;margin-top:18pt;border-top:1pt solid #ccc;padding-top:4pt;">'
-    +'QCAFlow v5.0 · UNOESC · Desenvolvido por Leonardo Felipe da Silva Rossini · 2026</p>\n'
+    +'QCAFlow v5.1 · UNOESC · Desenvolvido por Leonardo Felipe da Silva Rossini · 2026</p>\n'
     +'</body></html>';
 
   var blob = new Blob(['﻿' + wordHtml], { type: 'application/msword;charset=utf-8' });
@@ -3327,7 +3392,7 @@ function exportCompleteMarkdown() {
   md += auditMD() + '\n';
 
   md += '---\n\n';
-  md += '_QCAFlow v5.0 · UNOESC — Universidade do Oeste de Santa Catarina_  \n';
+  md += '_QCAFlow v5.1 · UNOESC — Universidade do Oeste de Santa Catarina_  \n';
   md += '_Desenvolvido por Leonardo Felipe da Silva Rossini · 2026_  \n';
   md += '_Referência: Ragin, C. C. (2008). Redesigning Social Inquiry. University of Chicago Press._\n';
 
