@@ -368,6 +368,16 @@ function calibValue(x, full, cross, non) {
       <tr><td>Intermediária</td><td>só contrafactuais fáceis (<code>dirExpect</code>)</td><td><strong>padrão de relato</strong></td></tr>
     </table>
     <p>Núcleo × periferia (Fiss, 2011): um literal da intermediária é <strong>nuclear</strong> quando pertence a um termo parcimonioso nele aninhado; caso contrário, é <strong>periférico</strong>.</p>
+
+    <div class="alert alert-info" style="margin-top:16px;">
+      <strong>Debate Causal Configuracional (Soluções):</strong>
+      Embora a abordagem clássica de Ragin (2008) sugira o uso da solução intermediária para relato em virtude de sua coerência com as expectativas teóricas do pesquisador, estudos e simulações com busca reversa de causalidade (Baumgartner &amp; Thiem, 2017) demonstram que as soluções intermediária e complexa geram redundâncias causais incorretas e falsos positivos sob condições estritas de descoberta causal. Baumgartner e Thiem defendem que apenas a solução parcimoniosa recupera corretamente o grafo causal gerador dos dados. Em contrapartida, os defensores da QCA tradicional apontam o risco de a parcimônia incorporar suposições contrafactuais teoricamente absurdas ou biologicamente implausíveis. O QCAFlow aborda essa controvérsia ao disponibilizar as três soluções lado a lado de forma clara e interativa, permitindo que o pesquisador visualize as implicações de cada premissa de minimização e realize decisões de modelagem transparentes e documentadas.
+    </div>
+
+    <div class="alert alert-info" style="margin-top:16px;">
+      <strong>Abordagens Alternativas (CNA e Otimização):</strong>
+      Como alternativa à minimização booleana tradicional baseada em tabelas verdade e counterfactuals, a Análise de Coincidência (<em>Coincidence Analysis</em> — CNA, Baumgartner &amp; Ambühl, 2020) modela relações causais sem o uso de logical remainders, permitindo desvendar estruturas complexas como causas comuns (efeitos colaterais) e cadeias causais (onde uma variável é desfecho intermediário e causa subsequente). Além disso, o protocolo ConCovOpt (Baumgartner &amp; Ambühl, 2021) provê um algoritmo sistemático de otimização de consistência e cobertura que auxilia na identificação da fronteira de eficiência empírica dos modelos, eliminando arbitrariedades na escolha de limiares.
+    </div>
     <p><strong>Complexidade:</strong> converge em 2–3 iterações para N ≤ 8 na prática.</p>
   </div>
 
@@ -645,8 +655,34 @@ git push -u origin main
     </div>
   </div>
 
-  <!-- ===================== 8. CHANGELOG ===================== -->
-  <h2 id="changelog">8. Histórico de Versões</h2>
+  <!-- ===================== 8. REFERÊNCIAS ===================== -->
+  <div class="sec">
+    <div class="sec-tag">BIBLIOGRAFIA</div>
+    <h3>8. Referências Bibliográficas</h3>
+    <ul class="ref-list" style="list-style:none; padding:0; line-height:1.6;">
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Baumgartner, M., &amp; Ambühl, M. (2020). Causal modeling with coincidence analysis. <em>Methodological Innovations, 13</em>(2). https://doi.org/10.1177/2059799120935575</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Baumgartner, M., &amp; Ambühl, M. (2021). Optimizing consistency and coverage in configurational causal modeling. <em>Sociological Methods &amp; Research, 50</em>(4), 1800--1833. https://doi.org/10.1177/0049124121995554</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Baumgartner, M., &amp; Thiem, A. (2017). Often trusted but never (properly) tested: Evaluating Qualitative Comparative Analysis. <em>Sociological Methods &amp; Research, 49</em>(2), 279--311. https://doi.org/10.1177/0049124117701487</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Cronqvist, L. (2019). <em>Tosmana: Trier Serial Multivalue Analyser</em> [Versão 1.61]. University of Trier. https://www.tosmana.net</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Dusă, A. (2019). <em>QCA with R: A comprehensive resource.</em> Springer. https://doi.org/10.1007/978-3-319-75668-4</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Fiss, P. C. (2011). Building better causal theories: A fuzzy set approach to typologies in organization research. <em>Academy of Management Journal, 54</em>(2), 393–420. https://doi.org/10.5465/amj.2011.60263120</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Greckhamer, T., Furnari, S., Fiss, P. C., &amp; Aguilera, R. V. (2018). Studying configurations with qualitative comparative analysis: Best practices in strategy and organization research. <em>Strategic Organization, 16</em>(4), 482–495. https://doi.org/10.1177/1476127018786487</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Nikou, S., Mezei, J., Liguori, E. W., &amp; El Tarabishy, A. (2024). FsQCA in entrepreneurship research: Opportunities and best practices. <em>Journal of Small Business Management, 62</em>(3), 1531--1548. https://doi.org/10.1080/00472778.2022.2147190</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Oana, I.-E., &amp; Schneider, C. Q. (2018). SetMethods: An add-on R package for advanced QCA. <em>The R Journal, 10</em>(1), 51--67. https://doi.org/10.32614/RJ-2018-031</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Pappas, I. O., &amp; Woodside, A. G. (2021). Fuzzy-set Qualitative Comparative Analysis (fsQCA): Guidelines for research practice in Information Systems and marketing. <em>International Journal of Information Management, 58</em>, 102310. https://doi.org/10.1016/j.ijinfomgt.2021.102310</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Ragin, C. C. (2008). <em>Redesigning social inquiry: Fuzzy sets and beyond.</em> University of Chicago Press.</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Ragin, C. C., &amp; Davey, S. (2023). <em>Fuzzy-set/Qualitative Comparative Analysis 4.1.</em> Department of Sociology, University of California, Irvine.</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Rihoux, B., &amp; Ragin, C. C. (Eds.). (2009). <em>Configurational comparative methods: Qualitative comparative analysis (QCA) and related techniques.</em> Sage.</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Rubinson, C. (2013). Contradictions in fsQCA. <em>Quality &amp; Quantity, 47</em>(5), 2847–2867. https://doi.org/10.1007/s11135-012-9694-3</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Schneider, C. Q., &amp; Wagemann, C. (2010). Standards of good practice in qualitative comparative analysis (QCA) and fuzzy-sets. <em>Comparative Sociology, 9</em>(3), 397--418. https://doi.org/10.1163/156913310X12658135114757</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Schneider, C. Q., &amp; Wagemann, C. (2012). <em>Set-theoretic methods for the social sciences: A guide to qualitative comparative analysis.</em> Cambridge University Press.</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Thiem, A. (2014). Navigating the complexities of qualitative comparative analysis: Case numbers, necessity relations, and model ambiguities. <em>Evaluation Review, 38</em>(6), 487--513. https://doi.org/10.1177/0193841X14550863</li>
+      <li style="margin-bottom:12px; padding-left:1.27cm; text-indent:-1.27cm;">Woodside, A. G. (2013). Moving beyond multiple regression analysis to algorithms: Calling for adoption of a paradigm shift from symmetric to asymmetric thinking in data analysis and crafting theory. <em>Journal of Business Research, 66</em>(4), 463–472. https://doi.org/10.1016/j.jbusres.2012.12.021</li>
+    </ul>
+  </div>
+
+  <!-- ===================== 9. CHANGELOG ===================== -->
+  <h2 id="changelog">9. Histórico de Versões</h2>
 
   <div class="sec">
     <div class="sec-tag">CHANGELOG</div>
