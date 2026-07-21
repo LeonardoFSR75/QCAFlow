@@ -72,12 +72,14 @@ qcaflow/                          ← repositório GitHub / Zenodo
 ├── LICENSE                       # MIT License
 ├── CITATION.cff                  # Metadados de citação (máquina)
 ├── README.md                     # Este arquivo
-├── publicacao/                   # Publicação acadêmica
-│   ├── paper.md                  #   Artigo JOSS (inglês) — subdir declarado na submissão
-│   ├── paper.bib                 #   Referências BibTeX
-│   └── Publicacao_Academica.html #   Produto Técnico — Mestrado Profissional (português)
+├── CODE_OF_CONDUCT.md            # Código de Conduta
+├── SECURITY.md                   # Política de Segurança
+├── ROADMAP.md                    # Roadmap do Projeto
+├── paper.md                      # Artigo JOSS (inglês)
+├── paper.bib                     # Referências BibTeX do JOSS
 ├── docs/
-│   └── Documentacao_Tecnica.html # Documentação técnica completa
+│   ├── Documentacao_Tecnica.html # Documentação técnica completa em português
+│   └── Artigos/                  # PDFs de referência bibliográfica
 ├── tests/                        # Testes automatizados dos algoritmos centrais
 │   ├── core-algorithms.test.js
 │   └── README.md
@@ -85,21 +87,14 @@ qcaflow/                          ← repositório GitHub / Zenodo
 └── templates/                    # Modelos de importação (CSV, Excel, JSON, XML)
 ```
 
-> **Nota:** O registro de software no INPI (`INPI_Registro.html`) é mantido fora deste repositório por conter dados pessoais (CPF) e informações privadas do processo administrativo.
-
 ## Roteiro JOSS / JOSS Submission Roadmap
 
 1. Criar repositório GitHub público: `github.com/LeonardoFSR75/qcaflow`
 2. Fazer upload de todos os arquivos
 3. Criar release com tag `v5.0.0`
 4. Conectar Zenodo → gera DOI automaticamente
-5. Preencher DOIs em `CITATION.cff`, `README.md`, `publicacao/paper.md`, `QCAFlow.html`
-6. Submeter em https://joss.theoj.org/papers/new — informar subdiretório `publicacao/` para `paper.md`
-
-## Registro INPI
-
-Programa de Computador nº **BR XXXXXXXXXXXXXXX** — INPI (Instituto Nacional da Propriedade Industrial), Lei 9.609/1998.  
-Documento de registro mantido em repositório privado local (fora do GitHub/Zenodo).
+5. Preencher DOIs em `CITATION.cff`, `README.md`, `paper.md`, `QCAFlow.html`
+6. Submeter em https://joss.theoj.org/papers/new
 
 ## Licença / License
 
