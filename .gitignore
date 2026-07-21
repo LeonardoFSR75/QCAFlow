@@ -13,3 +13,6 @@ Thumbs.db
 
 # Scientific articles (avoiding copyright issues on GitHub)
 docs/Artigos/
+
+# Academic reports (local only, not pushed to GitHub)
+publicacao/
