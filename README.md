@@ -87,15 +87,6 @@ qcaflow/                          ← repositório GitHub / Zenodo
 └── templates/                    # Modelos de importação (CSV, Excel, JSON, XML)
 ```
 
-## Roteiro JOSS / JOSS Submission Roadmap
-
-1. Criar repositório GitHub público: `github.com/LeonardoFSR75/qcaflow`
-2. Fazer upload de todos os arquivos
-3. Criar release com tag `v5.0.0`
-4. Conectar Zenodo → gera DOI automaticamente
-5. Preencher DOIs em `CITATION.cff`, `README.md`, `paper.md`, `QCAFlow.html`
-6. Submeter em https://joss.theoj.org/papers/new
-
 ## Licença / License
 
 MIT License © 2026 Leonardo Felipe da Silva Rossini — ver [`LICENSE`](LICENSE).
