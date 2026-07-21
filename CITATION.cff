@@ -25,7 +25,7 @@ date-released: "2026-07-19"
 license: MIT
 repository-code: "https://github.com/LeonardoFSR75/qcaflow"
 url: "https://github.com/LeonardoFSR75/qcaflow"
-doi: "10.XXXXX/joss.XXXXX"
+doi: "10.5281/zenodo.21465384"
 keywords:
   - qualitative-comparative-analysis
   - QCA

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-5.0-blue.svg)](https://github.com/LeonardoFSR75/qcaflow)
 [![JOSS](https://joss.theoj.org/papers/XXXXX/status.svg)](https://doi.org/10.XXXXX/joss.XXXXX)
-[![DOI](https://zenodo.org/badge/DOI/10.XXXXX.svg)](https://doi.org/10.XXXXX/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21465384.svg)](https://doi.org/10.5281/zenodo.21465384)
 
 ## Sobre / About
 
@@ -60,7 +60,7 @@ Testes automatizados dos algoritmos centrais (calibração, tabela verdade, PRI/
 
 ## Como Citar / Citation
 
-> Rossini, L. F. da S. (2026). *QCAFlow: Web-Based fsQCA Analysis Platform* (v5.0) [Software]. UNOESC. MIT License. https://doi.org/10.XXXXX/zenodo.XXXXXXX
+> Rossini, L. F. da S. (2026). *QCAFlow: Web-Based fsQCA Analysis Platform* (v5.0) [Software]. UNOESC. MIT License. https://doi.org/10.5281/zenodo.21465384
 
 Ver também `CITATION.cff` ou clique em **"Cite this repository"** no GitHub.
 
